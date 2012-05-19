@@ -1,0 +1,444 @@
+--- 
+status: publish
+layout: post
+title: Seven habits of effective text editing
+meta: 
+  _jd_wp_twitter: "Post Edited: Seven habits of effective text editing http://huangjian.info/158/seven-habits-of-effective/"
+  _wp_jd_bitly: ""
+  _wp_jd_clig: ""
+  _wp_old_slug: seven-habits-of-effective-text-editing
+  _wp_jd_wp: http://huangjian.info/158/seven-habits-of-effective/
+  _edit_last: "1"
+  _wp_jd_yourls: ""
+  _wp_jd_target: ""
+  _jd_post_meta_fixed: "true"
+  _wp_jd_url: ""
+  _jd_twitter: ""
+  _jd_tweet_this: "yes"
+tags: 
+- Technics
+- vim
+published: true
+type: post
+---
+Vim经典中的经典，下面是原文，后面是译文。
+
+Seven habits of effective text editing
+
+by Bram Moolenaar
+Bram@Moolenaar.net
+
+If you spend a lot of time typing plain text, writing programs or HTML, you can save a lot of time by using a good editor and using it effectively. This paper will present guidelines and hints for doing your work more quickly and with less mistakes.
+
+<!--more-->
+
+The open source text editor Vim (Vi IMproved) will be used here to present the ideas about effective editing, but they apply to other editors just as well. Choosing the right editor is actually the first step towards effective editing. The discussion about which editor is the best for you would take too much room and is avoided. If you don't know which editor to use or are dissatisfied with what you are currently using, give Vim a try; you won't be disappointed.
+
+Part 1: edit a file
+-------------------
+
+1. Move around quickly
+
+Most time is spent reading, checking for errors or looking for the right place to work on, rather than inserting new text or changing it. Navigating through the text is done very often, thus you should learn how to do that quickly.
+
+Quite often you will want to search for some text you know is there. Or look at all lines where a certain word or phrase is used. You could simply use the search command "/pattern" to find the text, but there are smarter ways:
+- If you see a specific word and want to search for other occurences of the same word, use the "*" command. It will grab the word from under the cursor and search for the next one.
+- If you set the 'incsearch' option, Vim will show the first match for the pattern, while you are still typing it. This quickly shows a typo in the pattern.
+- If you set the 'hlsearch' option, Vim will highlight all matches for the pattern with a yellow background. This gives a quick overview of where the search command will take you. In program code it can show where a variable is used. You don't even have to move the cursor to see the matches.
+
+In structured text there are even more possibilities to move around quickly. Vim has specific commands for programs in C (and similar languages like C++ and Java):
+- Use "%" to jump from a open brace to its matching closing brace. Or from a "#if" to the matching "#endif". Actually, "%" can jump to many different matching items. It is very useful to check if () and {} constructs are balanced properly.
+- Use "[{" to jump back to the "{" at the start of the current code block.
+- Use "gd" to jump from the use of a variable to its local declaration.
+
+There are many more, of course. The point is that you need to get to know these commands. You might object that you can't learn all these commands - there are hundreds of different movement commands, some simple, some very clever - and it would take weeks of training to learn them all. Well, you don't need to; instead realize what your specific way of editing is, and learn only those commands that make your editing more effective.
+
+There are three basic steps:
+1. While you are editing, keep an eye out for actions you repeat and/or spend quite a bit of time on.
+2. Find out if there is an editor command that will do this action quicker. Read the documentation, ask a friend, look at how others do this.
+3. Train using the command. Do this until your fingers type it without thinking.
+
+Let's use an example to show how it works:
+1. You find that when you are editing C program files, you often spend time looking for where a function is defined. You currently use the "*" command to search for other places where the function name appears, but end up going through a lot of matches for where the function is used instead of defined. You get the idea that there must be a way to do this faster.
+2. Looking through the quick reference you find a remark about jumping to tags. The documentation shows how this can be used to jump to a function definition, just what you were looking for!
+3. You experiment a bit with generating a tags file, using the ctags program that comes with Vim. You learn to use the CTRL-] command, and find you save lots of time using it. To make it easier, you add a few lines to your Makefile to automatically generate the tags file.
+
+A couple of things to watch out for when you are using these three steps:
+- "I want to get the work done, I don't have time to look through the documentation to find some new command". If you think like this, you will get stuck in the stone age of computing. Some people use Notepad for everything, and then wonder why other people get their work done in half the time...
+- Don't overdo it. If you always try to find the perfect command for every thing you do, your mind will have no time left to think about the work you were actually doing. Just pick out those actions that take more time than necessary, and train the commands until you don't need to think about it when using them. Then you can concentrate on the text.
+
+In the following sections there will be suggestions for actions that most people have to deal with. You can use these as inspiration for using the "three basic steps" for your own work.
+
+2. Don't type it twice
+
+There is a limited set of words we type. And even a limited number of phrases and sentences. Especially in computer programs. Obviously, you don't want to type the same thing twice.
+
+Very often you will want to change one word into another. If this is to be done in the whole file, you can use the ":s" substitute command. If only a few locations needs changing, a quick method is to use the "*" command to find the next occurrence of the word and use "cw" to change the word. Then type "n" to find the next word and "." to repeat the "cw" command.
+
+The "." command repeats the last change. A change, in this context, is inserting, deleting or replacing text. Being able to repeat this is a very powerful mechanism. If you organize your editing around it, many changes will become a matter of hitting just that "." key. Watch out for making other changes in between, because it will replace the change that you were repeating. Instead you might want to mark the location with the "m" command, continue your repeated change and come back there later.
+
+Some function and variable names can be awkward to type. Can you quickly type "XpmCreatePixmapFromData" without a typo and without looking it up? Vim has a completion mechanism that makes this a whole lot easier. It looks up words in the file you are editing, and also in #include'd files. You can type "XpmCr", then hit CTRL-N and Vim will expand it to "XpmCreatePixmapFromData" for you. Not only does this save quite a bit of typing, it also avoids making a typo and having to fix it later when the compiler gives you an error message.
+
+When you are typing a phrase or sentence multiple times, there is an even quicker approach. Vim has a mechanism to record a macro. You type "qa" to start recording into register 'a'. Then you type your commands as usual and finally hit "q" again to stop recording. When you want to repeat the recorded commands you type "@a". There are 26 registers available for this.
+
+With recording you can repeat many different actions, not just inserting text. Keep this is mind when you know you are going to repeat something.
+
+One thing to watch out for when recording is that the commands will be played back exactly as you typed them. When moving around you must keep in mind that the text you move over might be different when the command is repeated. Moving four characters right might work for the text where you are recording, but it might need to be five characters where you repeat the commands. It's often necessary to use commands to move over text objects (words, sentences) or move to a specific character.
+
+When the commands you need to repeat are getting more complicated, typing them right at once is getting more difficult. Instead of recording them, you should then write a script or macro. This is very useful to make templates for parts of your code. For example, a function header. You can make this as clever as you like.
+
+3. Fix it when it's wrong
+
+It's normal to make errors while typing. Nobody can avoid it. The trick is to quickly spot and correct them. The editor should be able to help you with this. But you need to tell it what's wrong and what's right.
+
+Very often you will make the same mistake again and again. Your fingers just don't do what you intended. This can be corrected with abbreviations. A few examples:
+:abbr Lunix Linux
+:abbr accross across
+:abbr hte the
+The words will be automatically corrected just after you typed them.
+
+The same mechanism can be used to type a long word with just a few characters. Especially useful for words which you find hard to type, and it avoids that you type them wrong. Examples:
+:abbr pn pinguin
+:abbr MS Mandrake Software
+However, these tend to expand to the full word when you don't want it, which makes it difficult when you really want to insert "MS" in your text. It is best to use short words which don't have an meaning of their own.
+
+To find errors in your text Vim has a clever highlighting mechanism. This was actually meant to be used to do syntax highlighting of programs, but it can catch and highlight errors as well.
+
+Syntax highlighting shows comments in color. That doesn't sound like an important feature, but once you start using it you will find that it helps a lot. You can quickly spot text that should be a comment, but isn't highlighted as such (you probably forgot a comment marker). Or see a line of code highlighted as comment (you forgot to insert a "*/"). These are errors which are hard to spot in a B&amp;W file and can waste a lot of time when trying to debug the code.
+
+Unbalanced braces can also be catched by the syntax highlighting. An unbalanced ")" is highlighted with a bright red background. You can use the "%" command to see how they match, and insert a "(" or ")" at the right position.
+
+Other common mistakes are also quickly spotted, for example using "#included &lt;stdio.h&gt;" instead of "#include &lt;stdio.h&gt;". You easily miss the mistake in B&amp;W, but quickly spot that "include" is highlighted while "included" isn't.
+
+A more complex example: for English text there is a long list of all words that are used. Any word not in this list could be an error. With a syntax file you can highlight all words that are not in the list. With a few extra macros you can add words to the wordlist, so that they are no longer flagged as an error. This works just as you would expect in a word processor. In Vim it is implemented with scripts and you can further tune it for your own use: for example, to only check the comments in a program for spelling errors.
+
+Part 2: edit more files
+-----------------------
+
+4. A file seldom comes alone
+
+People don't work on one file. Mostly there are many related files, and you edit several after each other, or even several at the same time. You should be able to take advantage of your editor to make working with several files more efficient.
+
+The previously mentioned tag mechanism also works for jumping between files. The usual approach is to generate a tags file for the whole project you are working on. You can then quickly jump between all files in the project to find the definitions of functions, structures, typedefs, etc. The time you save compared with manually searching is tremendous; creating a tags file is the first thing I do when browsing a program.
+
+Another powerful mechanism is to find all occurences of a name in a group of files, using the ":grep" command. Vim makes a list of all matches, and jumps to the first one. The ":cn" command takes you to each next match. This is very useful if you need to change the number of arguments in a function call.
+
+Include files contain useful information. But finding the one that contains the declaration you need to see can take a lot of time. Vim knows about include files, and can search them for a word you are looking for. The most common action is to lookup the prototype of a function. Position the cursor on the name of the function in your file and type "[I": Vim will show a list of all matches for the function name in included files. If you need to see more context, you can directly jump to the declaration. A similar command can be used to check if you did include the right header files.
+
+In Vim you can split the text area in several parts to edit different files. Then you can compare the contents of two or more files and copy/paste text between them. There are many commands to open and close windows, jump between them, temporaraly hide files, etc. Again you will have to use the three basic steps to select the set of commands you want to learn to use.
+
+There are more uses of multiple windows. The preview-tag mechanism is a very good example. This opens a special preview window, while keeping the cursor in the file you are working on. The text in the preview window shows, for example, the function declaration for the function name which is under the cursor. If you move the cursor to another name and leave there for a second, the preview window will show the definition of that name. It could also be the name of a structure or a function which is declared in an include file of your project.
+
+5. Let's work together
+
+An editor is for editing text. An e-mail program is for sending and receiving messages. An Operating System is for running programs. Etc. Each program has its own task and should be good at it. The power comes from having the programs work together.
+
+A simple example: Select some structured text in a list and sort it: "!sort". The external "sort" command is used to filter the text. Easy, isn't it? The sorting functionality could be included in the editor. But have a look at "man sort", it has a lot of options. And it's probably a nifty algorithm that does the sorting. Do you want to include all that in an editor? Also for other filter commands? It would grow _huge_.
+
+It has always been the spirit of Unix to have separate programs that do their job well, and work together to perform a bigger task. Unfortunately, most editors don't work too well together with other programs - you can't replace the e-mail editor in Netscape with another one, for example. You end up with a crippled editor. Another tendency is to include all kinds of functionality inside the editor; Emacs is a good example of where this can end up. (Some call it an operating system which can also be used to edit text.)
+
+Vim tries to integrate with other programs, but this is still a struggle. Currently it's possible to use Vim as the editor in MS-Developer Studio and Sniff. Some e-mail programs that support an external editor, like Mutt, can use Vim. Integration with Sun Workshop is being worked on. Generally this is an area that has to be improved in the near future. Only then will we get a system that's better than the sum of its parts.
+
+6. Text is structured
+
+You will often work with text that has some kind of structure, but different from what is supported by the available commands. Then you will have to fall back to the "building blocks" of the editor and create your own macros and scripts to work with this text. We are getting to the more complicated stuff here.
+
+One of the simpler things is to speed up the edit-compile-fix cycle. Vim has the ":make" command, which starts your compilation, catches the errors it produces and lets you jump to the error locations to fix the problems. If you use a different compiler, the error messages will not be recognized. Instead of going back to the old "write it down" system, you should adjust the 'errorformat' option. This tells Vim what your errors look like and how to get the file name and line number out of them. It works for the complicated gcc error messages, thus you should be able to make it work for almost any compiler.
+
+Sometimes adjusting to a type of file is just a matter of setting a few options or writing a few macros. For example, to jump around manual pages, you can write a macro that grabs the word under the cursor, clears the buffer and then reads the manual page for that word into the buffer. That's a simple and efficient way to lookup cross references.
+
+Using the three basic steps you can make working with any sort of structured file more effective. Just think about the actions you want to do with the file, find the editor commands that do it and start using them. It's really as simple as it sounds. You just have to do it.
+
+Part 3: sharpen the saw
+-----------------------
+
+7. Make it a habit
+
+Learning to drive a car takes effort. Is that a reason to keep driving your bicycle? No, you realize you need to invest time to learn a skill. Text editing isn't different. You need to learn new commands and tricks.
+
+On the other hand, you should not try to learn every command an editor offers. That would be a complete waste of time. Most people only need to learn 10 to 20 percent of the commands for their work. But it's a different set of commands for everybody. It requires that you lean back now and then, and wonder if there is some repetitive task that could be automated. If you do a task only once, and don't expect having to do it again, don't try to optimize it. But you probably realize you have been repeating something several times in the last hour. Then search the documentation for a command that can do it quicker. Or write a macro to do it. When it's a larger task, like lining out a specific sort of text, you could look around in newsgroups or on the internet if somebody already solved it for you.
+
+The essential basic step is the last one. You can think of a repetitive task, find a nice solution for it and after the weekend you forgot how you did it. That doesn't work. You will have to repeat the solution until your fingers do it automatically. Only then will you reach the efficiency you need. Don't try to learn too many things at once. But doing a few at the same time will work well. For tricks you don't use often enough to get them in your fingers, you might want to write them down to be able to look them up later. Anyway, if you keep the goal in view, you will find ways to make your editing more and more effective.
+
+One last remark to remind you of what happens when people ignore all the above: I still see people who spend half their day behind a VDU looking up at their screen, then down at two fingers, then up at the screen, etc. - and then wonder why they get so tired... Type with ten fingers! It's not just faster, it also is much less tiresome. Using a computer program for one hour each day, it only takes a couple of weeks to learn to touch-type.
+
+Epilogue
+
+The idea for the title comes from the successful book "The 7 habits of highly effective people" by Stephen R. Covey. I recommend it to everyone who wants to solve personal and professional problems (and who doesn't?). Although some of you will claim it came from the Dilbert book "Seven years of highly defective people" by Scott Adams (also recommended!). See http://www.vim.org/iccf/click1.html and go to "recommended books and CDs".
+
+About the author
+
+Bram Moolenaar is the main author of Vim. He writes the core Vim functionality and selects what code submitted by many others is included. He graduated at the technical university of Delft as a computer technician. Now he mainly works on software, but still knows how to handle a soldering iron. He is founder and treasurer of ICCF Holland, which helps orphans in Uganda. He does free-lance work as a systems architect, but actually spends most time working on Vim.
+
+<strong>进行有效编辑的七种习惯
+Bram Moolenaar</strong>
+
+如果你的很多时间是用来敲纯文本，写程序或HTML，那么有效地使用一个好的编
+辑器能节省你不少时间。这篇文章里的指导和提示将有助于你更快工作，更少犯
+错误。
+
+文中采用开源文本编辑器Vim(Vi IMproved)说明有效编辑的思想，但这些思想也
+适用于其他编辑器。择合适的编辑器只是有效编辑的第一步，对于哪个编辑器更
+好的讨论将占很大地方，这里就不提了。如果你不知道该用哪个编辑器，或者对
+现在所使用的不太满意，不妨试试Vim；你是不会失望的。
+
+第一部分：编辑一个文件
+
+快速定位
+
+编辑中大部分时间是花费在阅读、查错和寻找应该进行编辑的地方上，而不是插
+入新文字或进行修改。在文件中不断定位(navigate)是经常要做的，所以最好学
+会如何快速地进行。
+
+你常会搜寻文档中的一些文字。或者找出包含特定词或词组的行。你当然可以使
+用搜寻命令 /pattern，不过还有更聪明的方法：
+
+* 如果你看到一个特定词，想看看其他地方是不是出现过同样的词，可以使用
+* 命令。它将对光标所指的词进行搜寻。
+* 如果设置了 ' incsearch' 选项，Vim将在你正在输入搜寻模式的时候就
+显示搜寻的结果（而不是等到你敲了回车之后）。这能够使你更快地找出拼写
+错误。
+* 如果设置了 ' hlsearch' 选项，Vim将使用黄色背景对搜寻结果进行高亮
+显示。你可以对搜寻的结果一目了然。应用在程序代码中可以显示变量的所有
+引用。你甚至不需要移动鼠标就能看到所有的搜寻结果。
+
+对于结构化的文档，快速定位的办法就更多了。Vim提供专门针对C程序（以及
+C++、Java等等）的特殊命令：
+
+* 使用 %可以从开始括号跳到对应的关闭括号。或者从 ``#if'' 跳到对
+应的 ``#endif''。事实上， % 可以完成许多对应项之间的跳转。可
+以用来检查if()和{}结构是否平衡。
+* 使用 [{可以在代码段(block)中跳回到段起始的 ``{``。
+* 使用 gb 可以从引用某个变量的地方跳转到它的局部声明。
+
+定位的方法当然不止这些。关键是你需要知道有这些命令。你也许会说不可能学
+会所有命令 — Vim里有成百个定位命令，有的很简单，有的很聪明 — 这需要
+几星期的学习。不过，你不必如此；你只需要了解自己的编辑特点，然后掌握相
+关的定位命令就可以了。
+
+可以采取三个基本步骤：
+
+1. 在你进行编辑的时候，注意那些重复进行的操作。
+2. 找出能快速进行这些操作的编辑命令。阅读文档，问问朋友，或者看看其他
+人是如何做的。
+3. 进行练习，知道熟练为止。
+
+让我们通过以下这个例子说明一下：
+
+1. 你发现在写C程序时，经常要查找函数定义。你目前使用 * 命令对函
+数名进行搜寻，但得到的往往是函数的引用而不是函数定义。你觉得一定会
+有更好的办法。
+2. 读过一篇快速参考以后，你发现关于定位标记的说明，里面说明了如何定位
+函数定义，这正是你要找的！
+3. 你试着生成了一个标记文件，使用Vim自带的ctags程序。你学会了使用
+CTRL-] 命令，发现这省了不少事。为了更方便，你在 Makefile 里加
+入了几行以自动生成标记文件。
+
+当你使用以上三个步骤时，有几点需要注意的地方：
+
+* ``我只想完成任务，不想去读那些文档来找新的命令。''。如果你真的是这
+么想的，那么你将永远停留在计算的石器时代。有些人编写什么都用
+Notepad，却总不明白为什么其他人总能用他一半的时间成任务。
+* 不要过分。如果你总为一点小事也要去找完美的命令，你就没法集中精力到
+你本要完成的任务上了。只要找出那些耗费过多时间的操作，然后使用相关
+的命令直到熟练就可以了。这以后你就能集中精力到自己的文档上了。
+
+下面这些章节给出了大多数人遇到的操作。你仿照它们在实际工作中使用
+三个基本步骤。
+
+不要敲两次
+
+我们所使用的字词集合是有限的。既使是词组和句子也不过是有限的几个。对于
+程序来说更是如此。很明显，你不想把同样的东西敲上两遍。
+
+你经常会想把一个词替换成另一个。如果是全文件替换，你可以使用
+:s (substitute)命令。如果只是几个位置需要被替换，一个快速办法是使
+用 * 命令找出下一个词，使用 cw 来进行替换。然后敲
+n 找到下个词，再用 . 重复 cw 命令。
+
+. 命令重复上一个改变。这里的改变是插入、删除或替换操作。能够重复
+进行操作是个极为强大的机制。如果好好使用它，那么你大部分的编辑工作可能
+只不过是敲几下 . 的事。小心不要在两次重复之间做其他修改，因为这
+将改变你要重复的操作。如果确实需要如此，可以使用 m 命令记住要修
+改的位置，等重复操作进行完毕之后再回过头来修改它。
+
+有些函数名和变量名可能很难敲。你能准确无误地输入
+``XpmCreatePixmapFromData''么？Vim的自动补齐机制能给你省不少事。它查看
+你正在编辑的文件以及#include文件，你可以只敲入``XpmCr''，然后使用
+CTRL-N 命令让Vim把它补齐为``XpmCreatePixmapFromData''。这不但节省
+了输入时间，而且减少了输入的错误。
+
+如果你有同样的词组或句子需要输入多次，还有个更简单的办法。Vim可以进行
+录制宏。使用 qa 命令开始在'a'寄存器里录制宏。然后正常地输入编
+辑命令，最后用 q 退出录制状态。如果你想重复所录制的命令，只需
+执行 @a 命令。Vim总共提供26个这样的宏寄存器。
+
+使用宏录制功能可以记录各种操作，不只限于插入操作。如果你想重复一些东西，
+不妨一试。
+
+需要注意的是记录的命令会被原封不动地重复执行。在进行定位时简单的重复宏
+操作可能不是你想要的结果。比如对于一个词这里可能需要左移4个字符，在下
+个地方可能就要左移5个字符。所以必须定位到合适的位置再重复进行宏操作。
+
+如果你要重复的命令很复杂，把它们一次敲进去会很困难。这时你可以写一个脚
+本或宏。这常被用于建立代码模板；比如，一个函数头。你想做得多聪明就可以
+做得多聪明。
+
+知错就改
+
+编辑时经常会出错。无人能免。关键是快速发现并进行改正。编辑器应该提供这
+方面的支持，不过你必须告诉它什么是对什么是错。
+
+你可能常常会重复同样的错误，你的手指所做的并非是你要它做的。可以使用缩
+写(abbreviation)进行修正。下面是一些例子：
+
+* :abbr Lunix Linux
+* :abbr accross across
+* :abbr hte the
+
+这些词会在编辑时被自动改正。
+
+同样的机制也可以用于对很长的词语进行缩写。特别适用于输入那些你觉得很难
+敲的词，它可以避免出错。比如：
+
+* :abbr pn pinguin
+* :abbr MS Mandrake Software
+
+但有时候你想要的正是那些缩写，比如想插入``MS''。所以缩写中最好使用那些
+不会出现在文中的词。
+
+Vim提供了一个很聪明的高亮机制，一般用于程序的语法高亮，不过也可以用来
+查错。
+
+语法高亮会使用颜色显示注释。这听上去不是什么特别重要的功能，不过一旦用
+起来就会发现这其实很有用。你能够快速地发现那些没有高亮却本应作为注释的
+文字（可能是因为忘了敲注释符）。也可以发现一些被错误当成注释的代码（可
+能是因为忘了敲``*/''）。这些错误在黑白方式下是很难被发现的，浪费了不少
+调试时间。
+
+语法高亮也可以用来查找不匹配的括号。一个未被匹配的``)''会被亮红色背景
+加以标识。你可以使用 % 命令他们是被如何匹配的，然后把``(''或
+``)''插入到合适的位置。
+
+另一类常犯的错误也很容易发现，比如把 ``#include ＜stdio.h＞''敲成了
+``#included ＜stdio.h＞''。在黑白方式下这是很难发现的，但在语法高亮下
+则能很快发现``include''能被高亮而``included''没有。
+
+再看一个更复杂的例子：对于英文文本你可以定义一个所要使用的词的长列表。
+所有未在表中出现的词都可能是错误，并进行高亮显示。可以定义几个用于编辑
+词表的宏。这正是字处理器的拼写检查功能。Vim中是靠一些脚本来实现的，你
+也可以对它进行定制：比如，只对注释中的文字进行拼写检查。
+
+第二部分：编辑多个文件
+
+文件总是成帮结伙
+
+人们很少只编辑一个文件。一般需要顺序或同时编辑一些相关的文件。你应该利
+用编辑器使多文件编辑工作更为高效地。
+
+上面提到的标识(tag)机制也支持跨文件搜寻。一般做法是为项目的所有文件生
+成标识文件，然后在项目的所有文件中搜寻函数、结构、类型(typedef)等的定
+义。这比手工搜寻要快捷的多；我浏览一个程序要做的第一件事便是建立标识文
+件。
+
+另一个强大的功能是使用 :grep 命令对一组文件进行模式搜寻。Vim把
+搜寻结果做成一个列表，然后跳到第一个结果。使用 :cn 命令跳到下
+一个结果。如果你想改变一个函数调用的、参数个数，那么这个功能会很有用。
+
+头文件里有很多有用的信息。然而要知道一个声明出现在哪个头文件中却需要花
+不少时间。Vim能够理解头文件，能够从中找到你需要的东西。把光标移动到函
+数名下，然后敲 [I：Vim就会显示出一个头文件中该函数名的所有匹配。
+如果你想得到更详细的结果，可以直接跳到声明中。一个类似的命令可以用于检
+查你所使用的头文件是否正确。
+
+你可以把Vim的编辑区域进行分隔，用来编辑不同的文件。你可以对两个或多个
+文件进行比较，或者进行拷贝/粘贴。有许多命令用于打开关闭窗口，文件间跳
+转，暂时隐藏文件等等。可以再使用上面提到的三个基本步骤选择合适的命令进
+行学习。
+
+多窗口还有更多的用法。预览标识(preview-tag)就是个很好的例子。它打开一
+个特殊的预览窗口，光标还保留在你正在编辑的文件中。预览窗口中可以是光标
+所指函数的声明。如果你移动光标到另一个名字下，停留一两秒，预览窗口中就
+会显示那个名字的定义。名字还可以是头文件中声明的结构或函数。
+
+让我们一起来工作
+
+编辑器可以编辑文件。e-mail程序可以收发消息。操作系统可以运行程序。每个
+程序都有它自己的任务，而且应该做好。如果能让程序一同工作，那么就会实现
+很强大的功能。
+
+举个简单的例子：选择一个列表中的结构化的文字，并对它进行排序：
+!sort。这将使用外部命令``sort''来过滤文件。容易吧？排序功能是可以
+添加到编译器中的。不过看一下``man sort''就知道它有很多选项。它可能用了
+一个极为精巧的排序算法。你还打算把它加到编辑器中么？更何况还有其他不少
+过滤程序。编辑器可能会变得很大。
+
+Unix精神的一个体现就是提供独立的程序，各自做好自己的任务，然后组合起来
+完成更大的任务。不幸的是，许多编辑器不能很好地和其他程序一起工作，比如，
+你不能包Netscape的邮件编辑器换成其他编辑器。这样你只能使用那个不顺手的
+程序。另一个趋势是在编辑器里提供所有的功能，Emacs就是个代表（有人说
+Emacs其实是个操作系统，只是可以用来编辑文件）。
+
+Vim尽力和其他程序集成，但这需要经过斗争。目前Vim已经可以作为
+MS-Developer Studio和Sniff的编辑器。一些e-mail程序（比如Mutt）也支持外
+部编辑器。和Sun Workshop的集成工作正在进行中。总的来说这个领域还有待提
+高。将来我们会有一个大于其各部分总和的系统。
+
+文本结构化
+
+你可能经常会遇到有一些结构的文本，这些结构可能同于那些现有命令所支持的
+结构。这样你不得不利用那些底层的``砖头''创建你自己的宏和脚本。这里说明
+的就是这类更复杂的东西。
+
+有个简单的办法可以加速编辑-编译-修改这个循环。Vim提供 :make 命
+令，用于进行编译，并且获取错误输出，把你带到发生错误的地方进行修正。如
+果你使用了另一个编译器，那么错误就无法被Vim获得。如果不想自己动手，可
+以修改' errorformat'选项。告诉Vim错误是什么样子，以及如何从中获
+得文件名和行号。它支持复杂的gcc错误信息，所以应该也能支持其他编译器。
+
+有时处理一个新的文件类型只需要设置几个选项或写一些宏。比如，为了在man
+手册中进行跳转，你可以写一个宏获取光标下的词，清除缓冲区，然后读入新的
+man手册。这是简单而高效的参照(cross-reference)方法。
+
+使用三个基本步骤，你可以更有效地处理各种结构化文件。只需要想想你想对文
+件采取的操作，然后找到相应的命令去用就是了。就这么简单，你只要去做就成
+了。
+
+第三部分：磨刀
+
+养成习惯
+
+要学会开车必须下功夫。这是不是你只骑自行车的原因么？当然不是，你会发现
+你必须花时间来获得所需的技术。文本编辑也不例外。你需要学习新的命令，并
+使用它直至成为习惯。
+
+另一方面，你不应该试图学习编辑器提供的每个命令。这是彻底的浪费时间。大
+多数人只需要学习10%到20%的命令就足够工作了。但是每个人所需要的命令都
+各不相同。你需要不断学习，找出那些可以自动完成的重复操作。如果你只做一
+次操作，而且以后也不会再去做，那么就不需要进行优化。是如果你发现你在过
+去的一小时中重复了好几遍同样的操作，那么就有必要查看一下手册，看看能否
+更快速地完成。或者写一个宏来做。如果是是个不小的任务，比如对一类文本进
+行对齐，你需要阅读一下新闻组或看看Internet上是不是有人已经解决了同样的
+问题。
+
+最根本的步骤是最后的那一个。你可能能够找到一个重复性的任务，找到一个不
+错的作法，可过了一个周末就彻底忘了自己是怎么做的了。这不成。你必须重复
+你的作法直到烂熟于胸。只有这时你才真正获得了你需要的高效。一次不要学得
+太多。一次只试一些工作得很好的方法。对于那些不常用的技巧，你可能只需要
+把它记下来，留待以后查阅。总之，如果抱着这样的目标，你的编辑技能就会更
+加有效。
+
+最后需要指出的是，如果人们忽略了以上几点会发生什么：我仍然可以看到有人
+盯着屏幕看上半天，用两个指头敲几下，然后继续抬头看着屏幕，还抱怨自己太
+累.. 把十个指头都用上！这不光更快，还不累。每天抽出一个小时练习一下指
+法，只要几星期就足够了。
+
+后记
+
+书名得益于Stephen R. Covey所著的那本畅销书《高效人的七种习惯》(``The 7
+habits of highly effective people'')。
+
+关于作者
+
+Bram Moolenaar是Vim的主要作者。他编写了Vim核心功能，并采纳了许多开发者
+提供的代码。他的e-mail地址是：Bram@Moolenaar.net

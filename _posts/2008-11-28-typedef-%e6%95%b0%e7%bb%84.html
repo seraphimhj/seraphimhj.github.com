@@ -1,0 +1,143 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  dHlwZWRlZiDmlbDnu4Q=
+
+meta: 
+  _aioseop_description: !binary |
+    55CG6KejdHlwZWRlZiDmlbDnu4Q=
+
+  _aioseop_keywords: typedef
+  _edit_last: "1"
+  _aioseop_title: !binary |
+    dHlwZWRlZiDmlbDnu4Q=
+
+tags: 
+- c/c++
+- Technics
+- typedef
+published: true
+type: post
+---
+typedef到处都是，但是能够真正懂得typedef使用的不算太多。对于初学者而言，看别人的源码时对到处充斥的typedef往往不知所错，而参考书又很少，所以在此给出一个源码，供大家参考
+
+<!--more-->
+
+#define for if (0); else for
+
+#define dim(a) (sizeof(a)/sizeof(a[0]))
+
+enum {N1 = 2, N2 = 3, N3 = 4, N4 = 5};
+
+typedef int DataType;
+
+typedef DataType ARR1[N4];
+
+typedef ARR1 ARR2[N3];
+
+typedef ARR2 ARR3[N2];
+
+ARR1 a;
+
+ARR2 b;
+
+ARR3 c;
+
+void exam_1()
+
+{
+
+for (int i=0; i
+
+for (int i=0; i
+
+b[i][j] = (i+1)*10 + (j+1);
+
+for (int i=0; i
+
+for (int k=0; k
+
+printf("\nThe a is :\n");
+
+for (int i=0; i
+
+printf("\n");
+
+printf("\nThe b is :\n");
+
+for (int i=0; i
+
+{
+
+for (int j=0; j
+
+printf("\n");
+
+}
+
+printf("\nthe c is:\n");
+
+for (int i=0; i
+
+{
+
+for (int j=0; j
+
+{
+
+for (int k=0; k
+
+printf("\n");
+
+}
+
+printf("\n");
+
+}
+
+}
+
+void exam_2()
+
+{
+
+int *pn = NULL;
+
+pn = (int *)a;
+
+printf("\nThe a is :\n");
+
+for (int i=0; i
+
+printf("\n");
+
+pn = (int *)b;
+
+printf("\nThe b is :\n");
+
+for (int i=0; i
+
+printf("\n");
+
+pn = (int *)c;
+
+printf("\nThe c is :\n");
+
+for (int i=0; i
+
+printf("\n");
+
+}
+
+int main(int argc, char* argv[])
+
+{
+
+exam_1();
+
+exam_2();
+
+return 0;
+
+}

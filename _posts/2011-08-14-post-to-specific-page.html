@@ -1,0 +1,162 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  5Yip55So5qih5p2/5a6a5Yi2V29yZFByZXNz5Y+R6KGo5paH56ug6Iez5oyH
+  5a6a6aG16Z2i
+
+meta: 
+  _aioseop_keywords: wordpress, page, post, category
+  _aioseop_description: !binary |
+    5Yip55So5qih5p2/5a6a5Yi2V29yZFByZXNz77yM6Ieq5a6a5LmJ5bGe5oCn
+    5Z+f55qE5paH56ug77yM5Y+R6KGo5Zyo5oyH5a6a6aG16Z2i
+
+  _edit_last: "1"
+  _aioseop_title: !binary |
+    5Yip55So5qih5p2/5a6a5Yi2V29yZFByZXNz5Y+R6KGo5paH56ug6Iez54m5
+    5a6a6aG16Z2i
+
+tags: 
+- category
+- new page
+- Wordpress
+published: true
+type: post
+---
+<blockquote>在Wordpress的世界里，Post和Page是同级的，所以尽管你新建了页面（page），但是也做不到如首页那样集成显示多条文章（post）。</blockquote>
+本文借鉴<a title="wordpress官方帮助" href="http://codex.wordpress.org/Main_Page" target="_blank">Wordpress的官网</a>介绍的方法，利用新建模板的方法，将特定的Custom Field（这里主要是类别Category）显示在同一页面中，并移植到最新的主题twenty eleven中。 E文好的同学可以直接移步☞<a href="http://codex.wordpress.org/Pages#Examples_of_Pages_and_Templates">Examples of Pages and Templates</a>
+<!--more-->
+<h4>第一步：新建一个页面模板（Creating Your Own Page Templates）</h4>
+<blockquote>
+<ul>
+	<li>可以复制wordpress/wp-content/theme/themeXXX/index.php，名字可以随意取，我这里是cate-page.php</li>
+	<li>注意修改该文件的头部，这里指示该文件是一个页面模板，并会在页面可用模板中显示该名字。
+<code>&lt;?php
+/*
+Template Name: Category Template
+*/
+?&gt;</code></li>
+</ul>
+</blockquote>
+<h4>第二步：编辑模板文件</h4>
+下面是我的模板文件内容，如果怕麻烦可以直接填入，
+<pre lang="PHP" line="1" file="download.txt" colla="+">
+<?php
+/**
+* Template Name: Category Template
+*
+* This is the most generic template file in a WordPress theme
+* and one of the two required files for a theme (the other being style.css).
+* It is used to display a page when nothing more specific matches a query.
+* E.g., it puts together the home page when no home.php file exists.
+* Learn more: http://codex.wordpress.org/Template_Hierarchy
+*
+* @package WordPress
+* @subpackage Twenty_Eleven
+*/
+
+get_header(); ?>
+
+        <div id=”primary”>
+            <div id=”content” role=”main”>
+            <?php
+            // Get Page Category
+            if (is_page() ) {
+                $category = get_post_meta($posts[0]->ID, ‘category’, true);
+            }
+            if ($category) {
+                $cat = get_cat_ID($category);
+                $paged = (get_query_var(‘paged’)) ? get_query_var(‘paged’) : 1;
+                $post_per_page = 4; // -1 shows all posts
+                $do_not_show_stickies = 1; // 0 to show stickies
+                $args=array(
+                    ‘category__in’ => array($cat),
+                    ‘orderby’ => ‘date’,
+                    ‘order’ => ‘DESC’,
+                    ‘paged’ => $paged,
+                    ‘posts_per_page’ => $post_per_page,
+                    ‘caller_get_posts’ => $do_not_show_stickies
+                );
+                $temp = $wp_query;  // assign orginal query to temp variable for later use
+                $wp_query = null;
+                $wp_query = new WP_Query($args);
+
+                if ( $wp_query->have_posts() ) :
+
+                    twentyeleven_content_nav( ‘nav-above’ );
+
+                /* Start the Loop */
+                while ( $wp_query->have_posts()) : $wp_query->the_post();
+            ?>
+                <div <?php post_class() ?> id=”post-<?php the_ID(); ?>“>
+                    <h2><a href=”<?php the_permalink() ?>” rel=”bookmark” title=”Permanent Link to <?php the_title_attribute(); ?>“><?php the_title(); ?></a></h2>
+                    <small><?php the_time(‘F jS, Y’) ?> <!– by <?php the_author() ?> –></small>
+                    <div class=”entry”>
+                        <?php the_content(‘Read the rest of this entry ?0?3′); ?>
+                    </div>
+                    <p class=”postmetadata”><?php the_tags(‘Tags: ‘, ‘, ‘, ‘<br />’); ?> Posted in <?php the_category(‘, ‘) ?> | <?php edit_post_link(‘Edit’, ”, ‘ | ‘); ?>  <?php comments_popup_link(‘No Comments ?0?3′, ’1 Comment ?0?3′, ‘% Comments ?0?3′); ?></p>
+                </div>
+
+                <?php endwhile; ?>
+
+                <?php twentyeleven_content_nav( ‘nav-below’ ); ?>
+
+            <?php else : ?>
+
+                <article id=”post-0″ class=”post no-results not-found”>
+                    <header class=”entry-header”>
+                        <h1 class=”entry-title”><?php _e( ‘Nothing Found’, ‘twentyeleven’ ); ?></h1>
+                    </header><!– .entry-header –>
+
+                    <div class=”entry-content”>
+                        <p><?php _e( ‘Apologies, but no results were found for the requested archive. Perhaps searching will help find a related post.’, ‘twentyeleven’ ); ?></p>
+                       <?php get_search_form(); ?>
+                   </div><!– .entry-content –>
+               </article><!– #post-0 –>
+
+           <?php endif;
+           $wp_query = $temp;  //reset back to original query
+
+           }  // if ($category)
+           ?>
+
+       </div><!– #content –>
+   </div><!– #primary –>
+
+<?php get_sidebar(); ?>
+<?php get_footer(); ?>
+</pre>
+
+代码的原理相对比较简单，
+
+
+<blockquote><ul>
+	<li>获取该页面的类别Category属性（可以自定义，下面会有介绍）；</li>
+	<li>重新构造请求，遍历该类别下的所有文章Post，循环展现出来就是；</li>
+	<li>header，sidebar，footer默认就可以，也可以根据你的特定需求进行定制。</li>
+</ul></blockquote>
+
+
+<h4>第三步：创建新页面（Page）</h4>
+
+
+<blockquote><ul>
+	<li>默认情况下，wordpress 3.2.1是关闭了Custom Field开关的，所有首先要从Screen Option中打开这个开关。</li>
+	<li>输入新的Field，这里的Key只能是category（注意大小写），并设置value为你想要展现到该页面的文章（Post）</li>
+	<li>注意value必须与类别的字面对应，否则将什么都不出来</li>
+</ul></blockquote>
+
+
+<h4>第四步：创建该分类的文章（Post）</h4>
+
+
+<blockquote><ul>
+	<li>还记得刚刚在页面设置中输入的category value吧，将文章的Categories勾上刚刚设置的分类</li>
+</ul></blockquote>
+
+
+感谢你的耐心观看。如果一切顺利，这时你已经创建了新的模板，页面以及文章了。赶快打开新的页面看看吧，出现的是不是你想要的呢。这是<a title="读书笔记" href="http://huangjian.info/blog/notebooks/">阿剑创建的页面</a>。
+
+如果还有问题，可以在联系方式中找到我，会尽我所能的帮助你。
+
+最后，Enjoy Yourself！

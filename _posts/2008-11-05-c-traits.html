@@ -1,0 +1,81 @@
+--- 
+status: publish
+layout: post
+title: C++ Traits
+meta: 
+  _aioseop_keywords: C++ Traits
+  _aioseop_description: C++ Traits
+  _edit_last: "1"
+  _aioseop_title: C++ Traits
+tags: 
+- c/c++
+- Technics
+- traits
+- !binary |
+  5L+h5oGv5o+Q5Y+W
+
+published: true
+type: post
+---
+介绍Traits，先记下来再看
+Traits技术可以用来获得一个 类型 的相关信息的。 首先假如有以下一个泛型的迭代器类，其中类型参数 T 为迭代器所指向的类型：
+<span style="color: #0000ff;">
+template</span> &lt;<span style="color: #0000ff;">typename</span> T&gt;
+<span style="color: #0000ff;">class</span> myIterator
+{
+
+...
+};
+
+当我们使用myIterator时，怎样才能获知它所指向的元素的类型呢？我们可以为这个类加入一个内嵌类型，像这样：
+<span style="color: #0000ff;">template</span> &lt;<span style="color: #0000ff;">typename</span> T&gt;
+<span style="color: #0000ff;">class</span> myIterator
+{
+<span style="color: #0000ff;">typedef</span> T value_type;
+...
+};
+这样当我们使用myIterator类型时，可以通过 myIterator::value_type来获得相应的myIterator所指向的类型。
+
+现在我们来设计一个算法，使用这个信息。
+<span style="color: #0000ff;">template <span style="color: #000000;">&lt;typename T&gt;</span>
+typename</span> myIterator&lt;T&gt;::value_type Foo(myIterator&lt;T&gt; i)
+{
+...
+}
+这里我们定义了一个函数Foo，它的返回为为  参数i 所指向的类型，也就是T，那么我们为什么还要兴师动众的使用那个value_type呢？ 那是因为，当我们希望修改Foo函数，使它能够适应所有类型的迭代器时，我们可以这样写：
+<span style="color: #0000ff;">template</span> <span style="color: #000000;">&lt;typename I&gt;</span> <span style="color: #008000;">//这里的I可以是任意类型的迭代器
+</span><span style="color: #0000ff;">typename</span> I::value_type Foo(I i)
+{
+...
+}
+现在，任意定义了 value_type内嵌类型的迭代器都可以做为Foo的参数了，并且Foo的返回值的类型将与相应迭代器所指的元素的类型一致。至此一切问题似乎都已解决，我们并没有使用任何特殊的技术。然而当考虑到以下情况时，新的问题便显现出来了：
+
+原生指针也完全可以做为迭代器来使用，然而我们显然没有办法为原生指针添加一个value_type的内嵌类型，如此一来我们的Foo()函数就不能适用原生指针了，这不能不说是一大缺憾。那么有什么办法可以解决这个问题呢？ 此时便是我们的主角：类型信息榨取机 Traits 登场的时候了
+
+....drum roll......
+
+我们可以不直接使用myIterator的value_type，而是通过另一个类来把这个信息提取出来：
+<span style="color: #0000ff;">template</span> &lt;<span style="color: #0000ff;">typename</span> T&gt;
+class Traits
+{
+<span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">typename</span> T::value_type value_type;
+};
+这样，我们可以通过 Traits&lt;myIterator&gt;::value_type 来获得myIterator的value_type，于是我们把Foo函数改写成：
+<span style="color: #0000ff;">template</span> <span style="color: #000000;">&lt;typename I&gt;</span> <span style="color: #008000;">//这里的I可以是任意类型的迭代器
+</span><span style="color: #0000ff;">typename</span> Traits&lt;I&gt;::value_type Foo(I i)
+{
+...
+}
+然而，即使这样，那个原生指针的问题仍然没有解决，因为Trait类一样没办法获得原生指针的相关信息。于是我们祭出C++的又一件利器--偏特化(partial specialization)：
+<span style="color: #0000ff;">template</span> &lt;<span style="color: #0000ff;">typename</span> T&gt;
+class Traits&lt;T*&gt; <span style="color: #008000;">//注意 这里针对原生指针进行了偏特化
+</span>{
+<span style="color: #0000ff;">typedef</span> <span style="color: #0000ff;">typename</span> T value_type;
+};
+通过上面这个 Traits的偏特化版本，我们陈述了这样一个事实：一个 T* 类型的指针所指向的元素的类型为 T。
+
+如此一来，我们的 Foo函数就完全可以适用于原生指针了。比如：
+<span style="color: #0000ff;">int</span> * p;
+....
+<span style="color: #0000ff;">int</span> i = Foo(p);
+Traits会自动推导出 p 所指元素的类型为 int，从而Foo正确返回。

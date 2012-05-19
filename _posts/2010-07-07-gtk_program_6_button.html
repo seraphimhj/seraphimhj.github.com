@@ -1,0 +1,75 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  5aSn5a625LiA6LW355SoZ3Rr57yW56iLNg==
+
+meta: 
+  _jd_wp_twitter: "Post Edited: \xE5\xA4\xA7\xE5\xAE\xB6\xE4\xB8\x80\xE8\xB5\xB7\xE7\x94\xA8gtk\xE7\xBC\x96\xE7\xA8\x8B6 http://huangjian.info/195/gtk_program_6_button/"
+  _wp_jd_bitly: ""
+  _wp_jd_clig: ""
+  _wp_jd_wp: http://huangjian.info/195/gtk_program_6_button/
+  _edit_last: "1"
+  _wp_old_slug: ""
+  _wp_jd_yourls: ""
+  _wp_jd_target: http://huangjian.info/195/gtk_program_6_button/
+  _jd_post_meta_fixed: "true"
+  _wp_jd_url: ""
+  _jd_twitter: ""
+  _jd_tweet_this: "yes"
+tags: 
+- gtk
+- Program
+- Technics
+published: true
+type: post
+---
+<ul>
+	<li>8、按钮/单选/复选组件</li>
+</ul>
+<p align="left">我们这里将介绍几种按钮的使用方法，有些东西可能并不认为它是按钮，比如单选框和复选框，但是这些控件确实有相似的属性，因此gtk将它们归为一类，并将“标准按钮”作为基类，其它按钮都派生自该类型，下图即为整个继承体系：</p>
+<p align="left"><!--more--></p>
+
+<div align="center">
+<table width="80%" border="1" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">  GObject</p>
+<p align="left">   +----GInitiallyUnowned</p>
+<p align="left">         +----GtkObject</p>
+<p align="left">               +----GtkWidget</p>
+<p align="left">                     +----GtkContainer</p>
+<p align="left">                           +----GtkBin</p>
+<p align="left">                                 +----GtkButton</p>
+<p align="left">                                       +----GtkToggleButton</p>
+<p align="left">                                            +----GtkCheckButton</p>
+<p align="left">                                                 +---GtkRadioButton</p>
+<p align="left">                                       +----GtkColorButton</p>
+<p align="left">                                       +----GtkFontButton</p>
+<p align="left">                                       +----GtkOptionMenu</p>
+<p align="left">简单注释：</p>
+<p align="left">1）GObject 为整为继承树的树根，它在 glib 库中定义</p>
+<p align="left">2）GInitiallyUnowned 实际中并不使用</p>
+<p align="left">3）GtkObject 是gtk对象库的基类，不常用</p>
+<p align="left">4）GtkWidget 是 gtk 编程中最常用的一个组件，基本上所有界面相关组件都继承自它</p>
+<p align="left">5）GtkContainer 是所有”容器“类的基类，继承自该类的组件都可以在自己的内部再放</p>
+<p align="left">入其它组件，如”窗口“组件，”盒子“组件和”按钮“组件”等</p>
+<p align="left">6）GtkBin 是这样一个组件，它本身并不直接使用，而所有继承自它的组件都只能在自己</p>
+<p align="left">内部放入一个其它组件，如“窗口”，“按钮”等，但不包括“盒子”和“表格”组件，因为在它</p>
+<p align="left">们内部可以放入多个组件而不需要其它组件配合</p>
+<p align="left">7）GtkButton 是所有与“按钮”功能相关组件的组件</p>
+<p align="left">8）GtkToggleButton 是一种能记忆自己当前状态的按钮，如“单选”及“复选”按钮</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p align="left">1）无记忆及有记忆的按钮</p>
+
+<ul>
+	<li>有记忆按钮：它能记忆自己前一次的状态，比如有一种按钮，当被按下后，就保持按下的形状，再按一次就恢复到正常形状，如此循环；实际代码中，一般需要查询按钮的前一次状态</li>
+	<li>无记忆按钮：即普通的按钮，每次被触发都执行相同的流程</li>
+</ul>
+<p align="left">未完待续 … (9.27)</p>
+&nbsp;

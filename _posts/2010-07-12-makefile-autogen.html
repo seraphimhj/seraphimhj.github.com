@@ -1,0 +1,295 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  566A5Y2V5bel56iLTWFrZWZpbGXnmoToh6rliqjnlJ/miJA=
+
+meta: 
+  _jd_wp_twitter: "Post Edited: \xE7\xAE\x80\xE5\x8D\x95\xE5\xB7\xA5\xE7\xA8\x8BMakefile\xE7\x9A\x84\xE8\x87\xAA\xE5\x8A\xA8\xE7\x94\x9F\xE6\x88\x90 http://huangjian.info/228/makefile-autogen/"
+  _wp_jd_bitly: ""
+  _wp_jd_clig: ""
+  _wp_jd_wp: http://huangjian.info/228/makefile-autogen/
+  _wp_old_slug: "%e7%ae%80%e5%8d%95%e5%b7%a5%e7%a8%8bmakefile%e7%9a%84%e8%87%aa%e5%8a%a8%e7%94%9f%e6%88%90"
+  _edit_last: "1"
+  _wp_jd_yourls: ""
+  _wp_jd_target: http://huangjian.info/228/makefile-autogen/
+  _jd_post_meta_fixed: "true"
+  _wp_jd_url: ""
+  _jd_twitter: ""
+  _jd_tweet_this: "yes"
+tags: 
+- enginer
+- makefile
+- Technics
+published: true
+type: post
+---
+工程Makefile的编写，可以自己动手来写，也可以使用automake等工具来自动生成。下面还是以sort工程为例，对自动生成Makefle进行示例说明。
+
+预备知识:
+
+运用GNU Autoconf 及 Automake 这两套工具，可以自动生成Makefile文件，并且让开发出来的软件可以像大多数源码包那样，只需"./configure", "make","make install" 就可以把程序安装到系统中。
+
+autoconf是一个用于生成可以自动地配置软件源码包，用以适应多种UNIX类系统的shell脚本工具，其中autoconf需要用到 m4，便于生成脚本。
+
+<!--more-->
+
+automake是一个从Makefile.am文件自动生成Makefile.in的工具。为了生成 Makefile.in， automake还需用到perl。
+
+工程sort，Makefile的生成，需要以下几步：
+
+1) 运行autoscan命令
+
+2) 将configure.scan 更名为configure.in，并修改configure.in文件
+
+3) 在sort根目录下新建Makefile.am文件，并在各个模块子目录下也新建makefile.am文件
+
+4) 在sort根目录下新建NEWS、 README、 ChangeLog 、AUTHORS文件
+
+5) 运行aclocal命令
+
+6) 运行autoconf命令
+
+7) 运行automake -a命令
+
+8) 运行./confiugre,生成Makefile
+
+准备工作：
+
+安装automake。自动生成Makefile，需要编译环境安装有autoconf和automake，若没有安装，在ubuntu下可以这样来安装：
+
+root@mygirl:/study/sort# apt-get install automake
+
+源文件：
+
+本例工程，实现几种排序算法的具体代码实现和性能比较。工程原始文件结构如下：
+
+sort
+
+|-- main
+
+|   |-- include
+
+|   |   |-- heap_sort.h
+
+|   |   |-- quick_sort.h
+
+|   |   `-- shell_sort.h
+
+|   |-- libs
+
+|   `-- src
+
+|       `-- sort.c
+
+|-- heap_sort
+
+|   |-- include
+
+|   `-- src
+
+|       `-- heap_sort.c
+
+|-- quick_sort
+
+|   |-- include
+
+|   `-- src
+
+|       `-- quick_sort.c
+
+`-- shell_sort
+
+|-- include
+
+`-- src
+
+`-- shell_sort.c
+
+Let's do it！
+
+首先进入sort根目录，状态如下：
+
+root@mygirl:/study/sort# ls
+
+heap_sort main quick_sort shell_sort
+
+运行autoscan
+
+root@mygirl:/study/sort# autoscan
+
+root@mygirl:/study/sort# ls
+
+autoscan.log configure.scan heap_sort main quick_sort shell_sort
+
+可以看到，文件夹下多出了两个文件:autoscan.log,configure.scan。之后，我们需要将configure.scan更名为configure.in，并进行更改：
+
+root@mygirl:/study/sort# mv configure.scan configure.in root@mygirl:/study/sort# vim configrue.in
+
+更改后的文件，内容如下：
+
+#                                               -*- Autoconf -*-
+
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.61)
+
+AC_INIT(sort, 1.0, jiangpeifu@gmail.com)
+
+AC_CONFIG_SRCDIR([heap_sort/src/heap_sort.c])
+
+AC_CONFIG_HEADER([config.h])
+
+AM_INIT_AUTOMAKE(sort,1.0)
+
+# Checks for programs.
+
+AC_PROG_CC
+
+# Checks for libraries.
+
+AC_PROG_RANLIB+=RANLIB
+
+# Checks for header files.
+
+AC_HEADER_STDC
+
+AC_CHECK_HEADERS([stdlib.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+
+AC_HEADER_TIME
+
+# Checks for library functions.
+
+AC_CHECK_FUNCS([gettimeofday])
+
+AC_OUTPUT([Makefile
+
+heap_sort/Makefile
+
+quick_sort/Makefile
+
+shell_sort/Makefile
+
+main/Makefile
+
+])
+
+文件中，红色的为改动的内容。
+
+在根目录下添加Makefile.am 文件：
+
+root@mygirl:/study/sort# vim Makefile.am
+
+Makefile.am的内容如下：
+
+SUBDIRS=quick_sort heap_sort shell_sort main
+
+INCLUDES=-I./include
+
+export INCLUDES
+
+在main目录下添加Makefile.am 文件：
+
+root@mygirl:/study/sort# cd main
+
+root@mygirl:/study/sort/main# vim Makefile.am
+
+Makefile.am的内容如下：
+
+noinst_PROGRAMS=sort
+
+INCLUDES=-I./include
+
+sort_SOURCES=./src/sort.c
+
+sort_LDADD=$(top_srcdir)/heap_sort/libheap_sort.a \
+
+$(top_srcdir)/shell_sort/libshell_sort.a \
+
+$(top_srcdir)/quick_sort/libquick_sort.a
+
+在heap_sort目录下添加Makefile.am 文件：
+
+root@mygirl:/study/sort# cd heap_sort
+
+root@mygirl:/study/sort/heap_sort# vim Makefile.am
+
+Makefile.am的内容如下：
+
+INCLUDES=-I./include
+
+noinst_LIBRARIES=libheap_sort.a
+
+libheap_sort_a_SOURCES=./src/heap_sort.c
+
+在quick_sort目录下添加Makefile.am 文件：
+
+root@mygirl:/study/sort# cd quick_sort
+
+root@mygirl:/study/sort/quick_sort# vim Makefile.am
+
+Makefile.am的内容如下：
+
+INCLUDES=-I./include
+
+noinst_LIBRARIES=libquick_sort.a
+
+libquick_sort_a_SOURCES=./src/quick_sort.c
+
+在shell_sort目录下添加Makefile.am 文件：
+
+root@mygirl:/study/sort# cd shell_sort
+
+root@mygirl:/study/sort/shell_sort# vim Makefile.am
+
+Makefile.am的内容如下：
+
+INCLUDES=-I./include
+
+noinst_LIBRARIES=libshell_sort.a
+
+libshell_sort_a_SOURCES=./src/shell_sort.c
+
+在根目录下添加如下文件：NEWS，README，ChangeLog，AUTHORS，config.h.in：
+
+root@mygirl:/study/sort# touch NEWS README ChangeLog AUTHORS config.h.in
+
+这些文件的内容可以自己编写，我们这里文件内容均为空。
+
+运行aclocal，和autoconf命令：
+
+root@mygirl:/study/sort# aclocal
+
+root@mygirl:/study/sort# autoconf
+
+运行automake -a：
+
+root@mygirl:/study/sort# automake -a
+
+root@mygirl:/study/sort# ls
+
+aclocal.m4 autom4te.cache ChangeLog    configure     COPYING heap_sort install-sh Makefile.am missing quick_sort shell_sort
+
+AUTHORS     autoscan.log    config.h.in configure.in depcomp INSTALL    main        Makefile.in NEWS     README
+
+看到，根目录下多生成文件Makefile.in。在子模块main等目录下也生成了Makefile.in。
+
+运行./configure:
+
+root@mygirl:/study/sort# ./configure
+
+root@mygirl:/study/sort# ls
+
+aclocal.m4      autoscan.log config.h.in    configure     depcomp    install-sh Makefile.am NEWS        shell_sort
+
+AUTHORS         ChangeLog     config.log     configure.in heap_sort main        Makefile.in quick_sort stamp-h1
+
+autom4te.cache config.h      config.status COPYING       INSTALL    Makefile    missing      README
+
+这样就生成了工程sort的Makefile。
+
+在根目录下运行make，可以编译工程；运行make install可以安装编译的文件；运行make dist，可以生成源码压缩包。
+
+至此一切OK！！

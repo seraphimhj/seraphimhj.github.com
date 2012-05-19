@@ -1,0 +1,161 @@
+--- 
+status: publish
+layout: post
+title: fgets and fscanf
+meta: 
+  _jd_wp_twitter: "Post Edited: fgets and fscanf http://huangjian.info/140/fgets-and-fscanf/"
+  _wp_jd_bitly: ""
+  _wp_jd_clig: ""
+  _wp_jd_wp: http://huangjian.info/140/fgets-and-fscanf/
+  _edit_last: "1"
+  _wp_jd_yourls: ""
+  _jd_post_meta_fixed: "true"
+  _wp_jd_target: http://huangjian.info/140/fgets-and-fscanf/
+  _wp_jd_url: ""
+  _jd_twitter: ""
+  _jd_tweet_this: "yes"
+tags: 
+- c/c++
+- fgets
+- fscanf
+- Technics
+published: true
+type: post
+---
+fgets函数用来从文件中读入字符串。
+
+fgets函数的调用形式如下：fgets（str，n，fp）；此处，fp是文件指针；str是存放在字符串的起始地址；n是一个int类型变量。函数的功能是从fp所指文件中读入n-1个字符放入str为起始地址的空间内；如果在未读满n-1个字符之时，已读到一个换行符或一个EOF（文件结束标志），则结束本次读操作，读入的字符串中最后包含读到的换行符。因此，确切地说，调用fgets函数时，最多只能读入 n-1个字符。读入结束后，系统将自动在最后加'\0'，并以str作为函数值返回。
+
+<!--more-->
+
+注意：fgets()用来从参数stream所指的文件内读入字符并存到参数s所指的内存空间，直到出现换行字符、读到文件尾或是已读了n-1个字符为止，最后会加上NULL作为字符串结束。
+
+关于fscanf
+<pre>    #include &lt;cstdio&gt;
+    int fscanf( FILE *stream, const char *format, ... );</pre>
+The function fscanf() reads data from the given file stream in a manner exactly like scanf(). The return value of fscanf() is the number of variables that are actually assigned values, or <acronym title="End of file">EOF</acronym> if no assignments could be made.
+
+<strong>fgets 函数的使用</strong>
+
+fgets 既可以读文件，又可以读标准输入，而且可以防止溢出。但是它只能输入字符串(且能读到回车符\n)，故而用scanf语句的较多。scanf语句可以输入各种格式的数据，其功能较为强大。
+
+fgets 的使用方法：char *fgets(char *string, int n, FILE *stream)
+
+从文件stream中读取n-1个字符/一行（若一行不满n-1个），string接收字符串
+
+如果n &lt;= 0，返回NULL
+
+如果n == 1，返回" "，也就是一个空串
+
+如果成功，返回值等于string， 也就是获得字符串的首地址
+
+如果出错，或者读到FILE的结尾，返回NULL
+
+//通过while循环一行行取，读到文件末尾就是NULL了 ----读取整个文件
+#include
+
+void main( void )
+{
+FILE *stream;
+char line[100];
+
+if( (stream = fopen( "file.txt", "r" )) != NULL )
+{
+while( fgets( line, 100, stream ) != NULL)
+printf( "%s", line);
+fclose( stream );
+}
+}
+
+以下是fgets这个函数的实现：
+
+/***
+*fgets.c - get string from a file
+*
+* Copyright (c) Microsoft Corporation. All rights reserved.
+*
+*Purpose:
+* defines fgets() - read a string from a file
+*
+*******************************************************************************/
+
+#include
+#include
+#include
+#include
+#include
+#include
+#include
+
+/***
+*char *fgets(string, count, stream) - input string from a stream
+*
+*Purpose:
+* get a string, up to count-1 chars or '\n', whichever comes first,
+* append '\0' and put the whole thing into string. the '\n' IS included
+* in the string. if count&lt;=1 no input is requested. if EOF is found
+* immediately, return NULL. if EOF found after chars read, let EOF
+* finish the string as '\n' would.
+*
+*Entry:
+* char *string - pointer to place to store string
+* int count - max characters to place at string (include \0)
+* FILE *stream - stream to read from
+*
+*Exit:
+* returns string with text read from file in it.
+* if count &lt;= 0 return NULL * if count == 1 put null string in string * returns NULL if error or end-of-file found immediately * *Exceptions: * *******************************************************************************/ _TSCHAR * __cdecl _fgetts ( _TSCHAR *string, int count, FILE *str ) { REG1 FILE *stream; REG2 _TSCHAR *pointer = string; _TSCHAR *retval = string; int ch; _VALIDATE_RETURN(( string != NULL ) || ( count == 0 ), EINVAL, NULL); _VALIDATE_RETURN(( count &gt;= 0 ), EINVAL, NULL);
+_VALIDATE_RETURN(( str != NULL ), EINVAL, NULL);
+
+if (count == 0)
+{
+return NULL;
+}
+
+/* The C Standard states the input buffer should remain
+unchanged if EOF is encountered immediately. Hence we
+do not blank out the input buffer here */
+
+/* Init stream pointer */
+stream = str;
+
+_lock_str(stream);
+__try {
+
+#ifndef _UNICODE
+_VALIDATE_STREAM_ANSI_SETRET(stream, EINVAL, retval, NULL);
+#endif /* _UNICODE */
+if(retval!=NULL)
+{
+while (--count)
+{
+if ((ch = _fgettc_nolock(stream)) == _TEOF)
+{
+if (pointer == string) {
+retval=NULL;
+goto done;
+}
+
+break;
+}
+
+if ((*pointer++ = (_TSCHAR)ch) == _T('\n'))
+break;
+}
+*pointer = _T('\0');
+}
+
+/* Common return */
+done:
+
+; }
+__finally {
+_unlock_str(stream);
+}
+
+return(retval);
+}
+
+-----------------------------------------------------------------------------------------------------------------
+
+另： fgetc 和 getchar 是一个一个字符的读取，
