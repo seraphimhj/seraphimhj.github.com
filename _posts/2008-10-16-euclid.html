@@ -34,158 +34,158 @@ tags:
 published: true
 type: post
 ---
-<div id="blog_text">
-
-<strong>//朴素欧几里德</strong>
-
-function gcd(a,b:integer):integer;
-begin
-if b=0 then gcd:=a
-else gcd:=gcd(b,a mod b);
-end;
-
-<strong>扩展欧几里德定理</strong> 对于与不完全为0的非负整数a，b，gcd（a，b）表示a，b的最大公约数。那么存在整数x，y使得gcd（a，b）=ax+by。
-
-<!--more-->
-
-可以将其理解成一个限定整数根的不定方程，x,y必然存在且<strong>不一定唯一</strong>。这个定理可以求出其中一组解。
-
-求解x，y的方法的理解
-我们不妨设a&gt;b。
-1，显然当b=0，gcd（a，b）=a。此时x=1，y=0；
-2，ab&lt;&gt;0时
-设ax1+by1=gcd(a,b);
-bx2+(a mod b)y2=gcd(b,a mod b);
-根据朴素欧几里德原理有gcd(a,b)=gcd(b,a mod b);
-则:ax1+by1=bx2+(a mod b)y2;
-
-即:ax1+by1=bx2+(a-(a div b)*b)y2=ay2+bx2-(a div b)*by2;
-根据恒等定理得：x1=y2; y1=x2-(a div b)*y2;
-这样我们就得到了求解x1,y1的方法：x1，y1的值基于x2，y2.如此递归下去即得其解。
-
-显然，它与朴素欧几里得算法有同等的复杂度。但它同时求出了x,y。
-
-<strong>//扩展欧几里德算法</strong>
-
-procedure extended_gcd(a,b:integer);
-var
-ypie:integer;
-begin
-if b=0 then
-begin
-x:=1; y:=0;
-end
-else
-begin
-extended_gcd(b,a mod b);
-ypie:=y;
-y:=x-(a div b)*y;
-x:=ypie;
-end;
-end;
-
-//注意：x,y为全局变量，对它们的处理是压栈式的
-
-费马小定理
-(1)p为素数, 则p|(a^p - a)
-(2)p为素数，gcd(a, p) = 1, 则 p|(a^(p-1)-1)
-<div>证明：
-对于(2)，p是素数，a是整数且gcd(a,p)=1即他们的最大公约数是1。
-由于a, 2a, 3a, ……，(p-1)a 模p的余数都不相同。
-否则若(i*a) mod p=(j*a) mod p
-其中 1 =&lt; i &lt; j &lt;= p-1 则p|(j-i)*a, 而gcd(a,p)=1,
-那么p|(j - i),这是不可能的，所以a, 2a, 3a, ……, (p-1)a对p的余数
-取遍1，2，……p-1。
-所以a*2a*3a*4a*……*(p-1)a对p的余数等于1*2*……(p-1)对p的余数。
-这是由于性质：a mod p = x, b mod p = y, 那么(a*b) mod p = (x*y) mod p。
-1*2*……(p-1)*a^(p-1) mod p = (p-1)! mod p
-((a^(p-1) - 1)*(p-1)! + (p-1)!)mod p = (p-1)! mod p
-则(a^(p-1) - 1)*(p-1)! mod p = 0
-由于p是素数，gcd(p, (p-1)!)=1
-所以a^(p-1) - 1 mod p = 0
-就是 p|(a^(p-1) - 1)。因此(2)得证。
-对于(1) 若gcd(a,p) ≠ 1,那么由于p是素数必然p|a 因此p|a*(a^(p - 1) - 1)显然得证。
-如果gcd(a,p) = 1, 则由(2)得p|(a^(p-1)-1)因此因此p|(a^(p - 1) - 1)*a显然得证。</div>
-<div>欧拉函数是指：对于一个正整数n，小于n且和n互质的正整数的个数，记做：φ(n)
-欧拉定理：gcd(a, n) = 1，则a^φ(n) ≡ 1 mod n
-对于互质的整数a和n，有a^φ(n) ≡ 1 mod n
-证明：
-首先证明下面这个命题：
-对于集合Z = {X1,X2,...,Xφ(n)}，Xi为第i个小于n且和n互质的正整数
-考虑集合
-S = {aX1 mod n,aX2 mod n,...,aXφ(n) mod n}
-则S = Z
-证明:
-a, n互质，Xi与n互质，那么aXi与n互质
-对于Z中两个元素Xi和Xj，如果Xi ≠ Xj
-则aXi mod n ≠ aXj mod n，若aXi mod n = aXj mod n，
-那么a(Xi - Xj) mod n = 0, a, n互质那么Xi - Xj mod n = 0 由于</div>
-<div>0 &lt; Xi, Xj &lt; n显然不可能。因此S中的元素各不相同，这样S中含有φ(n)个与n互</div>
-<div>质的正整数，且满足每个元素小于n所以，很明显，S = Z</div>
-<div>既然这样，那么
-(aX1 × aX2×...×aXφ(n))mod n
-= (aX1 mod n × aX2 mod n × ... × aXφ(n) mod n)mod n
-= (x1 × x2 × ... × xφ(n))mod n
-考虑上面等式左边和右边
-最左边等于(a^φ(n) × (x1 × x2 × ... × xφ(n)) mod n
-最右边等于(x1 × x2 × ... × xφ(n))mod n
-得到(a^φ(n) - 1)(x1 × x2 × ... × xφ(n)) mod n = 0
-而(x1 × x2 × ... × xφ(n))mod n 和 n互质,所以 a^φ(n) ≡ 1 mod n</div>
-<div>推论：当n为素数时，φ(n) = n - 1, a^(n - 1) - 1 mod n = 0 就是费马小定理(2)</div>
-<div>模p乘法逆元
-对于整数a、p，如果存在整数b，满足a*b mod p =1，则说，b是a的模p乘法逆元。</div>
-<div>定理：a存在模p的乘法逆元的充要条件是gcd(a,p) = 1</div>
-<div>证明：
-首先证明充分性
-如果gcd(a,p) = 1，根据欧拉定理，a^φ(p) ≡ 1 mod p，因此
-显然a^(φ(p)-1) 是a的模p乘法逆元。</div>
-<div>
-
-再证明必要性
-假设存在a模p的乘法逆元为b， a*b ≡ 1 mod p
-则a*b = k*p + 1，所以1 = a*b - k*p
-因为gcd(a,p) = d
-所以d | 1
-所以d只能为1
-
-<span style="font-size: x-small;"><strong>Problem A：Euclid's Game（欧几里德游戏）</strong></span>
-
-<strong>题目的大意为：</strong>在一块板上一开始写有两个不相等的正整数。两个玩家交替写数字，每一 次，当前玩家都必须在板上写出任意两个板上数字的差，而且这个数字必须是新的，也就是说，不能与板上任何一个已有的数字相同。当玩家再也写不出新数字时， 他就输了。假设有A、B两个玩家，A先写，B后写。对于给定的两个数字，写程序判断是 A赢还是B赢。
-
-<strong> 提示：</strong>A赢还是B赢的关键是找出能写在板上的数字的个数，如果是奇数个数字可写，则A赢，如果是偶数个，则B赢。 能写在板上的数字个数刚好可以用欧几里德算法（GCD）得到，假设开始数板上的两个数字为M和N，且M&gt;N，则能写在板上的数字个 数=M/GCD(M,N)，因此，只需要判断该数字的奇数还是偶数即可。（算法略）
-
-N,2N的话转化为1,2的情况,根据算法后行动 N,3N转化为1,3的情况,根据算法先行动 5N,7N转化为5,7的情况,先行动,依次为2,3,1,4,6 互质则根据Max(A,B)奇偶判断.. 暂时还没找到反例
-
-<span style="font-size: small;">分析:这类题目同上面发的题目有类似的地方,均无 算法可直接套,需发现潜在规律,不防弄几个数小的试试.我例举几对数:13和3,15和12,大家不防将这两对数所能产生的数全写出来,这样会发现一个规 律,15和12所产生的数为3,6,9,12,15,共5个数,而且都为3的整数倍,可以发现15和12有个最大公约数3,其实这就是1个条件,即所两数 A,B之间存在最大公约数X(X&gt;1),那么中间所有数为{x,2x,...,max{A,B}};再看13和3,和上面类比,这对数最大公约数为 1,那么相减过程必定会产生1,通过1即能产生从1到max(A,B)之间所有连续的整数,所以该过程产生的所有数为 {1,2,...,max{A,B}};到这里两种条件均出来了,对于第一种情况元素个数为max{A,B}/X,后一种为max{A,B}/1,那么只 需要再两种不同情况下分别考虑产生的元素个数奇偶即可</span>
-
-<strong><span style="font-size: x-small;">Problem B：Locker doors（带锁的门）</span></strong>
-
-<strong>题目大意：</strong>在走廊上有n个带锁的门，从1到n依次编号。最初所有的门都是关着的。我们从门前经过n次，每一次都从1号门开始。在第i次经过时（i=1,2,..., n）我们改变i的整数倍号锁的状态：也就是如果门是关的，就打开它；如果门是打开的，就关上它。举例来说，第一次经过后，所有的门都是打开的；第二次经过后，偶数门是关着的，奇数门是开着的；以此类推，在最后一次经过后，有多少门是开着的。
-
-<strong>提示：</strong>门的状态只有两种，没经过一次，状态就会发生变化。如果一道门经过奇数次，那么结果状态和原始状态就会不一样， 而经过偶数次则不会发生变化。因此问题的关键就是找出那些经过奇数次的门有多少道。很幸运，那些门的编号正好是整数i的完全平方数即 1，4，9，16，...，因此只需要找出这样的数字有多少个即可。（算法略）
-
-<strong><span style="font-size: x-small;">Problem C：Euclidean algorithm for GCD（求最大公约数的欧几里德算法）</span></strong>
-
-<strong>题目大意：</strong>根据所给的两个正整数，用欧几里德算法求出它们的最大公约数。
-
-<strong>提示：</strong>最大公约数的欧几里德算法为GCD(m,n)=GCD(n,m mod n)，使用该式子就可以得到最大公约数。（算法见教材）
-
-<strong><span style="font-size: x-small;">Problem D：Fibonacci number(Recusion)（费伯拉契数列）</span></strong>
-
-<strong>题目大意：</strong>求所给整数的费伯拉契数列值。
-
-<strong>提示：</strong>根据费伯拉契数列的定义，使用递归解决。（算法略）
-
-<strong><span style="font-size: x-small;">Problem E：串匹配</span></strong>
-
-<strong>提示：</strong>使用蛮力法解决。（算法见教材）
-
-<strong><span style="font-size: x-small;">Problem F：Polynomial calculate（计算多项式的值）</span></strong>
-
-<strong>题目大意：</strong>根据所给的参数，计算多项式的值。
-
-提示：在计算多项式值的过程中，关键的是计算出X^i的值，可以写以函数来专门解决这一问题。另外也可采用递归来计算多项式的值，式子如下：
-
-</div>
-</div>
+<div id="blog_text"></br>
+</br>
+<strong>//朴素欧几里德</strong></br>
+</br>
+function gcd(a,b:integer):integer;</br>
+begin</br>
+if b=0 then gcd:=a</br>
+else gcd:=gcd(b,a mod b);</br>
+end;</br>
+</br>
+<strong>扩展欧几里德定理</strong> 对于与不完全为0的非负整数a，b，gcd（a，b）表示a，b的最大公约数。那么存在整数x，y使得gcd（a，b）=ax+by。</br>
+</br>
+<!--more--></br>
+</br>
+可以将其理解成一个限定整数根的不定方程，x,y必然存在且<strong>不一定唯一</strong>。这个定理可以求出其中一组解。</br>
+</br>
+求解x，y的方法的理解</br>
+我们不妨设a&gt;b。</br>
+1，显然当b=0，gcd（a，b）=a。此时x=1，y=0；</br>
+2，ab&lt;&gt;0时</br>
+设ax1+by1=gcd(a,b);</br>
+bx2+(a mod b)y2=gcd(b,a mod b);</br>
+根据朴素欧几里德原理有gcd(a,b)=gcd(b,a mod b);</br>
+则:ax1+by1=bx2+(a mod b)y2;</br>
+</br>
+即:ax1+by1=bx2+(a-(a div b)*b)y2=ay2+bx2-(a div b)*by2;</br>
+根据恒等定理得：x1=y2; y1=x2-(a div b)*y2;</br>
+这样我们就得到了求解x1,y1的方法：x1，y1的值基于x2，y2.如此递归下去即得其解。</br>
+</br>
+显然，它与朴素欧几里得算法有同等的复杂度。但它同时求出了x,y。</br>
+</br>
+<strong>//扩展欧几里德算法</strong></br>
+</br>
+procedure extended_gcd(a,b:integer);</br>
+var</br>
+ypie:integer;</br>
+begin</br>
+if b=0 then</br>
+begin</br>
+x:=1; y:=0;</br>
+end</br>
+else</br>
+begin</br>
+extended_gcd(b,a mod b);</br>
+ypie:=y;</br>
+y:=x-(a div b)*y;</br>
+x:=ypie;</br>
+end;</br>
+end;</br>
+</br>
+//注意：x,y为全局变量，对它们的处理是压栈式的</br>
+</br>
+费马小定理</br>
+(1)p为素数, 则p|(a^p - a)</br>
+(2)p为素数，gcd(a, p) = 1, 则 p|(a^(p-1)-1)</br>
+<div>证明：</br>
+对于(2)，p是素数，a是整数且gcd(a,p)=1即他们的最大公约数是1。</br>
+由于a, 2a, 3a, ……，(p-1)a 模p的余数都不相同。</br>
+否则若(i*a) mod p=(j*a) mod p</br>
+其中 1 =&lt; i &lt; j &lt;= p-1 则p|(j-i)*a, 而gcd(a,p)=1,</br>
+那么p|(j - i),这是不可能的，所以a, 2a, 3a, ……, (p-1)a对p的余数</br>
+取遍1，2，……p-1。</br>
+所以a*2a*3a*4a*……*(p-1)a对p的余数等于1*2*……(p-1)对p的余数。</br>
+这是由于性质：a mod p = x, b mod p = y, 那么(a*b) mod p = (x*y) mod p。</br>
+1*2*……(p-1)*a^(p-1) mod p = (p-1)! mod p</br>
+((a^(p-1) - 1)*(p-1)! + (p-1)!)mod p = (p-1)! mod p</br>
+则(a^(p-1) - 1)*(p-1)! mod p = 0</br>
+由于p是素数，gcd(p, (p-1)!)=1</br>
+所以a^(p-1) - 1 mod p = 0</br>
+就是 p|(a^(p-1) - 1)。因此(2)得证。</br>
+对于(1) 若gcd(a,p) ≠ 1,那么由于p是素数必然p|a 因此p|a*(a^(p - 1) - 1)显然得证。</br>
+如果gcd(a,p) = 1, 则由(2)得p|(a^(p-1)-1)因此因此p|(a^(p - 1) - 1)*a显然得证。</div></br>
+<div>欧拉函数是指：对于一个正整数n，小于n且和n互质的正整数的个数，记做：φ(n)</br>
+欧拉定理：gcd(a, n) = 1，则a^φ(n) ≡ 1 mod n</br>
+对于互质的整数a和n，有a^φ(n) ≡ 1 mod n</br>
+证明：</br>
+首先证明下面这个命题：</br>
+对于集合Z = {X1,X2,...,Xφ(n)}，Xi为第i个小于n且和n互质的正整数</br>
+考虑集合</br>
+S = {aX1 mod n,aX2 mod n,...,aXφ(n) mod n}</br>
+则S = Z</br>
+证明:</br>
+a, n互质，Xi与n互质，那么aXi与n互质</br>
+对于Z中两个元素Xi和Xj，如果Xi ≠ Xj</br>
+则aXi mod n ≠ aXj mod n，若aXi mod n = aXj mod n，</br>
+那么a(Xi - Xj) mod n = 0, a, n互质那么Xi - Xj mod n = 0 由于</div></br>
+<div>0 &lt; Xi, Xj &lt; n显然不可能。因此S中的元素各不相同，这样S中含有φ(n)个与n互</div></br>
+<div>质的正整数，且满足每个元素小于n所以，很明显，S = Z</div></br>
+<div>既然这样，那么</br>
+(aX1 × aX2×...×aXφ(n))mod n</br>
+= (aX1 mod n × aX2 mod n × ... × aXφ(n) mod n)mod n</br>
+= (x1 × x2 × ... × xφ(n))mod n</br>
+考虑上面等式左边和右边</br>
+最左边等于(a^φ(n) × (x1 × x2 × ... × xφ(n)) mod n</br>
+最右边等于(x1 × x2 × ... × xφ(n))mod n</br>
+得到(a^φ(n) - 1)(x1 × x2 × ... × xφ(n)) mod n = 0</br>
+而(x1 × x2 × ... × xφ(n))mod n 和 n互质,所以 a^φ(n) ≡ 1 mod n</div></br>
+<div>推论：当n为素数时，φ(n) = n - 1, a^(n - 1) - 1 mod n = 0 就是费马小定理(2)</div></br>
+<div>模p乘法逆元</br>
+对于整数a、p，如果存在整数b，满足a*b mod p =1，则说，b是a的模p乘法逆元。</div></br>
+<div>定理：a存在模p的乘法逆元的充要条件是gcd(a,p) = 1</div></br>
+<div>证明：</br>
+首先证明充分性</br>
+如果gcd(a,p) = 1，根据欧拉定理，a^φ(p) ≡ 1 mod p，因此</br>
+显然a^(φ(p)-1) 是a的模p乘法逆元。</div></br>
+<div></br>
+</br>
+再证明必要性</br>
+假设存在a模p的乘法逆元为b， a*b ≡ 1 mod p</br>
+则a*b = k*p + 1，所以1 = a*b - k*p</br>
+因为gcd(a,p) = d</br>
+所以d | 1</br>
+所以d只能为1</br>
+</br>
+<span style="font-size: x-small;"><strong>Problem A：Euclid's Game（欧几里德游戏）</strong></span></br>
+</br>
+<strong>题目的大意为：</strong>在一块板上一开始写有两个不相等的正整数。两个玩家交替写数字，每一 次，当前玩家都必须在板上写出任意两个板上数字的差，而且这个数字必须是新的，也就是说，不能与板上任何一个已有的数字相同。当玩家再也写不出新数字时， 他就输了。假设有A、B两个玩家，A先写，B后写。对于给定的两个数字，写程序判断是 A赢还是B赢。</br>
+</br>
+<strong> 提示：</strong>A赢还是B赢的关键是找出能写在板上的数字的个数，如果是奇数个数字可写，则A赢，如果是偶数个，则B赢。 能写在板上的数字个数刚好可以用欧几里德算法（GCD）得到，假设开始数板上的两个数字为M和N，且M&gt;N，则能写在板上的数字个 数=M/GCD(M,N)，因此，只需要判断该数字的奇数还是偶数即可。（算法略）</br>
+</br>
+N,2N的话转化为1,2的情况,根据算法后行动 N,3N转化为1,3的情况,根据算法先行动 5N,7N转化为5,7的情况,先行动,依次为2,3,1,4,6 互质则根据Max(A,B)奇偶判断.. 暂时还没找到反例</br>
+</br>
+<span style="font-size: small;">分析:这类题目同上面发的题目有类似的地方,均无 算法可直接套,需发现潜在规律,不防弄几个数小的试试.我例举几对数:13和3,15和12,大家不防将这两对数所能产生的数全写出来,这样会发现一个规 律,15和12所产生的数为3,6,9,12,15,共5个数,而且都为3的整数倍,可以发现15和12有个最大公约数3,其实这就是1个条件,即所两数 A,B之间存在最大公约数X(X&gt;1),那么中间所有数为{x,2x,...,max{A,B}};再看13和3,和上面类比,这对数最大公约数为 1,那么相减过程必定会产生1,通过1即能产生从1到max(A,B)之间所有连续的整数,所以该过程产生的所有数为 {1,2,...,max{A,B}};到这里两种条件均出来了,对于第一种情况元素个数为max{A,B}/X,后一种为max{A,B}/1,那么只 需要再两种不同情况下分别考虑产生的元素个数奇偶即可</span></br>
+</br>
+<strong><span style="font-size: x-small;">Problem B：Locker doors（带锁的门）</span></strong></br>
+</br>
+<strong>题目大意：</strong>在走廊上有n个带锁的门，从1到n依次编号。最初所有的门都是关着的。我们从门前经过n次，每一次都从1号门开始。在第i次经过时（i=1,2,..., n）我们改变i的整数倍号锁的状态：也就是如果门是关的，就打开它；如果门是打开的，就关上它。举例来说，第一次经过后，所有的门都是打开的；第二次经过后，偶数门是关着的，奇数门是开着的；以此类推，在最后一次经过后，有多少门是开着的。</br>
+</br>
+<strong>提示：</strong>门的状态只有两种，没经过一次，状态就会发生变化。如果一道门经过奇数次，那么结果状态和原始状态就会不一样， 而经过偶数次则不会发生变化。因此问题的关键就是找出那些经过奇数次的门有多少道。很幸运，那些门的编号正好是整数i的完全平方数即 1，4，9，16，...，因此只需要找出这样的数字有多少个即可。（算法略）</br>
+</br>
+<strong><span style="font-size: x-small;">Problem C：Euclidean algorithm for GCD（求最大公约数的欧几里德算法）</span></strong></br>
+</br>
+<strong>题目大意：</strong>根据所给的两个正整数，用欧几里德算法求出它们的最大公约数。</br>
+</br>
+<strong>提示：</strong>最大公约数的欧几里德算法为GCD(m,n)=GCD(n,m mod n)，使用该式子就可以得到最大公约数。（算法见教材）</br>
+</br>
+<strong><span style="font-size: x-small;">Problem D：Fibonacci number(Recusion)（费伯拉契数列）</span></strong></br>
+</br>
+<strong>题目大意：</strong>求所给整数的费伯拉契数列值。</br>
+</br>
+<strong>提示：</strong>根据费伯拉契数列的定义，使用递归解决。（算法略）</br>
+</br>
+<strong><span style="font-size: x-small;">Problem E：串匹配</span></strong></br>
+</br>
+<strong>提示：</strong>使用蛮力法解决。（算法见教材）</br>
+</br>
+<strong><span style="font-size: x-small;">Problem F：Polynomial calculate（计算多项式的值）</span></strong></br>
+</br>
+<strong>题目大意：</strong>根据所给的参数，计算多项式的值。</br>
+</br>
+提示：在计算多项式值的过程中，关键的是计算出X^i的值，可以写以函数来专门解决这一问题。另外也可采用递归来计算多项式的值，式子如下：</br>
+</br>
+</div></br>
+</div></br>
 <a href="http://photo.blog.sina.com.cn/showpic.html#blogid=441a9a740100b2jw&amp;url=http://static12.photo.sina.com.cn/orignal/441a9a744595f27732e4b" target="_blank"><img src="http://static12.photo.sina.com.cn/bmiddle/441a9a744595f27732e4b" alt="" /></a>

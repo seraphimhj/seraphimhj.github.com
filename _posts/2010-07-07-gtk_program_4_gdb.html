@@ -24,200 +24,200 @@ tags:
 published: true
 type: post
 ---
-<p align="left">6、使用GDB调试程序</p>
-<p align="left">上回话说使用Makefile来组织源代码，这回简单地介绍下如何使用GDB来调试我们的程序；关于GDB的其它应用将在后续的章节中逐渐深入。</p>
-<p align="left">首先需要肯定一点，GDB是个功能异常强大的调试工具，其本身只能运行于字符模式，但是当前众多基于GUI的调试器/IDE，无论是自由软件还是商 业软件，绝大多数都使用GDB作为其后端（但这些基于GUI的调试器都不太稳定），因此GDB是个不二的选择（笔者推荐的GUI调试器：insight和 ddd）。</p>
-<p align="left"><!--more--></p>
-<p align="left">这里使用 hello_gdb.c作为例子，如果你从前面一直看过来，对这个程序一定不会陌生，hello_gdb.c主要在 hello_dubuntu2.c的基础上，添加了几个整型和字符串型变量，来演示gdb的一些基本功能：</p>
-
-<table width="100%" border="1" cellspacing="1" cellpadding="0">
-<tbody>
-<tr>
-<td>
-<p align="center">hello_gdb.c</p>
-</td>
-</tr>
-<tr>
-<td>
-<p align="left">/* 本例的主要目的是在窗口中显示一个按钮，
-* 单击按钮退出程序，并构建几个变量来演示GDB功能。
-*/
-#include&lt;gtk/gtk.h&gt;void
-cb_button(GtkWidget *widget, gpointer data)
-{// 按钮”button”的回调函数
-gint i=5;
-gint j=++i;
-gtk_main_quit();
-}//此函数用于演示GDB直接调用被调试程序的函数
-gint
-gdb_test(gint arg)
-{
-g_print(“arg=%d\n”,arg);
-arg++;
-return arg;
-}</p>
-<p align="left">int
-main(int argc, char *argv[])
-{
-GtkWidget *main_window; //主窗口对象
-GtkWidget *button;              //将要放置到主窗口中的按钮对象</p>
-<p align="left">//构造两个变量用于演示GDB功能
-gint a=5;
-gchar *name=”Dubuntu-6.06″;
-//
-gtk_init(&amp;argc, &amp;argv);</p>
-<p align="left">main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-gtk_window_set_title(GTK_WINDOW(main_window), “Hello,Dubuntu2!”);
-//设置窗口的默认大小（宽200，高度50）
-gtk_window_set_default_size(GTK_WINDOW(main_window), 200,50);</p>
-<p align="left">button = gtk_button_new_with_label(“退出程序”);
-gtk_container_add(GTK_CONTAINER(main_window), button);
-//为”button”连接“单击事件”要调用的回调函数
-g_signal_connect(G_OBJECT(button), “clicked”, G_CALLBACK(cb_button),NULL);</p>
-<p align="left">gtk_widget_show(button);
-gtk_widget_show(main_window);
-//上边的两句可以合为 gtk_widget_show_all(window)</p>
-<p align="left">g_signal_connect(G_OBJECT(main_window), “destroy”, G_CALLBACK(cb_button),NULL);</p>
-<p align="left">gtk_main();
-return 0;
-}</p>
-</td>
-</tr>
-<tr>
-<td>
-<p align="left">编译：  gcc -g -Wall -o hello_gdb hello_gdb.c `pkg-config –cflags –libs gtk+-2.0`
-注意：-g 参数用于为可执行文件生成调试信息；
--Wall 用于在编译程序时打印所有的警告信息</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p align="left">好了，程序就是上边这个(hello_gdb.c)，我们使用如下的命令对它进行编译：</p>
-
-<div align="center">
-<table width="80%" border="1" cellpadding="0">
-<tbody>
-<tr>
-<td>
-<p align="left">gcc -g -Wall -o hello_gdb hello_gdb.c `pkg-config –cflags –libs gtk+-2.0`</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p align="left">编译完后，如果没有错误，将生成 hello_gdb 可执行文件，此可执行文件将携带 gdb 调试时所需要的调试信息，有了这些调试消息，我们就可以在调试程序的时候查看函数名，变量名，源代码。</p>
-<p align="left">好了，开始调试吧：
-1）在命令行下，通过如下命令加载刚编译生成的 hello_gdb 程序：</p>
-
-<div align="center">
-<table width="80%" border="1" cellpadding="0">
-<tbody>
-<tr>
-<td>
-<p align="left">gdb  ./hello_gdb</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p align="left">加载成功后，将得到如下提示信息，并进入 gdb 的命令行模式：</p>
-
-<div align="center">
-<table width="80%" border="1" cellpadding="0">
-<tbody>
-<tr>
-<td>
-<p align="left">dubuntu@dubuntu:~/Desktop/gnome-gtk-prog/hello_gtk/src$ gdb ./hello_gdb
-GNU gdb 6.5.50.20060605-cvs
-Copyright (C) 2006 Free Software Foundation, Inc.
-GDB is free software, covered by the GNU General Public License, and you are
-welcome to change it and/or distribute copies of it under certain conditions.
-Type “show copying” to see the conditions.
-There is absolutely no warranty for GDB.  Type “show warranty” for details.
-This GDB was configured as “i686-pc-linux-gnu”…Using host libthread_db library “/lib/tls/i686/cmov/libthread_db.so.1″.(gdb)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p align="left">2）好，现在已经成功启动gdb并且加载了可执行程序 hello_gdb，接下来的命令绝大部分都是争对 hello_gdb 程序，下面将列举几个最常用的命令：</p>
-
-<div align="center">
-<table width="80%" border="1" cellpadding="0">
-<tbody>
-<tr>
-<td>
-<p align="left">小技巧：在gdb命令中，只需要输入命令或参数的前几个字符，再按键盘上的“TAB”键，那gdb将自动补齐命令或参数，如果有多个候选者，那么gdb将把它们都列举出来。</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<ul>
-	<li>list ：简记为 l ，其作用就是列出程序的源代码，默认每次显示10行。</li>
-</ul>
-<ul>
-	<li>list 行号：将显示当前文件以“行号”为中心的前后10行代码，如：list 12</li>
-	<li>list 函数名：将显示“函数名”所在函数的源代码，如：list main</li>
-	<li>list ：不带参数，将接着上一次 list 命令的，输出下边的内容。</li>
-</ul>
-<div align="center">
-<table width="80%" border="1" cellpadding="0">
-<tbody>
-<tr>
-<td>
-<p align="left">注意：如果运行list 命令得到类似如下的打印，那是因为在编译程序时没有加入 -g 选项：
-(gdb) list
-1       ../sysdeps/i386/elf/start.S: No such file or directory.
-in ../sysdeps/i386/elf/start.S</p>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<ul>
-	<li>run：简记为 r ，其作用是运行程序，当遇到断点后，程序会在断点处停止运行，等待用户输入下一步的命令。</li>
-	<li>set args：设置运行程序时的命令行参数，如：set args 33 55</li>
-	<li>show args：显示命令行参数</li>
-	<li>continue：简讯为 c ，其作用是继续运行被断点中断的程序。</li>
-	<li>break：为程序设置断点。</li>
-</ul>
-<ul>
-	<li>break 行号：在当前文件的“行号”处设置断点，如：break  33</li>
-	<li>break 函数名：在用户定义的函数“函数名”处设置断点，如：break cb_button</li>
-	<li>info breakpoints：显示当前程序的断点设置情况</li>
-	<li>disable breakpoints Num：关闭断点“Num”，使其无效，其中“Num”为 info breakpoints 中显示的对应值</li>
-	<li>enable breakpoints Num：打开断点“Num”，使其重新生效</li>
-	<li>print a：将显示整数 a 的值</li>
-	<li>print ++a：将把 a 中的值加1,并显示出来</li>
-	<li>print name：将显示字符串 name 的值</li>
-	<li>print gdb_test(22)：将以整数22作为参数调用 gdb_test() 函数</li>
-	<li>print gdb_test(a)：将以变量 a 作为参数调用 gdb_test() 函数</li>
-	<li>layout src：显示源代码窗口</li>
-	<li>layout asm：显示反汇编窗口</li>
-	<li>layout regs：显示源代码/反汇编和CPU寄存器窗口</li>
-	<li>layout split：显示源代码和反汇编窗口</li>
-	<li>Ctrl + L：刷新窗口</li>
-</ul>
-<ul>
-	<li>step：简记为 s ，单步跟踪程序，当遇到函数调用时，则进入此函数体（一般只进入用户自定义函数）。</li>
-	<li>next：简记为 n，单步跟踪程序，当遇到函数调用时，也不进入此函数体；此命令同 step 的主要区别是，step 遇到用户自定义的函数，将步进到函数中去运行，而 next 则直接调用函数，不会进入到函数体内。</li>
-	<li>until：当你厌倦了在一个循环体内单步跟踪时，这个命令可以运行程序直到退出循环体。</li>
-	<li>finish：运行程序，直到当前函数完成返回，并打印函数返回时的堆栈地址和返回值及参数值等信息。</li>
-	<li>stepi或nexti：单步跟踪一些机器指令。</li>
-	<li>print 表达式：简记为 p ，其中“表达式”可以是任何当前正在被测试程序的有效表达式，比如当前正在调试C语言的程序，那么“表达式”可以是任何C语言的有效表达式，包括数字，变量甚至是函数调用。</li>
-</ul>
-<ul>
-	<li>bt：显示当前程序的函数调用堆栈。</li>
-	<li>display 表达式：在单步运行时将非常有用，使用display命令设置一个表达式后，它将在每次单步进行指令后，紧接着输出被设置的表达式及值。如： display a</li>
-	<li>watch 表达式：设置一个监视点，一旦被监视的“表达式”的值改变，gdb将强行终止正在被调试的程序。如： watch a</li>
-	<li>kill：将强行终止当前正在调试的程序</li>
-	<li>help 命令：help 命令将显示“命令”的常用帮助信息</li>
-	<li>call 函数(参数)：调用“函数”，并传递“参数”，如：call  gdb_test(55)</li>
-	<li>layout：用于分割窗口，可以一边查看代码，一边测试：</li>
-</ul>
-<ul>
-	<li>quit：简记为 q ，退出gdb</li>
-</ul>
-<p align="left">当然，gdb的功能远不止这些，包括多进程/多线程/信号/远程调试等功能在这里均没有提及，有需要的读者可以参考其它信息，本文的后续章节也将涉及一些内容。</p>
+<p align="left">6、使用GDB调试程序</p></br>
+<p align="left">上回话说使用Makefile来组织源代码，这回简单地介绍下如何使用GDB来调试我们的程序；关于GDB的其它应用将在后续的章节中逐渐深入。</p></br>
+<p align="left">首先需要肯定一点，GDB是个功能异常强大的调试工具，其本身只能运行于字符模式，但是当前众多基于GUI的调试器/IDE，无论是自由软件还是商 业软件，绝大多数都使用GDB作为其后端（但这些基于GUI的调试器都不太稳定），因此GDB是个不二的选择（笔者推荐的GUI调试器：insight和 ddd）。</p></br>
+<p align="left"><!--more--></p></br>
+<p align="left">这里使用 hello_gdb.c作为例子，如果你从前面一直看过来，对这个程序一定不会陌生，hello_gdb.c主要在 hello_dubuntu2.c的基础上，添加了几个整型和字符串型变量，来演示gdb的一些基本功能：</p></br>
+</br>
+<table width="100%" border="1" cellspacing="1" cellpadding="0"></br>
+<tbody></br>
+<tr></br>
+<td></br>
+<p align="center">hello_gdb.c</p></br>
+</td></br>
+</tr></br>
+<tr></br>
+<td></br>
+<p align="left">/* 本例的主要目的是在窗口中显示一个按钮，</br>
+* 单击按钮退出程序，并构建几个变量来演示GDB功能。</br>
+*/</br>
+#include&lt;gtk/gtk.h&gt;void</br>
+cb_button(GtkWidget *widget, gpointer data)</br>
+{// 按钮”button”的回调函数</br>
+gint i=5;</br>
+gint j=++i;</br>
+gtk_main_quit();</br>
+}//此函数用于演示GDB直接调用被调试程序的函数</br>
+gint</br>
+gdb_test(gint arg)</br>
+{</br>
+g_print(“arg=%d\n”,arg);</br>
+arg++;</br>
+return arg;</br>
+}</p></br>
+<p align="left">int</br>
+main(int argc, char *argv[])</br>
+{</br>
+GtkWidget *main_window; //主窗口对象</br>
+GtkWidget *button;              //将要放置到主窗口中的按钮对象</p></br>
+<p align="left">//构造两个变量用于演示GDB功能</br>
+gint a=5;</br>
+gchar *name=”Dubuntu-6.06″;</br>
+//</br>
+gtk_init(&amp;argc, &amp;argv);</p></br>
+<p align="left">main_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);</br>
+gtk_window_set_title(GTK_WINDOW(main_window), “Hello,Dubuntu2!”);</br>
+//设置窗口的默认大小（宽200，高度50）</br>
+gtk_window_set_default_size(GTK_WINDOW(main_window), 200,50);</p></br>
+<p align="left">button = gtk_button_new_with_label(“退出程序”);</br>
+gtk_container_add(GTK_CONTAINER(main_window), button);</br>
+//为”button”连接“单击事件”要调用的回调函数</br>
+g_signal_connect(G_OBJECT(button), “clicked”, G_CALLBACK(cb_button),NULL);</p></br>
+<p align="left">gtk_widget_show(button);</br>
+gtk_widget_show(main_window);</br>
+//上边的两句可以合为 gtk_widget_show_all(window)</p></br>
+<p align="left">g_signal_connect(G_OBJECT(main_window), “destroy”, G_CALLBACK(cb_button),NULL);</p></br>
+<p align="left">gtk_main();</br>
+return 0;</br>
+}</p></br>
+</td></br>
+</tr></br>
+<tr></br>
+<td></br>
+<p align="left">编译：  gcc -g -Wall -o hello_gdb hello_gdb.c `pkg-config –cflags –libs gtk+-2.0`</br>
+注意：-g 参数用于为可执行文件生成调试信息；</br>
+-Wall 用于在编译程序时打印所有的警告信息</p></br>
+</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+<p align="left">好了，程序就是上边这个(hello_gdb.c)，我们使用如下的命令对它进行编译：</p></br>
+</br>
+<div align="center"></br>
+<table width="80%" border="1" cellpadding="0"></br>
+<tbody></br>
+<tr></br>
+<td></br>
+<p align="left">gcc -g -Wall -o hello_gdb hello_gdb.c `pkg-config –cflags –libs gtk+-2.0`</p></br>
+</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+</div></br>
+<p align="left">编译完后，如果没有错误，将生成 hello_gdb 可执行文件，此可执行文件将携带 gdb 调试时所需要的调试信息，有了这些调试消息，我们就可以在调试程序的时候查看函数名，变量名，源代码。</p></br>
+<p align="left">好了，开始调试吧：</br>
+1）在命令行下，通过如下命令加载刚编译生成的 hello_gdb 程序：</p></br>
+</br>
+<div align="center"></br>
+<table width="80%" border="1" cellpadding="0"></br>
+<tbody></br>
+<tr></br>
+<td></br>
+<p align="left">gdb  ./hello_gdb</p></br>
+</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+</div></br>
+<p align="left">加载成功后，将得到如下提示信息，并进入 gdb 的命令行模式：</p></br>
+</br>
+<div align="center"></br>
+<table width="80%" border="1" cellpadding="0"></br>
+<tbody></br>
+<tr></br>
+<td></br>
+<p align="left">dubuntu@dubuntu:~/Desktop/gnome-gtk-prog/hello_gtk/src$ gdb ./hello_gdb</br>
+GNU gdb 6.5.50.20060605-cvs</br>
+Copyright (C) 2006 Free Software Foundation, Inc.</br>
+GDB is free software, covered by the GNU General Public License, and you are</br>
+welcome to change it and/or distribute copies of it under certain conditions.</br>
+Type “show copying” to see the conditions.</br>
+There is absolutely no warranty for GDB.  Type “show warranty” for details.</br>
+This GDB was configured as “i686-pc-linux-gnu”…Using host libthread_db library “/lib/tls/i686/cmov/libthread_db.so.1″.(gdb)</p></br>
+</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+</div></br>
+<p align="left">2）好，现在已经成功启动gdb并且加载了可执行程序 hello_gdb，接下来的命令绝大部分都是争对 hello_gdb 程序，下面将列举几个最常用的命令：</p></br>
+</br>
+<div align="center"></br>
+<table width="80%" border="1" cellpadding="0"></br>
+<tbody></br>
+<tr></br>
+<td></br>
+<p align="left">小技巧：在gdb命令中，只需要输入命令或参数的前几个字符，再按键盘上的“TAB”键，那gdb将自动补齐命令或参数，如果有多个候选者，那么gdb将把它们都列举出来。</p></br>
+</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+</div></br>
+<ul></br>
+	<li>list ：简记为 l ，其作用就是列出程序的源代码，默认每次显示10行。</li></br>
+</ul></br>
+<ul></br>
+	<li>list 行号：将显示当前文件以“行号”为中心的前后10行代码，如：list 12</li></br>
+	<li>list 函数名：将显示“函数名”所在函数的源代码，如：list main</li></br>
+	<li>list ：不带参数，将接着上一次 list 命令的，输出下边的内容。</li></br>
+</ul></br>
+<div align="center"></br>
+<table width="80%" border="1" cellpadding="0"></br>
+<tbody></br>
+<tr></br>
+<td></br>
+<p align="left">注意：如果运行list 命令得到类似如下的打印，那是因为在编译程序时没有加入 -g 选项：</br>
+(gdb) list</br>
+1       ../sysdeps/i386/elf/start.S: No such file or directory.</br>
+in ../sysdeps/i386/elf/start.S</p></br>
+</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+</div></br>
+<ul></br>
+	<li>run：简记为 r ，其作用是运行程序，当遇到断点后，程序会在断点处停止运行，等待用户输入下一步的命令。</li></br>
+	<li>set args：设置运行程序时的命令行参数，如：set args 33 55</li></br>
+	<li>show args：显示命令行参数</li></br>
+	<li>continue：简讯为 c ，其作用是继续运行被断点中断的程序。</li></br>
+	<li>break：为程序设置断点。</li></br>
+</ul></br>
+<ul></br>
+	<li>break 行号：在当前文件的“行号”处设置断点，如：break  33</li></br>
+	<li>break 函数名：在用户定义的函数“函数名”处设置断点，如：break cb_button</li></br>
+	<li>info breakpoints：显示当前程序的断点设置情况</li></br>
+	<li>disable breakpoints Num：关闭断点“Num”，使其无效，其中“Num”为 info breakpoints 中显示的对应值</li></br>
+	<li>enable breakpoints Num：打开断点“Num”，使其重新生效</li></br>
+	<li>print a：将显示整数 a 的值</li></br>
+	<li>print ++a：将把 a 中的值加1,并显示出来</li></br>
+	<li>print name：将显示字符串 name 的值</li></br>
+	<li>print gdb_test(22)：将以整数22作为参数调用 gdb_test() 函数</li></br>
+	<li>print gdb_test(a)：将以变量 a 作为参数调用 gdb_test() 函数</li></br>
+	<li>layout src：显示源代码窗口</li></br>
+	<li>layout asm：显示反汇编窗口</li></br>
+	<li>layout regs：显示源代码/反汇编和CPU寄存器窗口</li></br>
+	<li>layout split：显示源代码和反汇编窗口</li></br>
+	<li>Ctrl + L：刷新窗口</li></br>
+</ul></br>
+<ul></br>
+	<li>step：简记为 s ，单步跟踪程序，当遇到函数调用时，则进入此函数体（一般只进入用户自定义函数）。</li></br>
+	<li>next：简记为 n，单步跟踪程序，当遇到函数调用时，也不进入此函数体；此命令同 step 的主要区别是，step 遇到用户自定义的函数，将步进到函数中去运行，而 next 则直接调用函数，不会进入到函数体内。</li></br>
+	<li>until：当你厌倦了在一个循环体内单步跟踪时，这个命令可以运行程序直到退出循环体。</li></br>
+	<li>finish：运行程序，直到当前函数完成返回，并打印函数返回时的堆栈地址和返回值及参数值等信息。</li></br>
+	<li>stepi或nexti：单步跟踪一些机器指令。</li></br>
+	<li>print 表达式：简记为 p ，其中“表达式”可以是任何当前正在被测试程序的有效表达式，比如当前正在调试C语言的程序，那么“表达式”可以是任何C语言的有效表达式，包括数字，变量甚至是函数调用。</li></br>
+</ul></br>
+<ul></br>
+	<li>bt：显示当前程序的函数调用堆栈。</li></br>
+	<li>display 表达式：在单步运行时将非常有用，使用display命令设置一个表达式后，它将在每次单步进行指令后，紧接着输出被设置的表达式及值。如： display a</li></br>
+	<li>watch 表达式：设置一个监视点，一旦被监视的“表达式”的值改变，gdb将强行终止正在被调试的程序。如： watch a</li></br>
+	<li>kill：将强行终止当前正在调试的程序</li></br>
+	<li>help 命令：help 命令将显示“命令”的常用帮助信息</li></br>
+	<li>call 函数(参数)：调用“函数”，并传递“参数”，如：call  gdb_test(55)</li></br>
+	<li>layout：用于分割窗口，可以一边查看代码，一边测试：</li></br>
+</ul></br>
+<ul></br>
+	<li>quit：简记为 q ，退出gdb</li></br>
+</ul></br>
+<p align="left">当然，gdb的功能远不止这些，包括多进程/多线程/信号/远程调试等功能在这里均没有提及，有需要的读者可以参考其它信息，本文的后续章节也将涉及一些内容。</p></br>
 <p align="left">推荐阅读：<a href="http://fanqiang.chinaunix.net/program/other/2005-03-23/2993.shtml" target="_blank">用gdb调试程序</a></p>

@@ -24,154 +24,154 @@ tags:
 published: true
 type: post
 ---
-linux下批量修改文件名
-
-0、问题来源，想把一部分文件加上日期序。也就是在文件名称前加上当前的年月日进行输出。
-获取日期格式如下
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ date +%Y%m%d
-20091112
-
-1、使用find、awk/grep/sed、mv等命令组合来实现
-Ubuntu下
-
-<!--more-->
-
-利用awk命令进行制作，操作如下
-1)找到需要进行操作的文件名
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ find -name ‘*.jpg’ -printf %f\\n|grep -v ^[0-9] |grep -v logo.jpg
-se_platform.jpg
-soa1.jpg
-soa4.jpg
-java_primitive_data_type.jpg
-soa3.jpg
-soa2.jpg
-
-2)提取文件名，保持文件扩展名不变
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ find -name ‘*.jpg’ -printf %f\\n|grep -v ^[0-9] |grep -v logo.jpg|awk -F ‘.’ ‘{print $1}’
-se_platform
-soa1
-soa4
-java_primitive_data_type
-soa3
-soa2
-
-3)对文件进行批量替换操作
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ find -name ‘*.jpg’ -printf %f \\n|grep -v ^[0-9] |grep -v logo.jpg|awk -F ‘.’ ‘{print $1}’|
-xargs -i{} mv {}.jpg `date +%Y%m%d`{}.jpg
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ ls
-20090818a.jpg 20090919twitter4.jpg
-20090818learn.jpg 20091110open_project.jpg
-20090819java1.png 20091112java_primitive_data_type.jpg
-20090819javaseplatformroadmap.gif 20091112se_platform.jpg
-20090916neiji.jpg 20091112soa1.jpg
-20090916waiji.jpg 20091112soa2.jpg
-20090919photo.jpg 20091112soa3.jpg
-20090919twitter.jpg 20091112soa4.jpg
-20090919twitter2.jpg logo.jpg
-20090919twitter3.jpg
-
-利用nawk命令进行制作，操作如下
-1)找到要操作的文件名
-Zianed@ubuntu:~/sedcommand$ find ./ -type f | grep “log” |sed -n ’s/\.\///p’
-test2.log
-test1.log
-
-2)进行文件名更改操作
-Zianed@ubuntu:~/sedcommand$ ls *.log
-test1.log test2.log
-Zianed@ubuntu:~/sedcommand$ find ./ -type f | grep “log” |sed -n ’s/.\///p’ |
-nawk ‘{oldname=$1;$2=`date +%Y%m%d`$1;newname=$1;print “mv ” oldname ” ” newname }’ | /bin/sh
-nawk: warning: escape sequence `\.’ treated as plain `.’
-Zianed@ubuntu:~/sedcommand$ ls *.log
-test1_test.log test2_test.log
-Zianed@ubuntu:~/sedcommand$
-
-利用sed命令进行制作，操作如下
-find / -type f -name “*.sql” | sed s/\(.*\)\.sql/mv &amp; \1.pls/’ | sh
-
-2、编写Shell脚本运行
-保存为一个Shell脚本
-
-#!/bin/bash
-#script_name:rename_ALL
-find ./ -type f | grep “txt” |sed -n ’s/\.\///p’| nawk ‘{oldname=$1;
-sub(/\./,”_test\.”);
-newname=$1;
-print “mv ” oldname ” ” newname }’ | /bin/sh
-
-将上述代码保存为文件rename_ALL
-修改脚本的属性，使它能执行：chmod u+x rename_ALL
-执行：./rename_ALL
-
-来自网络
-看起来很管用，要是能够进行将要改的文件名格式传递进去就更好了。
-
-3、使用rename命令
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ rename –help
-Unknown option: help
-Usage: rename [-v] [-n] [-f] perlexpr [filenames]
-
-man rename发现,
-“rename” renames the filenames supplied according to the rule specified as the first argument.
-The perlexpr argument is a Perl expression which is expected to modify the $_ string in Perl for at least some of the filenames specified.If a given filename is not modified by the expression,it will not be renamed. If no filenames are given on the command line, filenames will be read via standard input.
-For example, to rename all files matching “*.bak” to strip the extension, you might say
-rename ’s/\.bak$//’ *.bak
-To translate uppercase names to lower, you’d use
-rename ‘y/A-Z/a-z/’ *
-
-命令格式:
-rename [ -v ] [ -n ] [ -f ] perlexpr [ files ]
-perlexpr 是一种 Perl 脚本格式的正则表达式。
-files 文件名通配符
-参数:
--v, –verbose
-Verbose: print names of files successfully renamed.
-详细模式:打印成功更改的文件名列表
--n, –no-act
-No Action: show what files would have been renamed.
-测试模式:并不真正的执行命令,而只是显示哪些文件名应该怎么进行更改,用于测试模式。
--f, –force
-Force: overwrite existing files.
-强制模式:在更改文件名,如果更改后的文件已经存在时覆盖已经存在的文件。
-
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ ls
-20090819java1.png 200909v9twitter4.jpg
-20090819javaseplatformroadmap.gif 2009vvv0epen_preject.jpg
-200908v8lerrn.jpg 2009vvv2jrvr_primitive_drtr_type.jpg
-200908v8r.jpg 2009vvv2se_plrtferm.jpg
-200909v6neiji.jpg 2009vvv2ser2.jpg
-200909v6wriji.jpg 2009vvv2ser3.jpg
-200909v9phete.jpg 2009vvv2ser4.jpg
-200909v9twitter.jpg 2009vvv2serv.jpg
-200909v9twitter2.jpg lege.jpg
-200909v9twitter3.jpg
-
-将*.jpg文件名中的09v9改为0919
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ rename ’s/09v9/0919/’ *.jpg
-Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ ls
-20090819java1.png 200909v6wriji.jpg
-20090819javaseplatformroadmap.gif 2009vvv0epen_preject.jpg
-200908v8lerrn.jpg 2009vvv2jrvr_primitive_drtr_type.jpg
-200908v8r.jpg 2009vvv2se_plrtferm.jpg
-20090919phete.jpg 2009vvv2ser2.jpg
-20090919twitter.jpg 2009vvv2ser3.jpg
-20090919twitter2.jpg 2009vvv2ser4.jpg
-20090919twitter3.jpg 2009vvv2serv.jpg
-20090919twitter4.jpg lege.jpg
-200909v6neiji.jpg
-
-rename 的典型应用:
-0. 批量更改文件扩展名
-$ rename ’s/\.txt/\.ext/’ *
-
-1. 批量删除文件扩展名
-$ rename ’s/\.txt//’ *
-
-2. 批量添加文件扩展名
-$ rename ’s/$/\.txt/’ *
-
-3. 按自己的方式批量重命名文件
-$ rename ’s/(\d)/第$1 章/’ *
-$ rename s/_/-/ *.jpg #修改所有的包含_的.jpg文件中的_为-
-
+linux下批量修改文件名</br>
+</br>
+0、问题来源，想把一部分文件加上日期序。也就是在文件名称前加上当前的年月日进行输出。</br>
+获取日期格式如下</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ date +%Y%m%d</br>
+20091112</br>
+</br>
+1、使用find、awk/grep/sed、mv等命令组合来实现</br>
+Ubuntu下</br>
+</br>
+<!--more--></br>
+</br>
+利用awk命令进行制作，操作如下</br>
+1)找到需要进行操作的文件名</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ find -name ‘*.jpg’ -printf %f\\n|grep -v ^[0-9] |grep -v logo.jpg</br>
+se_platform.jpg</br>
+soa1.jpg</br>
+soa4.jpg</br>
+java_primitive_data_type.jpg</br>
+soa3.jpg</br>
+soa2.jpg</br>
+</br>
+2)提取文件名，保持文件扩展名不变</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ find -name ‘*.jpg’ -printf %f\\n|grep -v ^[0-9] |grep -v logo.jpg|awk -F ‘.’ ‘{print $1}’</br>
+se_platform</br>
+soa1</br>
+soa4</br>
+java_primitive_data_type</br>
+soa3</br>
+soa2</br>
+</br>
+3)对文件进行批量替换操作</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ find -name ‘*.jpg’ -printf %f \\n|grep -v ^[0-9] |grep -v logo.jpg|awk -F ‘.’ ‘{print $1}’|</br>
+xargs -i{} mv {}.jpg `date +%Y%m%d`{}.jpg</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ ls</br>
+20090818a.jpg 20090919twitter4.jpg</br>
+20090818learn.jpg 20091110open_project.jpg</br>
+20090819java1.png 20091112java_primitive_data_type.jpg</br>
+20090819javaseplatformroadmap.gif 20091112se_platform.jpg</br>
+20090916neiji.jpg 20091112soa1.jpg</br>
+20090916waiji.jpg 20091112soa2.jpg</br>
+20090919photo.jpg 20091112soa3.jpg</br>
+20090919twitter.jpg 20091112soa4.jpg</br>
+20090919twitter2.jpg logo.jpg</br>
+20090919twitter3.jpg</br>
+</br>
+利用nawk命令进行制作，操作如下</br>
+1)找到要操作的文件名</br>
+Zianed@ubuntu:~/sedcommand$ find ./ -type f | grep “log” |sed -n ’s/\.\///p’</br>
+test2.log</br>
+test1.log</br>
+</br>
+2)进行文件名更改操作</br>
+Zianed@ubuntu:~/sedcommand$ ls *.log</br>
+test1.log test2.log</br>
+Zianed@ubuntu:~/sedcommand$ find ./ -type f | grep “log” |sed -n ’s/.\///p’ |</br>
+nawk ‘{oldname=$1;$2=`date +%Y%m%d`$1;newname=$1;print “mv ” oldname ” ” newname }’ | /bin/sh</br>
+nawk: warning: escape sequence `\.’ treated as plain `.’</br>
+Zianed@ubuntu:~/sedcommand$ ls *.log</br>
+test1_test.log test2_test.log</br>
+Zianed@ubuntu:~/sedcommand$</br>
+</br>
+利用sed命令进行制作，操作如下</br>
+find / -type f -name “*.sql” | sed s/\(.*\)\.sql/mv &amp; \1.pls/’ | sh</br>
+</br>
+2、编写Shell脚本运行</br>
+保存为一个Shell脚本</br>
+</br>
+#!/bin/bash</br>
+#script_name:rename_ALL</br>
+find ./ -type f | grep “txt” |sed -n ’s/\.\///p’| nawk ‘{oldname=$1;</br>
+sub(/\./,”_test\.”);</br>
+newname=$1;</br>
+print “mv ” oldname ” ” newname }’ | /bin/sh</br>
+</br>
+将上述代码保存为文件rename_ALL</br>
+修改脚本的属性，使它能执行：chmod u+x rename_ALL</br>
+执行：./rename_ALL</br>
+</br>
+来自网络</br>
+看起来很管用，要是能够进行将要改的文件名格式传递进去就更好了。</br>
+</br>
+3、使用rename命令</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ rename –help</br>
+Unknown option: help</br>
+Usage: rename [-v] [-n] [-f] perlexpr [filenames]</br>
+</br>
+man rename发现,</br>
+“rename” renames the filenames supplied according to the rule specified as the first argument.</br>
+The perlexpr argument is a Perl expression which is expected to modify the $_ string in Perl for at least some of the filenames specified.If a given filename is not modified by the expression,it will not be renamed. If no filenames are given on the command line, filenames will be read via standard input.</br>
+For example, to rename all files matching “*.bak” to strip the extension, you might say</br>
+rename ’s/\.bak$//’ *.bak</br>
+To translate uppercase names to lower, you’d use</br>
+rename ‘y/A-Z/a-z/’ *</br>
+</br>
+命令格式:</br>
+rename [ -v ] [ -n ] [ -f ] perlexpr [ files ]</br>
+perlexpr 是一种 Perl 脚本格式的正则表达式。</br>
+files 文件名通配符</br>
+参数:</br>
+-v, –verbose</br>
+Verbose: print names of files successfully renamed.</br>
+详细模式:打印成功更改的文件名列表</br>
+-n, –no-act</br>
+No Action: show what files would have been renamed.</br>
+测试模式:并不真正的执行命令,而只是显示哪些文件名应该怎么进行更改,用于测试模式。</br>
+-f, –force</br>
+Force: overwrite existing files.</br>
+强制模式:在更改文件名,如果更改后的文件已经存在时覆盖已经存在的文件。</br>
+</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ ls</br>
+20090819java1.png 200909v9twitter4.jpg</br>
+20090819javaseplatformroadmap.gif 2009vvv0epen_preject.jpg</br>
+200908v8lerrn.jpg 2009vvv2jrvr_primitive_drtr_type.jpg</br>
+200908v8r.jpg 2009vvv2se_plrtferm.jpg</br>
+200909v6neiji.jpg 2009vvv2ser2.jpg</br>
+200909v6wriji.jpg 2009vvv2ser3.jpg</br>
+200909v9phete.jpg 2009vvv2ser4.jpg</br>
+200909v9twitter.jpg 2009vvv2serv.jpg</br>
+200909v9twitter2.jpg lege.jpg</br>
+200909v9twitter3.jpg</br>
+</br>
+将*.jpg文件名中的09v9改为0919</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ rename ’s/09v9/0919/’ *.jpg</br>
+Zianed@ubuntu:~/public_web_sSmO9OUVY1/files/image$ ls</br>
+20090819java1.png 200909v6wriji.jpg</br>
+20090819javaseplatformroadmap.gif 2009vvv0epen_preject.jpg</br>
+200908v8lerrn.jpg 2009vvv2jrvr_primitive_drtr_type.jpg</br>
+200908v8r.jpg 2009vvv2se_plrtferm.jpg</br>
+20090919phete.jpg 2009vvv2ser2.jpg</br>
+20090919twitter.jpg 2009vvv2ser3.jpg</br>
+20090919twitter2.jpg 2009vvv2ser4.jpg</br>
+20090919twitter3.jpg 2009vvv2serv.jpg</br>
+20090919twitter4.jpg lege.jpg</br>
+200909v6neiji.jpg</br>
+</br>
+rename 的典型应用:</br>
+0. 批量更改文件扩展名</br>
+$ rename ’s/\.txt/\.ext/’ *</br>
+</br>
+1. 批量删除文件扩展名</br>
+$ rename ’s/\.txt//’ *</br>
+</br>
+2. 批量添加文件扩展名</br>
+$ rename ’s/$/\.txt/’ *</br>
+</br>
+3. 按自己的方式批量重命名文件</br>
+$ rename ’s/(\d)/第$1 章/’ *</br>
+$ rename s/_/-/ *.jpg #修改所有的包含_的.jpg文件中的_为-</br>
+</br>
 来源：http://my.unix-center.net/~Zianed/?p=450

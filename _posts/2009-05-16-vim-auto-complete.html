@@ -26,47 +26,47 @@ tags:
 published: true
 type: post
 ---
-相信用过Visual Studio的人特别喜欢自动补全的功能。但是我不知道是否每个用vim的人都知道如何使用它。其实很简单，Ctrl+N就可以了。它会根据你已经输入的几个字符在上下文中寻找匹配，还能在同时打开的多个VIM view中查找，另外还能查找已经设置好的一些头文件。。
-
-如果你用的是vim7，在字符界面下，也能出现下拉框。。。。非常稳定，也非常好用。。
-
-vim有万能补全，函数名和类名都没有问题
-
-宏定义也有补全
-
-类变量补全也有插件，还有一些别的插件比如
-
-EnhancedCommentify 当前行或者多行可视模式下的注释/反注释 \x
-SuperTab 在插入状态使用TAB键补全，现在被自己定义的F8代替了
-taglist 函数和变量定义的窗口，并可以双击跳转 :TlistToggle绑定到F4
-tabbar 用标签窗口形式，显示打开的文件 Alt-1,2切换
-AutoExplorer help里面剔出的快速浏览函数和变量的定义
-bufexplorer 浏览打开的缓冲文件 \be \bv \bs
-mark 不同颜色标记当前词，支持多次高亮标记 \m
-
-总之，只要你愿意配置vim可以非常强大
-
-but，不要迷信vim。用什么工具，取决于你的工程应用
-
-这个话题我已经郁闷了很久了。从用vim玩Python开始就非常得郁闷。今天在配置ctags+cscope+omnicppcomplete彻底得google了一下。发现vim7本身就支持补全，而且补全的机制十分强大。
-
-在_vimrc里加：
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascrīptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-
-然后就可以补全python js html css xml php c 如果下载了omnicppcomplete，解压后放到%HOMEPATH%\vimfiles下，然后在_vimrc里加：
-
-set nocp
-filetype plugin on
-
-现在补全功能就狂强了。需要补全的时候ctrl-x ctrl-o连着按，就会跳出一个候选菜单。啊，以前不知道，还到处搜索vim补全插件。现在好了。非常齐全了。呼，赶快开始享受编程！
-
-http://www.woodpecker.org.cn/obp/zqtips/Vim/tip94.txt
-这里还有一堆ctags使用说明，哈，很全！
-
+相信用过Visual Studio的人特别喜欢自动补全的功能。但是我不知道是否每个用vim的人都知道如何使用它。其实很简单，Ctrl+N就可以了。它会根据你已经输入的几个字符在上下文中寻找匹配，还能在同时打开的多个VIM view中查找，另外还能查找已经设置好的一些头文件。。</br>
+</br>
+如果你用的是vim7，在字符界面下，也能出现下拉框。。。。非常稳定，也非常好用。。</br>
+</br>
+vim有万能补全，函数名和类名都没有问题</br>
+</br>
+宏定义也有补全</br>
+</br>
+类变量补全也有插件，还有一些别的插件比如</br>
+</br>
+EnhancedCommentify 当前行或者多行可视模式下的注释/反注释 \x</br>
+SuperTab 在插入状态使用TAB键补全，现在被自己定义的F8代替了</br>
+taglist 函数和变量定义的窗口，并可以双击跳转 :TlistToggle绑定到F4</br>
+tabbar 用标签窗口形式，显示打开的文件 Alt-1,2切换</br>
+AutoExplorer help里面剔出的快速浏览函数和变量的定义</br>
+bufexplorer 浏览打开的缓冲文件 \be \bv \bs</br>
+mark 不同颜色标记当前词，支持多次高亮标记 \m</br>
+</br>
+总之，只要你愿意配置vim可以非常强大</br>
+</br>
+but，不要迷信vim。用什么工具，取决于你的工程应用</br>
+</br>
+这个话题我已经郁闷了很久了。从用vim玩Python开始就非常得郁闷。今天在配置ctags+cscope+omnicppcomplete彻底得google了一下。发现vim7本身就支持补全，而且补全的机制十分强大。</br>
+</br>
+在_vimrc里加：</br>
+autocmd FileType python set omnifunc=pythoncomplete#Complete</br>
+autocmd FileType javascript set omnifunc=javascrīptcomplete#CompleteJS</br>
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags</br>
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS</br>
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags</br>
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP</br>
+autocmd FileType c set omnifunc=ccomplete#Complete</br>
+</br>
+然后就可以补全python js html css xml php c 如果下载了omnicppcomplete，解压后放到%HOMEPATH%\vimfiles下，然后在_vimrc里加：</br>
+</br>
+set nocp</br>
+filetype plugin on</br>
+</br>
+现在补全功能就狂强了。需要补全的时候ctrl-x ctrl-o连着按，就会跳出一个候选菜单。啊，以前不知道，还到处搜索vim补全插件。现在好了。非常齐全了。呼，赶快开始享受编程！</br>
+</br>
+http://www.woodpecker.org.cn/obp/zqtips/Vim/tip94.txt</br>
+这里还有一堆ctags使用说明，哈，很全！</br>
+</br>
 回想之前写Python程序的体验，一般开两个窗口，一个vim，一个控制台。这边写代码，那边dir，真是艰苦卓绝啊！哈哈……我居然就这样用着写下来了。用到最后我突然发现没有dir和help、不能交互、只能打印的语言不是好语言，一度写js觉得要发疯。哈哈，想了就想笑。

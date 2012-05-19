@@ -31,187 +31,187 @@ tags:
 published: true
 type: post
 ---
-<hr />
-
-<span>写在最前面</span>
-
-笔者写做本文的目的，主要是为初学GTK编程的新手们提供一个能够快速上手的学习档案，能够通过自己将所有的代码输入并编译，以达到学习的目的。同时，也希望它成为一个参考手册，希望GTK中的每一个API都能在本文中找到相应的示例。
-
-<!--more-->
-
-笔者将尽力保证所有的代码都是最短小的，这样才能保证大家都有足够的动力去手工输入它。
-
-由于笔者时间及精力有限，不能一次将所有内容呈现给所有读者，因此拟定了一个计划：每天更新一个章节的内容，在笔者的Blog上进行连载，同时会不断地对以前的内容进行修改和完善，因此为了保证大家能够读到最新的内容，请随时关注笔者的Blog：<a href="http://lvjinhua.cublog.cn/" target="_blank">http://lvjinhua.cublog.cn</a>
-
-起笔的日子：2006.09.20
-
-<!--more-->
-<ul>
-	<li><span style="font-size: large;">为什么是GTK？</span></li>
-</ul>
-<span style="font-size: small;"><span style="font-size: x-small;">为什么不是GTK？笔者不想花费太多的口水去辨证为什么选择GTK而不是其它的东西；任何技术都没有好坏之分，只有使用它的人有能力的强弱之别；笔者认为比较明智的做法是：多编些程序，少做些争论。
-</span>
-</span>
-<ul>
-	<li><span style="font-size: large;">1、GTK简介</span></li>
-</ul>
-GTK (GIMP Toolkit) 是一套用于创建图形用户界面的工具包。它遵循 LGPL 许可证，所以可以用它来开发开源软件、自由软件，甚至是封闭源代码的商业软件，而不用花费任何费用来购买许可证和使用权。当前，GTK已经被成功地应用到了大量的自由软件及商业软件中，已经取得了很大的成功。
-
-GTK 的创建者：
-Peter Mattis： petm@xcf.berkeley.edu
-Spencer Kimball： spencer@xcf.berkeley.edu
-Josh MacDonald： jmacd@xcf.berkeley.edu
-<table align="center">
-<tbody>
-<tr>
-<td>当前，GTK主要由几大组件构成：
-*Gtk+：GTK的主要构件，包括所有的图形控件及大量实用的API。
-*Glib：包含一些标准函数的替代函数，以及一些处理链表等数据结构的函数等。这些替代函数被用来增强GTK 的可移植性，同时提供 libc 的对应函数的增强版本。
-*Pango：该组件用来处理国际化文字输出。</td>
-</tr>
-</tbody>
-</table>
-<ul>
-	<li><span style="font-size: large;">2、预备</span></li>
-</ul>
-工欲xxx，必先利其器！在进行实际的程序设计之前，应该先明确一些主要的开发工具。
-1）GTK是跨平台的，它能够运行于Linux/Unix/Windows/MacOS及嵌入式系统，但这不是本文所关注的重点；实际上，只要按照GTK所提供的API去编程，基本上在一个平台上设计的程序，在其它平台可以不加任何修改而成功地进行编译。
-
-笔者使用的操作系统是：<a href="http://www.dubuntu.com/" target="_blank">Dubuntu-6.06</a>，本文中所有的示例代码将在该平台上进行开发并编译运行；当然，这并不代表不能使用其它操作系统，只要安装了GCC编译环境、GTK/Glib/Libc开发库，基本上就能成功地编译运行本文中的所有示例，现就Ubuntu Dapper 发行版GTK开发环境安装方法简述如下：
-<table align="center">
-<tbody>
-<tr>
-<td>sudo apt-get install vim                        #是的，笔者使用vim来编写代码，当然您可以使用任何自己喜欢的编辑器
-sudo apt-get install build-essential       #这将安装
-gcc/g++/gdb/make 等基本编程工具
-sudo apt-get install gnome-core-devel  #这将安装 libgtk2.0-dev libglib2.0-dev 等开发相关的库文件
-sudo apt-get install pkg-config            #用于在编译GTK程序时自动找出头文件及库文件位置
-sudo apt-get install devhelp                 #这将安装 devhelp GTK文档查看程序
-sudo apt-get install libglib2.0-doc libgtk2.0-doc
-#这将安装 gtk/glib 的API参考手册及其它帮助文档
-sudo apt-get instal glade libglade2-dev #这将安装基于GTK的界面构造程序</td>
-</tr>
-</tbody>
-</table>
-当然，其它的 Linux 发行版可参考相应的文档进行开发环境的搭建，各大Linux论坛是个不错的咨询地：<a href="http://www.cublog.cn/u/11826/www.linuxsir.org%20" target="_blank">www.linuxsir.org </a>, <a href="http://www.cublog.cn/u/11826/www.linuxfans.org" target="_blank">www.linuxfans.org</a>
-
-如果有热心的同仁能提供其它操作系统 GTK 开发库的安装方法，欢迎提供给我笔者，笔者将在这里分享给大家！先行谢过了。
-<table align="center">
-<tbody>
-<tr>
-<td>
-<div>
-
-<span style="font-size: small;">Windows 平台以MinGW为例的环境设置：</span>
-
-来自<a href="http://blog.chinaunix.net/u/8780/showart.php?id=180307" target="_blank">linxh 的Blog</a>
-
-</div>
-<div><span style="font-size: x-small;">1. 从</span><span style="font-size: x-small;">http://www.gimp.org/~tml/gimp/win32/downloads.html</span><span style="font-size: x-small;">下载以下文件：</span></div>
-<ul>
-	<li><a href="ftp://ftp.gtk.org/pub/glib/2.12/win32/glib-2.12.1.zip"><span style="color: #0000ff;">glib-2.12.1.zip</span></a>. Runtime for GLib 2.12.1. Requires libiconv and gettext.</li>
-	<li><a href="ftp://ftp.gtk.org/pub/glib/2.12/win32/glib-dev-2.12.1.zip"><span style="color: #0000ff;">glib-dev-2.12.1.zip</span></a>. Corresponding developer package, i.e. headers, import libraries and documentation.</li>
-</ul>
-<ul>
-	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/gtk+-2.8.20.zip"><span style="color: #0000ff;">gtk+-2.8.20.zip</span></a>. Runtime for GTK+ 2.8.20. Requires GLib 2.12, atk 1.10, Pango 1.12 and cairo 1.2. In addition, if you want to be able to load PNG, JPEG or TIFF images with gdk-pixbuf, you will need libpng and zlib, libjpeg and libtiff respectively.</li>
-	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/gtk+-dev-2.8.20.zip"><span style="color: #0000ff;">gtk+-dev-2.8.20.zip</span></a>. Corresponding developer package.</li>
-	<li><a href="ftp://ftp.gtk.org/pub/pango/1.12/win32/pango-1.12.3.zip"><span style="color: #0000ff;">pango-1.12.3.zip</span></a>. Pango 1.12.3. Pango is used by GTK+ 2 and GIMP 2. Requires GLib 2.12 and cairo 1.2.</li>
-	<li><a href="ftp://ftp.gtk.org/pub/pango/1.12/win32/pango-dev-1.12.3.zip"><span style="color: #0000ff;">pango-dev-1.12.3.zip</span></a>. Corresponding developer package.</li>
-	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/atk-1.10.3.zip"><span style="color: #0000ff;">atk-1.10.3.zip</span></a><span style="color: #0000ff;">.</span> Atk is used by GTK+ 2.</li>
-	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/atk-dev-1.10.3.zip"><span style="color: #0000ff;">atk-dev-1.10.3.zip</span></a>. Corresponding developer package.</li>
-	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/cairo-1.2.2.zip"><span style="color: #0000ff;">cairo-1.2.2.zip</span></a>. Cairo is used by GTK+ 2 and Pango.</li>
-	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/cairo-dev-1.2.2.zip"><span style="color: #0000ff;">cairo-dev-1.2.2.zip</span></a>. Corresponding developer package.</li>
-	<li><span style="color: #0000ff;">pkg-config-0.20.zip</span>. <a href="http://www.freedesktop.org/software/pkgconfig/"><span style="color: #0000ff;">Pkg-config</span></a> is a neat program that is useful in makefiles etc and extensively used in building software according to the GTK+ and GNOME conventions, using autotools etc. It uses a "database" specifying interdependencies among softawre packages. It is used to get the compile and link flags needed when building software using libraries that provide pkg-config data. Requires GLib 2.x.</li>
-	<li><span style="color: #0000ff;">GNU libiconv</span> for Win32. Both runtime and developer files. <a href="http://www.gnu.org/software/libiconv/"><span style="color: #0000ff;">GNU Libiconv</span></a> is an implementation of <a href="http://www.opennc.org/onlinepubs/7908799/xsh/iconv.html"><span style="color: #0000ff;">iconv</span></a>. GLib uses libiconv, so you will need this.</li>
-	<li><span style="color: #0000ff;">gettext-0.14.5.zip</span>. Just the GNU libintl (internationalization library) DLL (intl.dll). GLib uses libintl, so you will need this.</li>
-	<li><span style="color: #0000ff;">gettext-dev-0.14.5.zip</span>. GNU gettext deveoper files and tools for Win32, containing the header libintl.h, msgfmt.exe, other programs, documentation, and various other files. libintl.h is needed if you build software that uses GNU gettext for internationalization. Msgfm<span style="color: #000000;">t is needed if you want to recompile message catalogs. The other commands can be used to manipulate message catalogs in other ways. </span>
-<div><span style="font-size: x-small;"><span style="color: #000000;">解压到一个目录下（以c:\gtk为例）。</span></span></div>
-<div><span style="font-size: x-small;"><span style="color: #000000;">2. 从</span></span><a href="http://gnuwin32.sourceforge.net/packages/libpng.htm"><span style="font-size: x-small;"><span style="color: #000000;">http://gnuwin32.sourceforge.net/packages/libpng.htm</span></span></a><span style="font-size: x-small;"><span style="color: #000000;">下载libpng，安装至c:\gtk下。</span></span></div>
-<div><span style="font-size: x-small;"><span style="color: #000000;">3. 编译：</span></span></div>
-<div><span style="font-size: x-small;"><span style="color: #000000;">(1) 设置环境变量 set PKG_CONFIG_PATH=C:\gtk\lib\pkgconfig</span></span></div>
-<div><span style="font-size: x-small;"><span style="color: #000000;">(2) 运行 pkg-config --cflags  --libs gtk+-win32-2.0</span></span></div>
-<div><span style="font-size: x-small;"><span style="color: #000000;">(3)  编译时加上上面的输出作为参数</span></span></div></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<ul>
-	<li><span style="font-size: large;">3、Hello,Dubuntu！</span></li>
-</ul>
-嗯，早就急不可待了，让我们开始我们的第一个程序吧！
-
-本程序的主要功能： 显示一个窗口，并在窗口的标题栏显示字符串"Hello, Dubuntu!"
-源代码如下所示，编译成功后，可以通过命令行输入 ./hello_dubuntu 来运行此程序，显示效果如下：
-<div></div>
-<table width="100%" border="1" cellspacing="1" cellpadding="1">
-<tbody>
-<tr>
-<td>hello_dubuntu.c</td>
-</tr>
-<tr>
-<td>#include&lt;gtk/gtk.h&gt;
-/* 一般可以在 /usr/include/gtk-2.0 下找到上边的头文件
-* 上边的头文件的作用是包含进行GTK编程所有可能用到的头
-* 文件，包括glib.h等
-*/
-int
-main(int argc, char *argv[])
-{
-GtkWidget *window;
-// GtkWidget 是绝大部分可视组件的的基类
-gtk_init(&amp;argc, &amp;argv);
-//对程序传入的命令行参数进行标准化处理
-window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-//创建窗口(200x200大小)
-gtk_window_set_title(GTK_WINDOW(window), "Hello,Dubuntu!");
-//设置窗口标题
-gtk_widget_show(window);
-//显示窗口
-gtk_main();
-//Gtk程序主循环
-return 0;
-}</td>
-</tr>
-<tr>
-<td>编译程序： gcc hello_dubuntu.c -o hello_dubuntu `pkg-config --cflags --libs gtk+-2.0`  # 注意："`" 不是普通的单引号 "'"，而是同"~"在一起的那个符号！</td>
-</tr>
-</tbody>
-</table>
-是的，上边的程序非常简单，除了注释就没几条语句了！但它确实是一个GTK程序，虽然它还不够完善，缺少信号处理，因此当您单击“关闭”按钮关闭此窗口后，实际上程序还在运行。
-
-1) 编译程序的命令行：
-如上，使用GNU C语言编译器 gcc ， 其中 pkg-config --cflags --libs gtk+-2.0 用于生成 gcc 编译及链接程序时所必须的头文件及库文件列表，在笔者的机器上运行该命令得到的结果如下：
-<table width="100%" border="1" cellspacing="1" cellpadding="1">
-<tbody>
-<tr>
-<td>命令： pkg-config --cflags --libs gtk+-2.0</td>
-</tr>
-<tr>
-<td>输出：
--I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include  -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lfontconfig -lXext -lXrender -lXinerama -lXi -lXrandr -lXcursor -lXfixes -lpango-1.0 -lcairo -lX11 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0</td>
-</tr>
-</tbody>
-</table>
-2) 大家如果对某个GTK标准API定义，或者某个类型/常量定义不清楚，可以在 devhelp 帮助程序中进行搜索，以查看某参数说明。
-
-3) gtk_init(&amp;argc, &amp;argv) 函数用于对传入进来的标准命令行参数进行解析并处理，这些标准命令行参数为（即：运行我们的程序时，通过命令行传入的下列参数会被自动处理）：
-<ul compact="compact">
-	<li><tt>--gtk-module</tt></li>
-	<li><tt>--g-fatal-warnings</tt></li>
-	<li><tt>--gtk-debug</tt></li>
-	<li><tt>--gtk-no-debug</tt></li>
-	<li><tt>--gdk-debug</tt></li>
-	<li><tt>--gdk-no-debug</tt></li>
-	<li><tt>--display</tt></li>
-	<li><tt>--sync</tt></li>
-	<li><tt>--name</tt></li>
-	<li><tt>--class</tt></li>
-</ul>
-4) gtk_widget_show(window) 用于告诉程序， 我们的 window 构件已经准备完成，可以显示了。
-5) gtk_main() ，程序将会运行到此，然后等待“事件”的发生；当有事件发生后，将调用此事件对应的回调函数，当回调函数执行完毕，又会重新回到 gtk_main() ，等待新的“事件”发生。
-6) 宏 GTK_WINDOW(window) 是用于进行类型检查及转换，它将把一个可以转化为 GtkWindow 的构件强制转换为GtkWindow 类型后传递给函数。
-
-好了，hello_dubuntu.c 理解了吗？ 什么！没有理解！ 不要紧，我们下边还会有很多这样的小例子，再多输入几个就会理解了，相信我！
-
+<hr /></br>
+</br>
+<span>写在最前面</span></br>
+</br>
+笔者写做本文的目的，主要是为初学GTK编程的新手们提供一个能够快速上手的学习档案，能够通过自己将所有的代码输入并编译，以达到学习的目的。同时，也希望它成为一个参考手册，希望GTK中的每一个API都能在本文中找到相应的示例。</br>
+</br>
+<!--more--></br>
+</br>
+笔者将尽力保证所有的代码都是最短小的，这样才能保证大家都有足够的动力去手工输入它。</br>
+</br>
+由于笔者时间及精力有限，不能一次将所有内容呈现给所有读者，因此拟定了一个计划：每天更新一个章节的内容，在笔者的Blog上进行连载，同时会不断地对以前的内容进行修改和完善，因此为了保证大家能够读到最新的内容，请随时关注笔者的Blog：<a href="http://lvjinhua.cublog.cn/" target="_blank">http://lvjinhua.cublog.cn</a></br>
+</br>
+起笔的日子：2006.09.20</br>
+</br>
+<!--more--></br>
+<ul></br>
+	<li><span style="font-size: large;">为什么是GTK？</span></li></br>
+</ul></br>
+<span style="font-size: small;"><span style="font-size: x-small;">为什么不是GTK？笔者不想花费太多的口水去辨证为什么选择GTK而不是其它的东西；任何技术都没有好坏之分，只有使用它的人有能力的强弱之别；笔者认为比较明智的做法是：多编些程序，少做些争论。</br>
+</span></br>
+</span></br>
+<ul></br>
+	<li><span style="font-size: large;">1、GTK简介</span></li></br>
+</ul></br>
+GTK (GIMP Toolkit) 是一套用于创建图形用户界面的工具包。它遵循 LGPL 许可证，所以可以用它来开发开源软件、自由软件，甚至是封闭源代码的商业软件，而不用花费任何费用来购买许可证和使用权。当前，GTK已经被成功地应用到了大量的自由软件及商业软件中，已经取得了很大的成功。</br>
+</br>
+GTK 的创建者：</br>
+Peter Mattis： petm@xcf.berkeley.edu</br>
+Spencer Kimball： spencer@xcf.berkeley.edu</br>
+Josh MacDonald： jmacd@xcf.berkeley.edu</br>
+<table align="center"></br>
+<tbody></br>
+<tr></br>
+<td>当前，GTK主要由几大组件构成：</br>
+*Gtk+：GTK的主要构件，包括所有的图形控件及大量实用的API。</br>
+*Glib：包含一些标准函数的替代函数，以及一些处理链表等数据结构的函数等。这些替代函数被用来增强GTK 的可移植性，同时提供 libc 的对应函数的增强版本。</br>
+*Pango：该组件用来处理国际化文字输出。</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+<ul></br>
+	<li><span style="font-size: large;">2、预备</span></li></br>
+</ul></br>
+工欲xxx，必先利其器！在进行实际的程序设计之前，应该先明确一些主要的开发工具。</br>
+1）GTK是跨平台的，它能够运行于Linux/Unix/Windows/MacOS及嵌入式系统，但这不是本文所关注的重点；实际上，只要按照GTK所提供的API去编程，基本上在一个平台上设计的程序，在其它平台可以不加任何修改而成功地进行编译。</br>
+</br>
+笔者使用的操作系统是：<a href="http://www.dubuntu.com/" target="_blank">Dubuntu-6.06</a>，本文中所有的示例代码将在该平台上进行开发并编译运行；当然，这并不代表不能使用其它操作系统，只要安装了GCC编译环境、GTK/Glib/Libc开发库，基本上就能成功地编译运行本文中的所有示例，现就Ubuntu Dapper 发行版GTK开发环境安装方法简述如下：</br>
+<table align="center"></br>
+<tbody></br>
+<tr></br>
+<td>sudo apt-get install vim                        #是的，笔者使用vim来编写代码，当然您可以使用任何自己喜欢的编辑器</br>
+sudo apt-get install build-essential       #这将安装</br>
+gcc/g++/gdb/make 等基本编程工具</br>
+sudo apt-get install gnome-core-devel  #这将安装 libgtk2.0-dev libglib2.0-dev 等开发相关的库文件</br>
+sudo apt-get install pkg-config            #用于在编译GTK程序时自动找出头文件及库文件位置</br>
+sudo apt-get install devhelp                 #这将安装 devhelp GTK文档查看程序</br>
+sudo apt-get install libglib2.0-doc libgtk2.0-doc</br>
+#这将安装 gtk/glib 的API参考手册及其它帮助文档</br>
+sudo apt-get instal glade libglade2-dev #这将安装基于GTK的界面构造程序</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+当然，其它的 Linux 发行版可参考相应的文档进行开发环境的搭建，各大Linux论坛是个不错的咨询地：<a href="http://www.cublog.cn/u/11826/www.linuxsir.org%20" target="_blank">www.linuxsir.org </a>, <a href="http://www.cublog.cn/u/11826/www.linuxfans.org" target="_blank">www.linuxfans.org</a></br>
+</br>
+如果有热心的同仁能提供其它操作系统 GTK 开发库的安装方法，欢迎提供给我笔者，笔者将在这里分享给大家！先行谢过了。</br>
+<table align="center"></br>
+<tbody></br>
+<tr></br>
+<td></br>
+<div></br>
+</br>
+<span style="font-size: small;">Windows 平台以MinGW为例的环境设置：</span></br>
+</br>
+来自<a href="http://blog.chinaunix.net/u/8780/showart.php?id=180307" target="_blank">linxh 的Blog</a></br>
+</br>
+</div></br>
+<div><span style="font-size: x-small;">1. 从</span><span style="font-size: x-small;">http://www.gimp.org/~tml/gimp/win32/downloads.html</span><span style="font-size: x-small;">下载以下文件：</span></div></br>
+<ul></br>
+	<li><a href="ftp://ftp.gtk.org/pub/glib/2.12/win32/glib-2.12.1.zip"><span style="color: #0000ff;">glib-2.12.1.zip</span></a>. Runtime for GLib 2.12.1. Requires libiconv and gettext.</li></br>
+	<li><a href="ftp://ftp.gtk.org/pub/glib/2.12/win32/glib-dev-2.12.1.zip"><span style="color: #0000ff;">glib-dev-2.12.1.zip</span></a>. Corresponding developer package, i.e. headers, import libraries and documentation.</li></br>
+</ul></br>
+<ul></br>
+	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/gtk+-2.8.20.zip"><span style="color: #0000ff;">gtk+-2.8.20.zip</span></a>. Runtime for GTK+ 2.8.20. Requires GLib 2.12, atk 1.10, Pango 1.12 and cairo 1.2. In addition, if you want to be able to load PNG, JPEG or TIFF images with gdk-pixbuf, you will need libpng and zlib, libjpeg and libtiff respectively.</li></br>
+	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/gtk+-dev-2.8.20.zip"><span style="color: #0000ff;">gtk+-dev-2.8.20.zip</span></a>. Corresponding developer package.</li></br>
+	<li><a href="ftp://ftp.gtk.org/pub/pango/1.12/win32/pango-1.12.3.zip"><span style="color: #0000ff;">pango-1.12.3.zip</span></a>. Pango 1.12.3. Pango is used by GTK+ 2 and GIMP 2. Requires GLib 2.12 and cairo 1.2.</li></br>
+	<li><a href="ftp://ftp.gtk.org/pub/pango/1.12/win32/pango-dev-1.12.3.zip"><span style="color: #0000ff;">pango-dev-1.12.3.zip</span></a>. Corresponding developer package.</li></br>
+	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/atk-1.10.3.zip"><span style="color: #0000ff;">atk-1.10.3.zip</span></a><span style="color: #0000ff;">.</span> Atk is used by GTK+ 2.</li></br>
+	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/atk-dev-1.10.3.zip"><span style="color: #0000ff;">atk-dev-1.10.3.zip</span></a>. Corresponding developer package.</li></br>
+	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/cairo-1.2.2.zip"><span style="color: #0000ff;">cairo-1.2.2.zip</span></a>. Cairo is used by GTK+ 2 and Pango.</li></br>
+	<li><a href="ftp://ftp.gtk.org/pub/gtk/v2.8/win32/cairo-dev-1.2.2.zip"><span style="color: #0000ff;">cairo-dev-1.2.2.zip</span></a>. Corresponding developer package.</li></br>
+	<li><span style="color: #0000ff;">pkg-config-0.20.zip</span>. <a href="http://www.freedesktop.org/software/pkgconfig/"><span style="color: #0000ff;">Pkg-config</span></a> is a neat program that is useful in makefiles etc and extensively used in building software according to the GTK+ and GNOME conventions, using autotools etc. It uses a "database" specifying interdependencies among softawre packages. It is used to get the compile and link flags needed when building software using libraries that provide pkg-config data. Requires GLib 2.x.</li></br>
+	<li><span style="color: #0000ff;">GNU libiconv</span> for Win32. Both runtime and developer files. <a href="http://www.gnu.org/software/libiconv/"><span style="color: #0000ff;">GNU Libiconv</span></a> is an implementation of <a href="http://www.opennc.org/onlinepubs/7908799/xsh/iconv.html"><span style="color: #0000ff;">iconv</span></a>. GLib uses libiconv, so you will need this.</li></br>
+	<li><span style="color: #0000ff;">gettext-0.14.5.zip</span>. Just the GNU libintl (internationalization library) DLL (intl.dll). GLib uses libintl, so you will need this.</li></br>
+	<li><span style="color: #0000ff;">gettext-dev-0.14.5.zip</span>. GNU gettext deveoper files and tools for Win32, containing the header libintl.h, msgfmt.exe, other programs, documentation, and various other files. libintl.h is needed if you build software that uses GNU gettext for internationalization. Msgfm<span style="color: #000000;">t is needed if you want to recompile message catalogs. The other commands can be used to manipulate message catalogs in other ways. </span></br>
+<div><span style="font-size: x-small;"><span style="color: #000000;">解压到一个目录下（以c:\gtk为例）。</span></span></div></br>
+<div><span style="font-size: x-small;"><span style="color: #000000;">2. 从</span></span><a href="http://gnuwin32.sourceforge.net/packages/libpng.htm"><span style="font-size: x-small;"><span style="color: #000000;">http://gnuwin32.sourceforge.net/packages/libpng.htm</span></span></a><span style="font-size: x-small;"><span style="color: #000000;">下载libpng，安装至c:\gtk下。</span></span></div></br>
+<div><span style="font-size: x-small;"><span style="color: #000000;">3. 编译：</span></span></div></br>
+<div><span style="font-size: x-small;"><span style="color: #000000;">(1) 设置环境变量 set PKG_CONFIG_PATH=C:\gtk\lib\pkgconfig</span></span></div></br>
+<div><span style="font-size: x-small;"><span style="color: #000000;">(2) 运行 pkg-config --cflags  --libs gtk+-win32-2.0</span></span></div></br>
+<div><span style="font-size: x-small;"><span style="color: #000000;">(3)  编译时加上上面的输出作为参数</span></span></div></li></br>
+</ul></br>
+</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+<ul></br>
+	<li><span style="font-size: large;">3、Hello,Dubuntu！</span></li></br>
+</ul></br>
+嗯，早就急不可待了，让我们开始我们的第一个程序吧！</br>
+</br>
+本程序的主要功能： 显示一个窗口，并在窗口的标题栏显示字符串"Hello, Dubuntu!"</br>
+源代码如下所示，编译成功后，可以通过命令行输入 ./hello_dubuntu 来运行此程序，显示效果如下：</br>
+<div></div></br>
+<table width="100%" border="1" cellspacing="1" cellpadding="1"></br>
+<tbody></br>
+<tr></br>
+<td>hello_dubuntu.c</td></br>
+</tr></br>
+<tr></br>
+<td>#include&lt;gtk/gtk.h&gt;</br>
+/* 一般可以在 /usr/include/gtk-2.0 下找到上边的头文件</br>
+* 上边的头文件的作用是包含进行GTK编程所有可能用到的头</br>
+* 文件，包括glib.h等</br>
+*/</br>
+int</br>
+main(int argc, char *argv[])</br>
+{</br>
+GtkWidget *window;</br>
+// GtkWidget 是绝大部分可视组件的的基类</br>
+gtk_init(&amp;argc, &amp;argv);</br>
+//对程序传入的命令行参数进行标准化处理</br>
+window = gtk_window_new(GTK_WINDOW_TOPLEVEL);</br>
+//创建窗口(200x200大小)</br>
+gtk_window_set_title(GTK_WINDOW(window), "Hello,Dubuntu!");</br>
+//设置窗口标题</br>
+gtk_widget_show(window);</br>
+//显示窗口</br>
+gtk_main();</br>
+//Gtk程序主循环</br>
+return 0;</br>
+}</td></br>
+</tr></br>
+<tr></br>
+<td>编译程序： gcc hello_dubuntu.c -o hello_dubuntu `pkg-config --cflags --libs gtk+-2.0`  # 注意："`" 不是普通的单引号 "'"，而是同"~"在一起的那个符号！</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+是的，上边的程序非常简单，除了注释就没几条语句了！但它确实是一个GTK程序，虽然它还不够完善，缺少信号处理，因此当您单击“关闭”按钮关闭此窗口后，实际上程序还在运行。</br>
+</br>
+1) 编译程序的命令行：</br>
+如上，使用GNU C语言编译器 gcc ， 其中 pkg-config --cflags --libs gtk+-2.0 用于生成 gcc 编译及链接程序时所必须的头文件及库文件列表，在笔者的机器上运行该命令得到的结果如下：</br>
+<table width="100%" border="1" cellspacing="1" cellpadding="1"></br>
+<tbody></br>
+<tr></br>
+<td>命令： pkg-config --cflags --libs gtk+-2.0</td></br>
+</tr></br>
+<tr></br>
+<td>输出：</br>
+-I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include  -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lfontconfig -lXext -lXrender -lXinerama -lXi -lXrandr -lXcursor -lXfixes -lpango-1.0 -lcairo -lX11 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0</td></br>
+</tr></br>
+</tbody></br>
+</table></br>
+2) 大家如果对某个GTK标准API定义，或者某个类型/常量定义不清楚，可以在 devhelp 帮助程序中进行搜索，以查看某参数说明。</br>
+</br>
+3) gtk_init(&amp;argc, &amp;argv) 函数用于对传入进来的标准命令行参数进行解析并处理，这些标准命令行参数为（即：运行我们的程序时，通过命令行传入的下列参数会被自动处理）：</br>
+<ul compact="compact"></br>
+	<li><tt>--gtk-module</tt></li></br>
+	<li><tt>--g-fatal-warnings</tt></li></br>
+	<li><tt>--gtk-debug</tt></li></br>
+	<li><tt>--gtk-no-debug</tt></li></br>
+	<li><tt>--gdk-debug</tt></li></br>
+	<li><tt>--gdk-no-debug</tt></li></br>
+	<li><tt>--display</tt></li></br>
+	<li><tt>--sync</tt></li></br>
+	<li><tt>--name</tt></li></br>
+	<li><tt>--class</tt></li></br>
+</ul></br>
+4) gtk_widget_show(window) 用于告诉程序， 我们的 window 构件已经准备完成，可以显示了。</br>
+5) gtk_main() ，程序将会运行到此，然后等待“事件”的发生；当有事件发生后，将调用此事件对应的回调函数，当回调函数执行完毕，又会重新回到 gtk_main() ，等待新的“事件”发生。</br>
+6) 宏 GTK_WINDOW(window) 是用于进行类型检查及转换，它将把一个可以转化为 GtkWindow 的构件强制转换为GtkWindow 类型后传递给函数。</br>
+</br>
+好了，hello_dubuntu.c 理解了吗？ 什么！没有理解！ 不要紧，我们下边还会有很多这样的小例子，再多输入几个就会理解了，相信我！</br>
+</br>
 下集预告：将在窗口中添加一个按钮，并为按钮关联"clicked"事件，以使单击按钮后会有一些返回。

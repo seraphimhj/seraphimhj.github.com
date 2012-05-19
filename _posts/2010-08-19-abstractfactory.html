@@ -24,61 +24,61 @@ tags:
 published: true
 type: post
 ---
-断断续续地看完了设计模式教程的抽象工厂模式一节。对C#不熟，看的云里雾里，好歹总结一下吧。
-
-创建型模式主要解决的是new的问题。
-
-我们通常创建一个对象：Road road = new Road();
-
-这样客户代码就依赖于实现（假如Road变化频繁，当下需要一个maRoad对象，那么代码就需要改变），模式的作用：找出变化，然后封装。这里可以用方法把Road进行封装，以后只需改变自己所建的类库。
-
-<!--more-->
-
-第二个motivation：当有一系列相互依赖的对象需要创建。
-
-当创建多个系列产品时，如果采用switch语句，那么，每次增加新的系列产品，都需要进行代码的修改，因而可以在抽象工厂的生产产品时采用反射机制
-
-<code>using System;</code>
-
-using System.Reflection;
-
-namespace AbstractFactory
-{
-///
-/// AbstractFactory类
-///
-public abstract class AbstractFactory
-{
-public static AbstractFactory GetInstance()
-{
-string factoryName = Constant.STR_FACTORYNAME.ToString();
-
-AbstractFactory instance;
-
-if(factoryName != "")
-instance = (AbstractFactory)Assembly.Load(factoryName).CreateInstance(factoryName);
-else
-instance = null;
-
-return instance;
-}
-
-public abstract Tax CreateTax();
-
-public abstract Bonus CreateBonus();
-}
-}
-<span style="font-size: small;"><span style="line-height: 19px;"><span style="font-family: Monaco, Consolas, 'Andale Mono', 'DejaVu Sans Mono', monospace; font-size: small;"><span style="line-height: 19px;">
-</span></span></span></span>
-
-参考文献：
-
-<a href="http://terrylee.cnblogs.com/archive/2005/12/13/295965.html">http://terrylee.cnblogs.com/archive/2005/12/13/295965.html</a>
-
-<a href="http://www.cnblogs.com/anlyren/archive/2008/01/31/abstract_factory.html">http://www.cnblogs.com/anlyren/archive/2008/01/31/abstract_factory.html</a>
-
-<a href="http://ldjsyl.javaeye.com/blog/184640">http://ldjsyl.javaeye.com/blog/184640</a>
-
-<a href="http://www.cnblogs.com/wayfarer/archive/2004/04/26/7742.html">http://www.cnblogs.com/wayfarer/archive/2004/04/26/7742.html</a>
-
+断断续续地看完了设计模式教程的抽象工厂模式一节。对C#不熟，看的云里雾里，好歹总结一下吧。</br>
+</br>
+创建型模式主要解决的是new的问题。</br>
+</br>
+我们通常创建一个对象：Road road = new Road();</br>
+</br>
+这样客户代码就依赖于实现（假如Road变化频繁，当下需要一个maRoad对象，那么代码就需要改变），模式的作用：找出变化，然后封装。这里可以用方法把Road进行封装，以后只需改变自己所建的类库。</br>
+</br>
+<!--more--></br>
+</br>
+第二个motivation：当有一系列相互依赖的对象需要创建。</br>
+</br>
+当创建多个系列产品时，如果采用switch语句，那么，每次增加新的系列产品，都需要进行代码的修改，因而可以在抽象工厂的生产产品时采用反射机制</br>
+</br>
+<code>using System;</code></br>
+</br>
+using System.Reflection;</br>
+</br>
+namespace AbstractFactory</br>
+{</br>
+///</br>
+/// AbstractFactory类</br>
+///</br>
+public abstract class AbstractFactory</br>
+{</br>
+public static AbstractFactory GetInstance()</br>
+{</br>
+string factoryName = Constant.STR_FACTORYNAME.ToString();</br>
+</br>
+AbstractFactory instance;</br>
+</br>
+if(factoryName != "")</br>
+instance = (AbstractFactory)Assembly.Load(factoryName).CreateInstance(factoryName);</br>
+else</br>
+instance = null;</br>
+</br>
+return instance;</br>
+}</br>
+</br>
+public abstract Tax CreateTax();</br>
+</br>
+public abstract Bonus CreateBonus();</br>
+}</br>
+}</br>
+<span style="font-size: small;"><span style="line-height: 19px;"><span style="font-family: Monaco, Consolas, 'Andale Mono', 'DejaVu Sans Mono', monospace; font-size: small;"><span style="line-height: 19px;"></br>
+</span></span></span></span></br>
+</br>
+参考文献：</br>
+</br>
+<a href="http://terrylee.cnblogs.com/archive/2005/12/13/295965.html">http://terrylee.cnblogs.com/archive/2005/12/13/295965.html</a></br>
+</br>
+<a href="http://www.cnblogs.com/anlyren/archive/2008/01/31/abstract_factory.html">http://www.cnblogs.com/anlyren/archive/2008/01/31/abstract_factory.html</a></br>
+</br>
+<a href="http://ldjsyl.javaeye.com/blog/184640">http://ldjsyl.javaeye.com/blog/184640</a></br>
+</br>
+<a href="http://www.cnblogs.com/wayfarer/archive/2004/04/26/7742.html">http://www.cnblogs.com/wayfarer/archive/2004/04/26/7742.html</a></br>
+</br>
 <a href="http://tech.ddvip.com/2009-01/1231903193105793.html">http://tech.ddvip.com/2009-01/1231903193105793.html</a>
