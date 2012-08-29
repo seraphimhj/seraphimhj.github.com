@@ -3,13 +3,22 @@ layout: page
 title: Hello World!
 tagline: Supporting tagline
 ---
+
 {% include JB/setup %}
 
-<h2>{{ page.title }}</h2>
-<p>The Latest Posts</p>
-<ul class="posts">
-  {% for post in site.posts %}
-    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
-  {% endfor %}
+
+<div id="home">
+    <h1>Blog Posts</h1>
+    <ul class="posts">
+        {% for post in site.posts %}
+            <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+<h1>Sample</h1>
+<ul>
+    <li><span>14 Apr 2011</span> &raquo; <a href="http://skillsmatter.com/podcast/agile-testing/optimizing-for-happiness">Video: ACCU Conference - Optimizing For Happiness</a></li>
+    <li><span>09 Apr 2011</span> &raquo; <a href="http://blogs.sitepoint.com/podcast-107-social-coding-with-githubs-tom-preston-werner/">SitePoint Podcast: Social Coding with GitHub’s Tom Preston-Werner</a></li>
 </ul>
+</div>
 
