@@ -1,0 +1,143 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  dHlwZWRlZiDmlbDnu4Q=
+
+meta: 
+  _aioseop_description: !binary |
+    55CG6KejdHlwZWRlZiDmlbDnu4Q=
+
+  _aioseop_keywords: typedef
+  _edit_last: "1"
+  _aioseop_title: !binary |
+    dHlwZWRlZiDmlbDnu4Q=
+
+tags: 
+- c/c++
+- Technics
+- typedef
+published: true
+type: post
+---
+typedef到处都是，但是能够真正懂得typedef使用的不算太多。对于初学者而言，看别人的源码时对到处充斥的typedef往往不知所错，而参考书又很少，所以在此给出一个源码，供大家参考</br>
+</br>
+<!--more--></br>
+</br>
+#define for if (0); else for</br>
+</br>
+#define dim(a) (sizeof(a)/sizeof(a[0]))</br>
+</br>
+enum {N1 = 2, N2 = 3, N3 = 4, N4 = 5};</br>
+</br>
+typedef int DataType;</br>
+</br>
+typedef DataType ARR1[N4];</br>
+</br>
+typedef ARR1 ARR2[N3];</br>
+</br>
+typedef ARR2 ARR3[N2];</br>
+</br>
+ARR1 a;</br>
+</br>
+ARR2 b;</br>
+</br>
+ARR3 c;</br>
+</br>
+void exam_1()</br>
+</br>
+{</br>
+</br>
+for (int i=0; i</br>
+</br>
+for (int i=0; i</br>
+</br>
+b[i][j] = (i+1)*10 + (j+1);</br>
+</br>
+for (int i=0; i</br>
+</br>
+for (int k=0; k</br>
+</br>
+printf("\nThe a is :\n");</br>
+</br>
+for (int i=0; i</br>
+</br>
+printf("\n");</br>
+</br>
+printf("\nThe b is :\n");</br>
+</br>
+for (int i=0; i</br>
+</br>
+{</br>
+</br>
+for (int j=0; j</br>
+</br>
+printf("\n");</br>
+</br>
+}</br>
+</br>
+printf("\nthe c is:\n");</br>
+</br>
+for (int i=0; i</br>
+</br>
+{</br>
+</br>
+for (int j=0; j</br>
+</br>
+{</br>
+</br>
+for (int k=0; k</br>
+</br>
+printf("\n");</br>
+</br>
+}</br>
+</br>
+printf("\n");</br>
+</br>
+}</br>
+</br>
+}</br>
+</br>
+void exam_2()</br>
+</br>
+{</br>
+</br>
+int *pn = NULL;</br>
+</br>
+pn = (int *)a;</br>
+</br>
+printf("\nThe a is :\n");</br>
+</br>
+for (int i=0; i</br>
+</br>
+printf("\n");</br>
+</br>
+pn = (int *)b;</br>
+</br>
+printf("\nThe b is :\n");</br>
+</br>
+for (int i=0; i</br>
+</br>
+printf("\n");</br>
+</br>
+pn = (int *)c;</br>
+</br>
+printf("\nThe c is :\n");</br>
+</br>
+for (int i=0; i</br>
+</br>
+printf("\n");</br>
+</br>
+}</br>
+</br>
+int main(int argc, char* argv[])</br>
+</br>
+{</br>
+</br>
+exam_1();</br>
+</br>
+exam_2();</br>
+</br>
+return 0;</br>
+</br>
+}
