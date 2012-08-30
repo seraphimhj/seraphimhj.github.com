@@ -9,8 +9,8 @@ pygments: true
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Seraphim
-tagline: Freedom
+title : 阿剑的小站
+tagline: vice coder & deep thinker
 author : 
   name : Jian Huang
   email : hj1986@gmail.com
@@ -81,7 +81,7 @@ JB :
   comments :
     provider : disqus
     disqus :
-      short_name : jekyllbootstrap
+      short_name : hjian
     livefyre :
       site_id : 123
     intensedebate :
@@ -99,7 +99,7 @@ JB :
   analytics :
     provider : google 
     google : 
-        tracking_id : 'UA-123-12'
+        tracking_id : 'UA-12279890-2'
     getclicky :
       site_id : 
     mixpanel :
@@ -111,7 +111,7 @@ JB :
   # Set 'provider' to false to turn sharing off globally.
   #
   sharing :
-    provider : false
+    provider : like
     
   # Settings for all other include helpers can be defined by creating 
   # a hash with key named for the given helper. ex:
