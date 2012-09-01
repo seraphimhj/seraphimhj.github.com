@@ -1,0 +1,149 @@
+--- 
+status: publish
+layout: post
+title: fgets and fscanf
+tags: 
+- c/c++
+- fgets
+- fscanf
+- Technics
+published: true
+type: post
+---
+fgets函数用来从文件中读入字符串。</br>
+</br>
+fgets函数的调用形式如下：fgets（str，n，fp）；此处，fp是文件指针；str是存放在字符串的起始地址；n是一个int类型变量。函数的功能是从fp所指文件中读入n-1个字符放入str为起始地址的空间内；如果在未读满n-1个字符之时，已读到一个换行符或一个EOF（文件结束标志），则结束本次读操作，读入的字符串中最后包含读到的换行符。因此，确切地说，调用fgets函数时，最多只能读入 n-1个字符。读入结束后，系统将自动在最后加'\0'，并以str作为函数值返回。</br>
+</br>
+<!--more--></br>
+</br>
+注意：fgets()用来从参数stream所指的文件内读入字符并存到参数s所指的内存空间，直到出现换行字符、读到文件尾或是已读了n-1个字符为止，最后会加上NULL作为字符串结束。</br>
+</br>
+关于fscanf</br>
+<pre>    #include &lt;cstdio&gt;</br>
+    int fscanf( FILE *stream, const char *format, ... );</pre></br>
+The function fscanf() reads data from the given file stream in a manner exactly like scanf(). The return value of fscanf() is the number of variables that are actually assigned values, or <acronym title="End of file">EOF</acronym> if no assignments could be made.</br>
+</br>
+<strong>fgets 函数的使用</strong></br>
+</br>
+fgets 既可以读文件，又可以读标准输入，而且可以防止溢出。但是它只能输入字符串(且能读到回车符\n)，故而用scanf语句的较多。scanf语句可以输入各种格式的数据，其功能较为强大。</br>
+</br>
+fgets 的使用方法：char *fgets(char *string, int n, FILE *stream)</br>
+</br>
+从文件stream中读取n-1个字符/一行（若一行不满n-1个），string接收字符串</br>
+</br>
+如果n &lt;= 0，返回NULL</br>
+</br>
+如果n == 1，返回" "，也就是一个空串</br>
+</br>
+如果成功，返回值等于string， 也就是获得字符串的首地址</br>
+</br>
+如果出错，或者读到FILE的结尾，返回NULL</br>
+</br>
+//通过while循环一行行取，读到文件末尾就是NULL了 ----读取整个文件</br>
+#include</br>
+</br>
+void main( void )</br>
+{</br>
+FILE *stream;</br>
+char line[100];</br>
+</br>
+if( (stream = fopen( "file.txt", "r" )) != NULL )</br>
+{</br>
+while( fgets( line, 100, stream ) != NULL)</br>
+printf( "%s", line);</br>
+fclose( stream );</br>
+}</br>
+}</br>
+</br>
+以下是fgets这个函数的实现：</br>
+</br>
+/***</br>
+*fgets.c - get string from a file</br>
+*</br>
+* Copyright (c) Microsoft Corporation. All rights reserved.</br>
+*</br>
+*Purpose:</br>
+* defines fgets() - read a string from a file</br>
+*</br>
+*******************************************************************************/</br>
+</br>
+#include</br>
+#include</br>
+#include</br>
+#include</br>
+#include</br>
+#include</br>
+#include</br>
+</br>
+/***</br>
+*char *fgets(string, count, stream) - input string from a stream</br>
+*</br>
+*Purpose:</br>
+* get a string, up to count-1 chars or '\n', whichever comes first,</br>
+* append '\0' and put the whole thing into string. the '\n' IS included</br>
+* in the string. if count&lt;=1 no input is requested. if EOF is found</br>
+* immediately, return NULL. if EOF found after chars read, let EOF</br>
+* finish the string as '\n' would.</br>
+*</br>
+*Entry:</br>
+* char *string - pointer to place to store string</br>
+* int count - max characters to place at string (include \0)</br>
+* FILE *stream - stream to read from</br>
+*</br>
+*Exit:</br>
+* returns string with text read from file in it.</br>
+* if count &lt;= 0 return NULL * if count == 1 put null string in string * returns NULL if error or end-of-file found immediately * *Exceptions: * *******************************************************************************/ _TSCHAR * __cdecl _fgetts ( _TSCHAR *string, int count, FILE *str ) { REG1 FILE *stream; REG2 _TSCHAR *pointer = string; _TSCHAR *retval = string; int ch; _VALIDATE_RETURN(( string != NULL ) || ( count == 0 ), EINVAL, NULL); _VALIDATE_RETURN(( count &gt;= 0 ), EINVAL, NULL);</br>
+_VALIDATE_RETURN(( str != NULL ), EINVAL, NULL);</br>
+</br>
+if (count == 0)</br>
+{</br>
+return NULL;</br>
+}</br>
+</br>
+/* The C Standard states the input buffer should remain</br>
+unchanged if EOF is encountered immediately. Hence we</br>
+do not blank out the input buffer here */</br>
+</br>
+/* Init stream pointer */</br>
+stream = str;</br>
+</br>
+_lock_str(stream);</br>
+__try {</br>
+</br>
+#ifndef _UNICODE</br>
+_VALIDATE_STREAM_ANSI_SETRET(stream, EINVAL, retval, NULL);</br>
+#endif /* _UNICODE */</br>
+if(retval!=NULL)</br>
+{</br>
+while (--count)</br>
+{</br>
+if ((ch = _fgettc_nolock(stream)) == _TEOF)</br>
+{</br>
+if (pointer == string) {</br>
+retval=NULL;</br>
+goto done;</br>
+}</br>
+</br>
+break;</br>
+}</br>
+</br>
+if ((*pointer++ = (_TSCHAR)ch) == _T('\n'))</br>
+break;</br>
+}</br>
+*pointer = _T('\0');</br>
+}</br>
+</br>
+/* Common return */</br>
+done:</br>
+</br>
+; }</br>
+__finally {</br>
+_unlock_str(stream);</br>
+}</br>
+</br>
+return(retval);</br>
+}</br>
+</br>
+-----------------------------------------------------------------------------------------------------------------</br>
+</br>
+另： fgetc 和 getchar 是一个一个字符的读取，

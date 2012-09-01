@@ -1,0 +1,74 @@
+--- 
+status: publish
+layout: post
+title: C&C++ Question about Input in ACM
+tags: 
+- c/c++
+- programming
+- Technics
+published: true
+type: post
+---
+一个带缓冲输出（cout）</br>
+一个不带缓冲输出(printf)</br>
+</br>
+A. 输入_第一类：以EOF（-1）结尾；</br>
+解决方法：</br>
+C语法</br>
+while(scanf("%d %d",&amp;a, &amp;b) != EOF)</br>
+{     .... }</br>
+C++语法</br>
+while( cin &gt;&gt; a &gt;&gt; b )</br>
+{     .... }</br>
+说明：</br>
+1. Scanf函数返回值就是读出的变量个数，如：scanf( “%d %d”, &amp;a, &amp;b ); 如果只有一个整数输入，返回值是1，如果有两个整数输入，返回值是2，如果一个都没有，则返回值是-1；</br>
+2. EOF是一个预定义的常量，等于-1。</br>
+</br>
+<!--more--></br>
+</br>
+B. 输入_第二类：指定输入个数n；</br>
+解决方法：</br>
+C语法</br>
+scanf("%d",&amp;n) ;</br>
+for( i=0 ; i C++语法</br>
+cin &gt;&gt; n;</br>
+for( i=0 ; i</br>
+</br>
+C. 输入_第三类：以特殊输入（例如0）作为结束标志；</br>
+解决方法：</br>
+C语法</br>
+while(scanf("%d",&amp;n) &amp;&amp; n!=0 )</br>
+{     .... }</br>
+C++语法</br>
+while( cin &gt;&gt; n &amp;&amp; n != 0 )</br>
+{     .... }</br>
+</br>
+D. 输入_第四类：以上情况的组合</br>
+</br>
+E. 输入_第五类：输入一整行的字符串；</br>
+解决方法：</br>
+C语法</br>
+char buf[20];</br>
+gets(buf);</br>
+C++语法</br>
+如果用string buf;来保存：</br>
+getline( cin , buf );</br>
+如果用char buf[ 255 ]; 来保存：</br>
+cin.getline( buf, 255 );</br>
+说明：</br>
+1. scanf(“ %s%s”,str1,str2)，在多个字符串之间用一个或多个空格分隔；</br>
+2. 若使用gets函数，应为gets(str1); gets(str2); 字符串之间用回车符作分隔。</br>
+3. 通常情况下，接受短字符用scanf函数，接受长字符用gets函数。</br>
+4. 而getchar函数每次只接受一个字符，经常c=getchar()这样来使用。</br>
+另外,cin.getline的用法：</br>
+1. getline 是一个函数，它可以接受用户的输入的字符，直到已达指定个数，或者用户输入了特定的字符。它的函数声明形式（函数原型）如下：</br>
+istream&amp; getline(char line[], int size, char endchar = '\n');</br>
+2. 不用管它的返回类型，只关心它的三个参数：</br>
+char line[]： 就是一个字符数组，用户输入的内容将存入在该数组内。</br>
+int size : 最多接受几个字符？用户超过size的输入都将不被接受。</br>
+char endchar :当用户输入endchar指定的字符时，自动结束。默认是回车符。</br>
+3. 结合后两个参数，getline可以方便地实现： 用户最多输入指定个数的字符，如果超过，则仅指定个数的前面字符有效，如果没有超过，则用户可以通过回车来结束输入。</br>
+char name[4];</br>
+cin.getline(name,4,'\n');</br>
+由于 endchar 默认已经是 '\n'，所以后面那行也可以写成：</br>
+cin.getline(name,4);

@@ -1,0 +1,170 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  V29yZHByZXNz5Luj56CB6auY5Lqu5o+S5Lu25Y+K5Y2K6KeS5byV5Y+36Zeu
+  6aKY
+tags: 
+- code highlight
+- plugin
+- Wordpress
+published: true
+type: post
+---
+<blockquote>作为一个IT从业人员的个人网站，和各种代码打交道是家常便饭。因此一款好的wordpress代码高亮插件，来整理代码，规范输入，显得尤为必要。</blockquote></br>
+本文针对此问题，搜集了网路上流传的各种插件，并提出了我的个人解决方案。</br>
+<!--more--></br>
+在介绍插件之前，建议读者首先<strong>解决WordPress代码半角引号变全角问题</strong>。</br>
+<h4>问题的提出</h4></br>
+</br>
+</br>
+<blockquote>这个问题是由于wordpress的智能化程度太高，自动将半角引号转换为全角，包括单引号、双引号等，导致代码在流传中，出现各种各样的问题。正是一个标点引发的血案...</blockquote></br>
+</br>
+</br>
+<h4>解决方案(来自互联网)</h4></br>
+<blockquote>（1） 找到主题目录的functions.php ，在开头加入这段代码</br>
+<blockquote></br>
+<pre class="brush:php">remove_filter('the_content', 'wptexturize');</pre></br>
+</blockquote></br>
+</blockquote></br>
+<blockquote>（2） 找到WordPress安装目录/wp-includes/"目录里面的"formatting.php"文件；将这段代码全部注释掉</br>
+<blockquote>修改前：</br>
+<pre class="brush:php">// static strings</br>
+$curl = str_replace($static_characters, </br>
+      $static_replacements, $curl);</br>
+// regular expressions</br>
+$curl = preg_replace($dynamic_characters, </br>
+      $dynamic_replacements, $curl);</pre></br>
+</blockquote></br>
+<blockquote>修改后：</br>
+<pre class="brush:php">// static strings</br>
+// $curl = str_replace($static_characters, </br>
+//       $static_replacements, $curl);</br>
+// regular expressions</br>
+// $curl = preg_replace($dynamic_characters, </br>
+//       $dynamic_replacements, $curl);</pre></br>
+</blockquote></br>
+</blockquote></br>
+实践之后发现，第二种方法会导致"Warning: Cannot modify header information - headers already sent by (...)"的annoying warning，目前第一种方法还没发现缺陷，建议使用。</br>
+</br>
+Ok，下面言归正传，开始介绍怎样在wordpress Post中贴上美观的代码风格。</br>
+</br>
+<h4>一、江湖代有豪杰出，各领风骚数十年</h4></br>
+</br>
+关于Wordpress的代码插件网络上有很多，随意google或百度之，大致可以看到关于以下几种的介绍：</br>
+</br>
+</br>
+</br>
+<blockquote><strong>1. WP-Syntax</strong></br>
+</br>
+特点：支持多语言、行号、横向竖向滚动条，</br>
+</br>
+效果图：</br>
+</br>
+<img class="alignnone" title="wp-syntax screenshot" src="http://s.wordpress.org/extend/plugins/wp-syntax/screenshot-2.png?r=422729" alt="" width="377" height="80" /></br>
+</br>
+点评：这款WordPress代码高亮插件灰常不错，安装后直接启用即可。在可视化编辑和HTML下自由切换，并且在Windows live writer中还供给了该插件的支持，方便用writer写博。</br>
+</br>
+使用方法：</br>
+&lt;pre lang="php"> your code code&lt;/pre></blockquote></br>
+</br>
+</br>
+</br>
+</br>
+<blockquote><strong>2. WP-SynHighlight</strong></br>
+</br>
+特点：支持多语言、行号、横向竖向滚动条、<strong>展开收起</strong></br>
+</br>
+点评：这款安装后会在WordPress后台编辑器中生成一个代码插入按钮，使用非常方便。</br>
+</br>
+输出的代码展目前一个代码输出框内，有横向和树向滚动条。也能够在可视化和HTML模式下任意转换，无论在哪种模式下编辑代码都能够高亮，但部分代码与liverwriter不兼容，适合喜欢在WordPress后台写博的朋友。</br>
+</br>
+使用方法：</br>
+<pre class="brush:php">[codesyntax lang="php"] your code here [/codesyntax]</pre></blockquote></br>
+</br>
+</br>
+</br>
+</br>
+<blockquote><strong>3. Codecolorer</strong></br>
+</br>
+特点：支持多语言、行号、横向竖向滚动条 支持RSS输出代码高亮。</br>
+</br>
+效果图：</br>
+</br>
+<img class="alignnone" title="codecolorer screenshot" src="http://s.wordpress.org/extend/plugins/codecolorer/screenshot-2.png?r=422729" alt="" width="459" height="202" /></br>
+</br>
+点评：使用这款插件的人非常的多！颜色高亮方面很突出，遗憾的是貌似这款插件不能在可视化编辑和HTML下切换。</br>
+</br>
+使用方法：</br>
+</br>
+</br>
+</br>
+<blockquote>(a)</br>
+<pre class="brush:php"><code lang="language"> your code here </code>;</pre></br>
+(b)</br>
+<pre class="brush:php">[cc lang="lang"] your code here [/cc]</pre></blockquote></br>
+</br>
+</blockquote></br>
+</br>
+</br>
+</br>
+</br>
+<blockquote><strong>4. Google Syntax Highlighter for WordPress</strong></br>
+</br>
+特点：100%基于js，支持多种语言、行号，支持多种浏览器，超轻量级，效果图如下：</br>
+</br>
+<img class="alignnone" title="Google Syntax Highlighter for WordPress Screenshot" src="http://s.wordpress.org/extend/plugins/google-syntax-highlighter/screenshot-1.png?r=422723" alt="" width="358" height="222" /></br>
+</br>
+点评：支持以 Plain Text 方式浏览代码，支持快速剪切和打印，简洁不失功能!</br>
+</br>
+使用方法：</br>
+&lt;pre class="c-sharp"> your code here&lt;/pre></blockquote></br>
+</br>
+</br>
+</br>
+</br>
+</br>
+<blockquote><strong>5. Prettify GC Syntax Highlighter</strong></br>
+</br>
+特点：支持多语言、行号,与html兼容，并且能指定背景色，上效果图：</br>
+</br>
+<img class="alignnone" title="prettify gc syntax highlighter screenshot" src="http://s.wordpress.org/extend/plugins/prettify-gc-syntax-highlighter/screenshot-1.png?r=422729" alt="" width="332" height="254" /></br>
+</br>
+点评：本博正在使用，非常符合我的需求：简单，唯一的功能是能使你的代码与google code中的样式一样，就是它了！</br>
+</br>
+使用方法：</br>
+&lt;pre class="prettyprint"> your code here&lt;/pre></blockquote></br>
+</br>
+</br>
+</br>
+<h4>二、大道至简，无招胜有招</h4></br>
+</br>
+可能有朋友会觉得安装插件，拖慢了网站的速度，不用着急，本文还给出了另一种解决方案：生成html语言，直接在贴入编辑器。</br>
+</br>
+1. 借助在线生成代码html的网站</br>
+</br>
+</br>
+<blockquote><div style="padding-left: 30px; text-align: left;">目前知道的有“发芽网”，然而，每次贴代码都需要打开网站，略显麻烦，适合有插件洁癖的童鞋。</div></blockquote></br>
+</br>
+</br>
+&nbsp;</br>
+</br>
+2. 本地生成代码高亮html，一个小工具：CodeRender</br>
+</br>
+</br>
+<blockquote><div style="padding-left: 30px; text-align: left;"></br>
+</br>
+该程序是基于dp.SyntaxHighlighter，支持常见的语言，操作也比较简便。不过要想正确显示代码高亮还需在WordPress主题中加载代码样式文件“highlight.css”（下载的压缩包中包含）。建议大家直接复制highlight.css中的代码到主题style.css文件中，也可以个性化定制“highlight.css”，改变代码高亮、边框、背景等颜色。</br>
+</br>
+</div></blockquote></br>
+</br>
+</br>
+&nbsp;</br>
+</br>
+以上是两种非插件的方法，既然我已经选择了Prettify GC Syntax Highlighter，先试用一段时间再说吧。</br>
+</br>
+<span style="color: #0000ff;">最新报告：Prettify GC Syntax Highlighter竟然不支持<strong>PHP代码</strong>的高亮，桑心地转而投入<strong><a title="auto-syntaxhighlighter" href="http://wordpress.org/extend/plugins/auto-syntaxhighlighter/" target="_blank"><span style="color: #0000ff;">Auto SyntaxHighlighter</span></a></strong>的怀抱，一款简单而好用的代码插件。</span></br>
+</br>
+Wordpress建站的道路仍然任重而道远，她的快乐就在于折腾，正是痛并快乐着......继续......Man</br>
+</br>
+&nbsp;

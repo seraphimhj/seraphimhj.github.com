@@ -1,0 +1,155 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  5aCG5o6S5bqPLCBL6Lev5ZCI5bm2LCDmnajmsI/nn6npmLU=
+tags: 
+- ACM
+- Algorithm
+- Research
+- !binary |
+  5o6S5bqP
+
+published: true
+type: post
+---
+一.堆排序.</br>
+</br>
+以前虽然对堆排序的理论和过程已经非常熟悉了,伪代码也写了不少,但竟然还没有真正在VC中实现过.今天把它写了一下,代码如下:</br>
+<pre lang="Cpp" line="1" file="download.txt" colla="+"> </br>
+#include<iostream></br>
+using namespace std;</br>
+</br>
+//======================================</br>
+//  最大堆 Heap</br>
+//======================================</br>
+class Heap</br>
+{</br>
+private:</br>
+int *array;</br>
+size_t size;</br>
+inline size_t parent(size_t i)</br>
+{</br>
+return i>>1;</br>
+}</br>
+inline size_t left(size_t i)</br>
+{</br>
+return i<<1;</br>
+}</br>
+inline size_t right(size_t i)</br>
+{</br>
+return (i>>1)+1;</br>
+}</br>
+public:</br>
+Heap(int *array,size_t size)</br>
+{</br>
+this->array=array;</br>
+this->size=size;</br>
+}</br>
+void heapify(size_t i)</br>
+{</br>
+size_t l,r,max=i;</br>
+int temp;</br>
+l=left(i);</br>
+r=right(i);</br>
+if(l<size && array[i]<array[l]) max=l;</br>
+if(r<size && array[max]<array[r]) max=r;</br>
+if(max!=i)</br>
+{</br>
+temp=array[i];</br>
+array[i]=array[max];</br>
+array[max]=temp;</br>
+heapify(max);</br>
+}</br>
+}</br>
+void buildHeap()</br>
+{</br>
+for(int i=parent(size-1);i<=0;i--)</br>
+heapify(i);</br>
+}</br>
+void sort()</br>
+{</br>
+int temp;</br>
+for(int i=size-1;i<0;i--)</br>
+{</br>
+temp=array[0];</br>
+array[0]=array[i];</br>
+array[i]=temp;</br>
+size=size-1;</br>
+heapify(0);</br>
+}</br>
+}</br>
+};</br>
+</br>
+//一个简单的应用实例------------------</br>
+void main()</br>
+{</br>
+int a[10]={2,6,3,8,9,7,1,4,0,5};</br>
+Heap heap=Heap(a,10);</br>
+heap.buildHeap();</br>
+heap.sort();</br>
+for(int i=0;i<10;i++)</br>
+{</br>
+cout<<a[i]<<endl;;</br>
+}</br>
+</br>
+}</br>
+</pre></br>
+二.基于堆的K路合并问题.</br>
+</br>
+题：请给出一下时间为O(n*lgk),用来将 k 个已排序链表合并为一个排序链表的算法.此处,n 次所有输入链表中元素的总数.</br>
+</br>
+答：新建一个链表，再申请一个大小为 k 的数组A,首先把　k 个已排序链表的第一个元素压入 A 中，将 A 建成一个最小堆，花费O(k) 的时间．然后将堆 A 的第一个元素 min（也就是最小的那个）放入链表中．再将min-&gt;nextNode 放在min的位置．再花O(lgk)调用heapify 方法将 A 重新建成一个最小堆．然后又将第一个元素 min 放入链表......重复进行就可将 k 个已排序链表合并．（当最后剩余不到 k 个节点时情况会有点变化，但很容易解决）．显然，这样处理的时间复杂为 O(n*lgk);</br>
+</br>
+三.Young 氏矩阵的相关算法.</br>
+</br>
+题:一个 m*n 的 Young 氏矩阵(Young tableau) 是一个 m*n 的矩阵,其中每一行的数据都从左到右排序,第一列的数据都从上到下排序.Young 氏矩阵中可能会有一些  ∞ 数据项,表示不存在的元素.所以,Young 氏矩阵可以用来存放 r&lt;= mn 个有限的元素.</br>
+</br>
+a).画一个包含{9,16,3,2,4,8,5,14,12} 的4*4 的Young 氏矩阵.</br>
+</br>
+b).给出一个在非空 m*n 的 Young  氏矩阵上实现 EXTRACT-MIN 算法,使其运行时间为O(m+n).</br>
+</br>
+c).说明如何在O(m+n)时间内,将一个新元素手入到一个未满的 m*n Young 氏矩阵中.</br>
+</br>
+d).给出一个时间复杂度为 O(n^3) 的对 n*n Young 氏矩阵排序的算法.</br>
+</br>
+f).给出一个运行时间为O(m+n) 的算法,来决定一个给定的数是否存在于一个给定的 m*n  的 Young 氏矩阵当中.</br>
+</br>
+答.a).  2     3      4      5</br>
+</br>
+8     9     12    14</br>
+</br>
+16    ∞      ∞     ∞</br>
+</br>
+∞     ∞      ∞     ∞ PS.该矩阵并不是唯一的.</br>
+</br>
+b). 用递归的思想.通过递归的解决(m-1)*n,或m*(n-1) 的子问题来求解.则有 T(m,n)=T(m-1,n) or T(m,n-1)+ O(1),显然,T=O(m+n).伪代码如下:</br>
+EXTRACT_MIN( Young[ x...m] [y...n])</br>
+EXTRACT_MIN=Young[x][y]; //类似FORTRAN的写法.函数名即是返回值.</br>
+if(x==m and y==n) Young[x][y]= INFINITY;</br>
+if(Young[x+1][y]&gt;Young[x][y+1])</br>
+Young[x][y]=EXTRACT_MIN(Young[x...m][y+1...m]);</br>
+else Young[x][y]=EXTRACT_MIN(Young[x+1...m][y...m]);</br>
+END</br>
+</br>
+c).  这个就比较简单了.先将待插入的元素 K 放在 Young[m][n], 然后比较 K 与它左方或上方元素的大小,并与其中较大的一个交换.反复进行直到 K 不小于它左方和上方的元素为止. 在这里,同样有,T(m,n)=T(m-1,n) or T(m,n-1)+ O(1),T=O(m+n).伪代码如下:</br>
+INSERT(k,Young[m][n])</br>
+if(Young[m][n] &lt; INFINITY)  alert: 矩阵已满,无法插入!!</br>
+while(k&lt;Young[m-1][n] or k&lt;Young[m][n-1])</br>
+if(Young[m-1][n] &gt;Young[m][n-1])</br>
+swap(k,Young[m-1][n]);</br>
+m=m-1;</br>
+else</br>
+swap(k,Young[m][n-1]);</br>
+n=n-1;</br>
+END</br>
+</br>
+d). 调用 n*n 次 EXTRACT_MIN 过程即可.</br>
+</br>
+e). 同样是递归的思想.递归表达式与 b)中的相同.伪代码如下:</br>
+SEARCH(k,Young[x...m][y...n]</br>
+if(k&lt;Young[x][y] or k&gt;Young[m][n] return "NotFound";</br>
+if(k==Young[x][y])    return "Found",x,y.</br>
+if(k&lt;Young[x+1][y]) SEARCH(k,Young[x...x][y+1...n]</br>
+else SEARCH(k,Young[x+1...m][y...n]</br>
+END

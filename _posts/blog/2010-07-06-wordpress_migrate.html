@@ -1,0 +1,147 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  V29yZFByZXNz5Y2a5a6i5pCs5a62
+
+tags: 
+- transfer
+- Wordpress
+published: true
+type: post
+---
+有时你需要在你的服务器上移动WordPress，或者将WordPress从一个服务器转移至另外一个服务器。你不必重新安装WordPress。 WordPress具有处理这类情形所需的高度灵活性。</br>
+</br>
+对大多数安装设置的简单回答：</br>
+<ul></br>
+	<li>如果数据库和URL保持不变，你只需复制你的文件和数据库即可。</li></br>
+	<li>如果数据库和用户名发生变化，编辑 wp-config.php ，确保已将它设置为正确的属性值。</li></br>
+	<li>如果你想<strong>在转移之前测试一下</strong>， 你必须临时改变一下数据库表项"wp_options"中的"siteurl" 和 "home"值(可以通过类似phpMyAdmin的工具修改)。</br>
+如果你设置了任何的rewrites (永久链接)，你需要禁用 .htaccess ， 成功设置后再重新配置永久链接。</li></br>
+</ul></br>
+<!--more--></br>
+</br>
+<a id=".E5.9C.A8.E4.BD.A0.E7.9A.84.E7.AB.99.E7.82.B9.E4.B8.AD.E8.BD.AC.E7.A7.BBWordPress" name=".E5.9C.A8.E4.BD.A0.E7.9A.84.E7.AB.99.E7.82.B9.E4.B8.AD.E8.BD.AC.E7.A7.BBWordPress"></a></br>
+<h2>在你的站点中转移WordPress</h2></br>
+将WordPress文件从你的服务器上的某处转移至另一处 - 改变它的URL - 有些地方需要特别注意的。</br>
+</br>
+这里是分步介绍：</br>
+<ol></br>
+	<li>你可以使用以下两种方法之一建立一个新位置：</br>
+<ol></br>
+	<li>如果要移动你的 WordPress核心文件 到一个新目录，那就新建一个新目录吧。</li></br>
+	<li>如果你想移动WordPress到你的根目录， 请确保所有的 index.php， .htaccess，以及其他可能要复制的文件已经备份或者转移， 并且根目录已经为新的WordPress文件准备好了。</li></br>
+</ol></br>
+</li></br>
+	<li>登录到你的博客。</li></br>
+	<li>进入 管理 &gt; 设置 &gt; 常规 面板.</li></br>
+	<li>在输入框 <strong>WordPress 地址（URL）:</strong> 中，将地址更改成WordPress核心文件所在的新位置。</li></br>
+	<li>在输入框 <strong>Blog 地址（URL）:</strong> 把地址改为新位置，要与WordPress 地址 (URI)相符。</li></br>
+	<li>点击 <strong>保存修改</strong>.</li></br>
+	<li>(现在先不要试着 打开/查看 你的博客!)</li></br>
+	<li><em>只针对 WordPress 2.0 :</em> 删除文件夹 <em>wp-content/cache</em>.</li></br>
+	<li>将你的核心文件转移至新目录。这包括原始目录中的文件，如<tt> http://example.com/wordpress</tt>，以及所有子目录。</li></br>
+	<li>如果你使用 永久链接， 进入 管理 &gt; 设置 &gt;永久链接 面板，将你的永久链接结构更新到你的 .htaccess 文件中，.htaccess文件应该与<tt>index.php</tt> 文件放置在同一个目录下。</li></br>
+	<li>如果你遇到已上传的图片丢失的问题， 你需要在SQL数据库中更改每篇文章到这个图片的路径。为了这一点，请按照<a title="http://www.tamba2.org.uk/wordpress/move3" href="http://www.tamba2.org.uk/wordpress/move3">Tamba2's Tutorial "Moving your weblog inside your PC"</a>说明去做。</li></br>
+	<li>你还要检查和修改在'设置-其他'中的'文件保存目录'，以确保它是正确的，不然你新上传的文件还是会保存至旧的文件夹下。</li></br>
+	<li>现有的 '图片/媒体' 链接还是会指向旧的目录，你必须将它们更新至新的位置。</li></br>
+</ol></br>
+在移动文件之前，设定好URI位置是非常重要的。</br>
+</br>
+如果你在更改URIs之前不小心移动了文件，别担心。假设文件本来的路径是 /path/to/old/ ，而你在更改URIs前将他们移至 /path/to/new 。 修正上述问题的方法把 /path/to/old/ 设定为转到/path/to/new/的symlink (对于 Windows 用户来说, "symlink" 等同于"快捷方式")。</br>
+<pre>ln -s /path/to/new /path/to/old</pre></br>
+然后像平时那样按照 <a title="WordPress博客搬家" href="http://codex.wordpress.org/WordPress%E5%8D%9A%E5%AE%A2%E6%90%AC%E5%AE%B6#.E5.9C.A8.E4.BD.A0.E7.9A.84.E7.AB.99.E7.82.B9.E4.B8.AD.E8.BD.AC.E7.A7.BBWordPress">上述方法</a> 来做一遍。最后如果你愿意的话可以删除symlink。</br>
+</br>
+现在你已经完成了所有步骤了。 测试一下你的网站，并确保它可以正常工作了。如果更改涉及到你的新blog网址，要让人们知道这个新网址哦。并且考虑一下在<tt>.htaccess</tt>文件中添加一些转向内容来引导访客到新的网址。</br>
+</br>
+更改站点URL 也提供了这些操作的细节。</br>
+</br>
+<a id=".E5.B0.86WordPress.E6.94.BE.E5.9C.A8.E5.AD.90.E7.9B.AE.E5.BD.95.E4.B8.AD.EF.BC.8C.E5.90.8C.E6.97.B6.E6.8A.8AIndex.E6.96.87.E4.BB.B6.E4.BF.9D.E7.95.99.E5.9C.A8.E6.A0.B9.E7.9B.AE.E5.BD.95" name=".E5.B0.86WordPress.E6.94.BE.E5.9C.A8.E5.AD.90.E7.9B.AE.E5.BD.95.E4.B8.AD.EF.BC.8C.E5.90.8C.E6.97.B6.E6.8A.8AIndex.E6.96.87.E4.BB.B6.E4.BF.9D.E7.95.99.E5.9C.A8.E6.A0.B9.E7.9B.AE.E5.BD.95"></a></br>
+<h2>将WordPress放在子目录中，同时把Index文件保留在根目录</h2></br>
+请阅读文章给WordPress自己的目录， 获得详细的信息。</br>
+</br>
+<a id=".E5.B0.86WordPress.E8.BD.AC.E7.A7.BB.E5.88.B0.E6.96.B0.E6.9C.8D.E5.8A.A1.E5.99.A8" name=".E5.B0.86WordPress.E8.BD.AC.E7.A7.BB.E5.88.B0.E6.96.B0.E6.9C.8D.E5.8A.A1.E5.99.A8"></a></br>
+<h2>将WordPress转移到新服务器</h2></br>
+如果你打算将WordPress从一个服务器转移至另一个上， 首先得备份你的数据。这包括备份你的WordPress数据库和所有核心文件，图片，插件和其他在你网站上的文件。 请看 WordPress 备份 和 备份你的数据库获得更多详情。</br>
+<ul></br>
+	<li>注意： 如果你只是换了一个新的服务器而域名保持不变，你要做的只是编辑修改 wp-config.php 以适应你的新服务起即可（如：数据库名，数据库用户，数据库密码等）。</li></br>
+</ul></br>
+<strong>如果你根本在乎你的旧博客能否工作</strong></br>
+<ol></br>
+	<li>从旧博客上，下载一个WordPress主要文件的副本到你的硬盘，然后编辑wp-config.php以适应新的服务器。</li></br>
+	<li>返回到你的旧博客，在选项中变更 url 到你的新站点。</li></br>
+	<li>再次下载你的数据库(保留旧的以防万一)，上传新的数据库和带有编辑过的 wp-config.php 文件的wordpress核心文件的副本 到新的服务器。 完成!</li></br>
+</ol></br>
+<strong>如果你希望你的旧博客继续工作</strong></br>
+</br>
+注意: 开始之前，请确保你已经备份了旧博客的WordPress数据库!</br>
+</br>
+<em>Part A - 激活你的新博客</em></br>
+<ol></br>
+	<li>下载整个WordPress安装文件到你的硬盘上。 给这个文件夹指定一个名字以表明这是你的旧博客的安装文件。</li></br>
+	<li>返回到你的旧博客然后更改url 为新的站点.</li></br>
+	<li>再次下载整个WordPress安装文件到你的硬盘。给这个文件夹指定一个名字以表明这是新博客的安装文件。</li></br>
+	<li>再次下载数据库(保留旧的)，上传这个数据库到新的服务器上。使用同样的数据库名字，并且在新服务器建立了一个和旧服务器一样的用户，这将会是最简单的做法。</li></br>
+	<li>如果你使用了不同的数据库名字或者用户名(见上一步)，在你的新博客的安装文件夹中修改 wp-config.php 中的相关内容即可。</li></br>
+	<li>上传新博客的安装文件夹到你的新站点。转眼间，你的新博客就应该可以运行了!</li></br>
+</ol></br>
+<em>Part B - 恢复旧博客</em></br>
+<ol></br>
+	<li>在原先的服务器上，删除旧博客的数据库(记住，开始时你应该在本地电脑上做一个备份).</li></br>
+	<li>上传旧博客的安装文件夹到你原来的服务器上，覆盖现有的文件(你也可以删除文件夹，然后重新上传旧博客的文件)。</li></br>
+	<li>从你的本地电脑上传旧博客的数据库到服务器上，这样就行了！</li></br>
+</ol></br>
+另外一种复制文章，评论，页面，分类和自定义域(文章状态，数据， 永久链接， ping 状态等等) 的过程，如下:</br>
+<ol></br>
+	<li>安装一个新的Wordpress博客</li></br>
+	<li>进入旧的管理面板，进入工具 &gt; 导出，在菜单”限定作者“中选择"所有作者"。</br>
+<ol></br>
+	<li>点击下载导出的文件</li></br>
+</ol></br>
+</li></br>
+	<li>在新博客中进入工具 &gt; 导入， 选择 Wordpress 选项</li></br>
+	<li>在接下来的页面中，选择文件导出，点击上传文件然后导入。</li></br>
+	<li>接下来会显示一个页面。在分配作者中，在已存在的使用者中分配一个作者或者创建一个新的。</li></br>
+	<li>点击提交</li></br>
+	<li>最后，点击</li></br>
+</ol></br>
+注意：如果新博客中有文章的话(如hello world, info page...)，使用这种方法，这些文章将不会被删除。文章只能被添加。 使用前一种方法，新博客中的文章将会被删除。</br>
+</br>
+<a id=".E4.BD.BF.E7.94.A8Fantastico.E5.B0.86WordPress.E8.BD.AC.E7.A7.BB.E5.88.B0.E6.96.B0.E7.9A.84.E6.9C.8D.E5.8A.A1.E5.99.A8.E4.B8.8A" name=".E4.BD.BF.E7.94.A8Fantastico.E5.B0.86WordPress.E8.BD.AC.E7.A7.BB.E5.88.B0.E6.96.B0.E7.9A.84.E6.9C.8D.E5.8A.A1.E5.99.A8.E4.B8.8A"></a></br>
+<h2>使用Fantastico将WordPress转移到新的服务器上</h2></br>
+一些网络主机使用一种叫做 <a title="http://netenberg.com/fantastico.php" href="http://netenberg.com/fantastico.php">Fantastico</a> 的服务，只需点击几次就可以安装vanilla WordPress站点，你可以转移你的blog到一个这类站点上，但是步骤略有不同。</br>
+</br>
+开始之前先备份好你的数据库。这包括备份你的WordPress数据库和所有核心文件，图片，插件和其他在你网站上的文件。 请看 WordPress 备份 和 备份你的数据库获得更多详情。</br>
+</br>
+<strong>制作一个数据库副本。 你需要编辑<code>.sql</code> 文件，为了防止出现错误， 在副本上做实验是很重要的。</strong></br>
+</br>
+使用你的备份开始如下步骤。</br>
+<ol></br>
+	<li><strong>如果</strong>你已经更改了域名，编辑备份的数据库文件来反映这一点。一种简单的方法是:</br>
+<ol></br>
+	<li>使用一个 文本编辑器, 打开一个<code>.sql</code>数据库文件的 <strong>副本</strong>。</li></br>
+	<li>使用查找/替换的方法，查找所有博客所有旧的URL，然后替换成新的URL。</li></br>
+	<li>使用旧的电子邮件地址重复这一过程。(例如,使用<tt>someone@tutorial.com</tt>替换<tt>someone@example.com</tt>)。</li></br>
+	<li>保存修改。</li></br>
+</ol></br>
+</li></br>
+	<li>从你的旧网站上传插件和主题到新的站点。</li></br>
+	<li>删除刚才在Fantastico web上安装的数据库表。</li></br>
+	<li>恢复数据库。</li></br>
+</ol></br>
+当你准备好检查你的站点时，确保清理你的缓存和cookies，这样你才能在浏览器中看到刚才所做的更改。</br>
+</br>
+<a id=".E9.99.84.E5.8A.A0.E4.BF.A1.E6.81.AF" name=".E9.99.84.E5.8A.A0.E4.BF.A1.E6.81.AF"></a></br>
+<h2>附加信息</h2></br>
+<ul></br>
+	<li><a title="http://www.tamba2.org.uk/wordpress/" href="http://www.tamba2.org.uk/wordpress/">Podz WordPress 指南</a></li></br>
+	<li><a title="http://www.mydigitallife.info/2007/10/01/how-to-move-wordpress-blog-to-new-domain-or-location/" href="http://www.mydigitallife.info/2007/10/01/how-to-move-wordpress-blog-to-new-domain-or-location/">如何转移WordPress到一个新的域名或者位置</a></li></br>
+	<li><a title="http://www.velvetblues.com/web-development-blog/how-to-move-a-wordpress-blog-or-website/" href="http://www.velvetblues.com/web-development-blog/how-to-move-a-wordpress-blog-or-website/">怎样移动WordPress博客和站点</a></li></br>
+	<li><a title="http://www.prelovac.com/vladimir/how-to-move-wordpress-site-to-another-server-with-zero-downtime" href="http://www.prelovac.com/vladimir/how-to-move-wordpress-site-to-another-server-with-zero-downtime">怎样以0停机时间转移WordPress站点到另外一个服务器</a></li></br>
+	<li><a title="http://www.problogger.net/archives/2009/01/03/how-to-move-from-wordpresscom-to-wordpressorg/" href="http://www.problogger.net/archives/2009/01/03/how-to-move-from-wordpresscom-to-wordpressorg/">将 wordpress.com 博客转移到一个独立主机博客</a></li></br>
+</ul></br>
+<ul></br>
+	<li>Trasferire Wordpress su un altro server <a title="http://www.nemoprincess.it/wordpress/diario-di-bordo/trasferire-wordpress-su-un-nuovo-server.html" href="http://www.nemoprincess.it/wordpress/diario-di-bordo/trasferire-wordpress-su-un-nuovo-server.html">Come trasferire Wordpress su un altro server</a></li></br>
+	<li>Italian version of this article - <a title="http://www.valent-blog.eu/2007/09/14/trasferire-wordpress/" href="http://www.valent-blog.eu/2007/09/14/trasferire-wordpress/">Versione italiana dell'articolo</a></li></br>
+	<li>German version of this article - [1]</li></br>
+</ul>

@@ -1,0 +1,208 @@
+--- 
+status: publish
+layout: post
+title: !binary |
+  5pWw6K665Z+656GA
+
+tags: 
+- Number Theory
+- Research
+- !binary |
+  5pyA5aSn5YWs57qm5pWw
+
+- !binary |
+  5pyA5bCP5YWs5YCN5pWw
+
+- !binary |
+  57Sg5pWw
+
+published: true
+type: post
+---
+<div id="blog_text">
+<h1>（１）素数</h1>
+数学类的基本算法大多数属于初等数论范畴，相当大一部分与素数有直接关系，因此素数是一个很基本又很重要的内容。我们先来看看怎么判断一个数是否素数。素数的定义为：如果一个数的正因子只有１和这个数本身，那么这个数就是素数。根据定义，我们立即能得到判断一个数Ｎ（大于１)是否素数的简单的算法：枚举２到Ｎ－１之间的整数，判断是否能整除Ｎ。如果n很大，那么上面的程序就要运行比较长的一段时间，那么有没有更快一点的算法呢？回答是肯定的！因为如果n含有不为1和自身的因子，那么这些因子中必定有不大于sqrt(n)的（假设n有因子p，1&lt;p&lt;n，如果p&lt;=sqrt(n)，那么p就不大于sqrt(n)，如果p&gt;sqrt(n)，那么n/p也是n的因子，而且1&lt;n/p&lt;n，所以n/p不大于sqrt(n)）。容易知道这个算法的时间复杂度为O(sqrt(n))。
+<!--more-->
+<h1>（２）因式分解</h1>
+因式分解的算法很简单，模拟手工分解的过程，我们得到分解n的算法：枚举所有不大于n的所有素数，判断这些素数能整除n多少次。判断2到n是否素数，总共要计算sqrt(2)+sqrt(3)+sqrt(4)…+sqrt(n)&lt;=n*sqrt(n)次，因此算法的时间复杂度可以粗略地认为是O(n*sqrt(n))。事实上，我们有更好的算法。先看一个显而易见的结论：如果p是能整除n的所有大于1的数中最小的，那么p是n的一个素因子。
+<h1>（３）公因子的数量</h1>
+问题描述：已知一个正整数N，问这个数有多少正公因子。
+算法分析：最容易想到的算法是：枚举1..N，看看有多少个数能整除N，这种算法的复杂度为O( N )。可以优化一下：如果N有小于SQRT( N )的因子X，那么N必定有大于SQRT( N )的因子Y与X对应，而且XY=N。所以我们只需要枚举1..SQRT( N )的数即可，还要考虑N为完全平方数的特殊情况上面这个算法的复杂度为O(sqrt(N))。其实我们可以利用因式分解的方法来做。假设我们已经分解N得到 N =(p[1]^s[1])*(p[2]^s[2])...*(p[pnum]^s[pnum])，其中p[i]为互不相同的素数，那么N的正因子的数量为（具体怎么推导请参考组合数学教材中的母函数一
+章）：(s[1]+1)*(s[2]+1)*…*(s[pnum]+1)。
+<h1>（４）最大公因式</h1>
+问题描述：已知两个正整数a和b，求这两个数的最大公因数GCD( a , b )。(GCD是Greatest Common Divisor的缩写)
+算法分析：不妨设a&lt;=b，一种十分容易想到的算法是：枚举1到a的所有整数，在能同时整除a和b的数中取最大的。这个算法的时间复杂度为O(min(a,b))，当min(a,b)较大的时候程序要执行比较长的时间。我们可以利用初等数论中的一个定理：
+GCD( a , b ) = GCD( a , b-a ) = GCD( a , b-2*a ) = GCD( a , b-3*a ) = …= GCD( a , b mod a )</br>
+关于这个定理的具体证明，请参考初等数论书（或者初中数学竞赛中的数论相关章节）。</br>
+下面给出利用这个定理来写的一个求最大公因式的程序，此算法的时间复杂度为O(log(Max(a,b)))。
+<h1>（５）最小公倍数</h1>
+问题描述：已知两个正整数a和b，求这两个数的最小公倍数LCM ( a , b )。(LCM是Least Common Multiply的缩写)</br>
+算法分析：直接利用公式：LCM ( a , b ) * GCD( a , b ) = a * b即可</br>
+<h2><a>十进制转为二进制数的三种方法</a></h2>
+<div>方法1：常见的除2取余法</div>
+<div><span style="font-family: 宋体;">#include &lt;iostream.h&gt;
+const N=20;</br>
+int i=0;</br>
+//10进制转换为2进制函数，思想就是除2取余</span></div></br>
+<div>
+
+<span style="font-family: 宋体;">void Chg(long n,int *p)</br>
+{</br>
+while(n)</br>
+{</br>
+p[i++]=n%2;</br>
+n/=2;</br>
+}</br>
+}</br>
+void main()</br>
+{</br>
+long n;</br>
+int a[N]={0};</br>
+cout&lt;&lt;"请输入整数n"&lt;&lt;endl;</br>
+cin&gt;&gt;n;</br>
+Chg(n,a);</br>
+i--;        //在Chg函数中i多加了1次，故减去</br>
+while(i&gt;=0)</br>
+cout&lt;&lt;a[i--];</br>
+cout&lt;&lt;endl;</br>
+}</span></br>
+</br>
+</div>
+<div><span style="font-family: 宋体;">方法2：递归实现</span></div>
+<span style="font-family: 宋体;"><span style="font-family: 宋体;">#include &lt;iostream.h&gt;</br>
+const N=32;          //N定义可转换的二进制最大位数</span></span></br>
+</br>
+<span style="font-family: 宋体;">//逆置函数，因数组初始化全为0，若输入的数为19，那么此时数组内容为a[]={1,1,0,0,1,0,0...}</br>
+//,而要输出10011，此时循环控制无法确定，故逆置。</br>
+void Nizhi(int *p)</br>
+{</br>
+int i,r;</br>
+for(i=0;i&lt;=N/2-1;i++)</br>
+{</br>
+r=p[i];</br>
+p[i]=p[N-1-i];</br>
+p[N-1-i]=r;</br>
+}</br>
+}</span></br>
+</br>
+<span style="font-family: 宋体;">//求2的n次幂</br>
+long pow(int n)</br>
+{</br>
+long mul=1;</br>
+for(int i=1;i&lt;=n;i++)</br>
+mul*=2;</br>
+return mul;</br>
+}</span></br>
+
+<span style="font-family: 宋体;">//该函数为十进制转换二进制函数，m为要转换的数，p为指向保存二进制数的数组的指针</br>
+//该函数的思想是根据2进制转换为10进制的过程而来，通过确定2进制数中1的权的位置而得出2进制串，</br>
+//思想大致如下：在5位二进制串b4b3b2..中，可以表达的最大十进制数值为pow(5)-1,亦即pow(4)+pow(4)-1.</br>
+//那么当m-pow(4)&lt;=pow(4)-1时，余下4个二进制位足够表示m-pow(4),此时可以确定b4为1.同理可以递归到最低</br>
+//位，对于二进制递归的结束条件就是m=1和m=0两种情况。</br>
+//下面注释以19为介绍</br>
+int Chg(long m,int *p)</br>
+{</br>
+int i,j;</br>
+if(m==1) {p[0]=1;return 1;}       //递归结束条件</br>
+else if(m==0) {p[0]=0;return 0;} //递归结束条件</br>
+else {</br>
+for(i=0;;i++)</br>
+{</br>
+j=pow(i);</br>
+if(m-j&lt;=j-1)          //从低位搜索满足条件的i即为1的权所在位置</br>
+break;            //当i=4时，有19-pow(4)=3&lt;pow(4)-1,跳出</br>
+}</br>
+p[i]=1;               //修改a[4]=1</br>
+m=m-j;</br>
+return Chg(m,p);     //递归19-pow(4)的余数Chg(3,p)</br>
+}</br>
+}</span></br>
+
+<span style="font-family: 宋体;">void main()</br>
+{</br>
+int i;</br>
+long n;</br>
+int a[N]={0};</br>
+cout&lt;&lt;"请输入1个正整数："&lt;&lt;endl;</br>
+cin&gt;&gt;n;</br>
+Chg(n,a);</br>
+Nizhi(a);</br>
+for(i=0;a[i]!=1;i++);             //经过逆置后的数组a为{0,0,...1,0,0,1,1},此循环产生循环变量i</br>
+for(i;i&lt;N;i++)</br>
+cout&lt;&lt;a[i];</br>
+cout&lt;&lt;endl;</br>
+}</span>
+</br>
+方法3：方法1的扩充，适合于大整数（注：输入条件有待改善）
+</br>
+<span style="font-family: 宋体;">#include &lt;stdio.h&gt;</br>
+#include &lt;iostream.h&gt;</br>
+#include &lt;String.h&gt;</br>
+const LENGTH=50;       //定义保存十进制和二进制数的最大元素</span></br>
+</br>
+<span style="font-family: 宋体;">//若十进制数位全为0返回1，否则返回0</span></br>
+</br>
+<span style="font-family: 宋体;">int Iszero( char *string_char )</br>
+{</br>
+while( *string_char != 'b' )</br>
+if( *string_char++ != 0 ) return 0;</span></br>
+</br>
+<span style="font-family: 宋体;">return 1;</span></br>
+
+<span style="font-family: 宋体;"> }
+//十进制转换为二进制，参数string_char为保存十进制数位的数组，binary_int为保存除2余数的数组</br>
+//思想是将保存十进制数的数组从高位依次除2，用d保存余数，当到保存个位的元素时，将除2的余数</br>
+//赋值到另外一个数组binary_int[],并从binary_int[]的高位往下保存，类似于n/2(n为十进制整数)取余法，当数组</br>
+//decimal_char[]所有位全为0时跳出外层循环</span></br>
+</br>
+<span style="color: #000000;">void decimalTobinary( char *decimal_char , int *binary_int )</br>
+{</br>
+int emainder, i, length_local = LENGTH-1;    //emainder保存余数值,i为循环变量，length_local为下标</span></br>
+</br>
+<span style="color: #000000;">while( !Iszero( decimal_char ) )    //若decimal_char所有位的元素全为0时退出</br>
+{</br>
+i=0;</br>
+while( decimal_char[i] != 'b' )    //遇到结束符'b'时完成1次除2操作</br>
+{</br>
+emainder = decimal_char[i]%2;             //保存每一位除2的余数，参与下一位除2</span></br>
+</br>
+<span style="color: #000000;">if( decimal_char[i+1] != 'b' )   //若已经到最后一位就不修改下一位值</br>
+decimal_char[i+1] = emainder*10 + decimal_char[i+1];   //此操作可能生成ASC码为回车的数值，故前面改结束符为'b'</span></br>
+</br>
+<span style="color: #000000;">if( decimal_char[i] &gt;= 2 )   //修改当前位除2后的值</br>
+{ decimal_char[i] /= 2;   }</br>
+else</br>
+{ decimal_char[i] = 0;    }</span></br>
+</br>
+<span style="color: #000000;">i++;</br>
+}</span></br>
+</br>
+<span style="color: #000000;">if( length_local &gt;= 0 )     //一次除2完成后保存最后的余数</br>
+binary_int[ length_local-- ] = emainder ;</br>
+}</br>
+}</br>
+void main()</br>
+{</br>
+//定义</br>
+int length,i=0,j=0;                             //length为输入字符串的长度</br>
+int yushu[LENGTH]={0};                          //yushu[LENGTH]保存每一次除2的余数</br>
+char num_bit[LENGTH];                           //num_bit[LENGTH]保存输入的数字串的每一位</br>
+gets(num_bit);</br>
+length=strlen(num_bit);</br>
+num_bit[length]='b';                            //'b'为数组结束标志，此处不用'\n'，因为后面会起冲突</span></br>
+</br>
+<span style="color: #000000;">//字符数据处理</br>
+for( j ; j&lt;length ; j++){</br>
+num_bit[j]=num_bit[j]-'0';             //将字符0，1，2...转换为数值0，1，2....</br>
+}</span></br>
+</br>
+<span style="color: #000000;">//调用函数</br>
+decimalTobinary( num_bit , yushu );</span></br>
+</br>
+<span style="color: #000000;">//输出</br>
+for(i=0;yushu[i]!=1;i++);                  //在decimalTobinary()函数中保存余数是从最高位开始的，那么从低位</br>
+for(i;i&lt;LENGTH;i++)                             //开始查找时第一个1就是2进制串的最高位</br>
+cout&lt;&lt;yushu[i];</br>
+}</span></br>
+</br>
+</div>
