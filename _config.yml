@@ -2,7 +2,7 @@
 # For more see: https://github.com/mojombo/jekyll/wiki/Permalinks
 permalink: /:categories/:year/:month/:day/:title 
 
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "bootstrap_src"]
 auto: true
 pygments: true
 markdown: rdiscount
@@ -11,7 +11,9 @@ markdown: rdiscount
 # so be sure to set them if your theme uses them.
 #
 title : 阿剑的小站
-tagline: code, thinke & innovate
+shoten : seraphim
+licence : MIT
+tagline : code, thinke & innovate
 author : 
   name : Jian Huang
   email : hj1986@gmail.com
