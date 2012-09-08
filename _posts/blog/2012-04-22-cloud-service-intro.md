@@ -1,8 +1,8 @@
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 --- 
 status: publish 
 layout: post 
-tags: - cloud - Technics 
+title: 云服务概览
+tags: [cloud, Technics]
 --- 
 
 > 只要在搜索引擎里输入cloud server,或者云服务,无论是搜索结果还是旁边的竞价广告,都会出来一批批的无论是大公司还是小公司的,无论是知名的还是非著名的云计算解决方案, 国外的诸如：amazon, ms, ibm, hp, rackspace, godaddy, oracle, sap等等,国内的则有:阿里云,盛大云,百度云,华云,美橙等等.

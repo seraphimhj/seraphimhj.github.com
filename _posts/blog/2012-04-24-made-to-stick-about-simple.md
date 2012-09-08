@@ -1,9 +1,8 @@
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 --- 
 status: publish 
 layout: post 
-title: !binary | 57KY5L2P4oCU4oCU566A57qm5Y6f5YiZ
-tags: - Inovacation - Notes - Standard 
+title: 粘住之简约原则
+tags: [Inovacation, Notes, Standard]
 published: true 
 type: post 
 --- 

@@ -2,7 +2,7 @@
 status: publish 
 layout: post 
 title: Cache的缘分
-tags: - friends - Life 
+tags: [friends, Life]
 published: true 
 type: post 
 --- 

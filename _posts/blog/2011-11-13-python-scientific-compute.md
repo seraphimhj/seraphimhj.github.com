@@ -2,7 +2,7 @@
 --- 
 status: publish 
 layout: post 
-title: !binary | UHl0aG9u56eR5a2m6K6h566X5LmL5pyA5bCP5LqM5LmY5rOV5ouf5ZCI5puy 57q/ 
+title: 用Python实现最小二乘法
 tags: [regression, python, least square method]
 published: true 
 type: post 

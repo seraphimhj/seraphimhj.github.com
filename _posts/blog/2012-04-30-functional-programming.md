@@ -1,9 +1,8 @@
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 --- 
 layout: post
-title: 函数式编程
+title: Functional Programming
 category: programming
-tags : [functional, intro]
+tags: [functional, intro]
 ---
 {% include JB/setup %}
 
