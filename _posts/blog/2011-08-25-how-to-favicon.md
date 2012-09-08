@@ -1,10 +1,8 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 --- 
-status: publish 
 layout: post 
 title: Favicon的制作
-tags: - favicon - Wordpress 
-published: true 
+tags: [favicon, Wordpress]
 type: post 
 --- 
 

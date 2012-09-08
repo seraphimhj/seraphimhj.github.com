@@ -1,10 +1,8 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 --- 
-status: publish 
 layout: post 
 title: 真爱你的云
-tags: - Life - song 
-published: true 
+tags: [Life, song]
 type: post 
 --- 
 

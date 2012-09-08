@@ -1,10 +1,8 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 --- 
-status: publish 
 layout: post 
 title: Cache的缘分
 tags: [friends, Life]
-published: true 
 type: post 
 --- 
 
