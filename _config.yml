@@ -1,18 +1,18 @@
 # This is the default format. 
 # For more see: https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink: /:year/:month/:day/:title 
+permalink: /:title 
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "bootstrap_src"]
 auto: true
 pygments: true
+paginate: 6
 markdown: rdiscount
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : 阿剑的小站
-shoten : seraphim
-tagline : coding, thining & innovating
+title : SeraPhim
+tagline : Clear & Colorful
 author : 
   name : Jian Huang
   email : hj1986@gmail.com
@@ -28,7 +28,7 @@ author :
 # Else if you are pushing to username.github.com, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-#production_url : http://seraphimhj.github.com
+production_url : http://huangjian.info/
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #

@@ -1,5 +1,49 @@
 ---
 layout: default
 ---
+<link rel="stylesheet" type="text/css" href="/js/prettify/prettify.css" />
+
 {% include JB/setup %}
+
 {% include themes/dinky/post.html %}
+
+<div style="float:left;width:160px;">
+    <iframe width="100%" height="75" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=75&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=0&isWeibo=0&isFans=0&uid=1539451591&verifier=01e6b106&dpc=1"></iframe>
+</div>
+<div id="jiathis_style_32x32" style="float:left;margin-left:20px;margin-top:35px;">
+    <a class="jiathis_button_tsina"></a>
+    <a class="jiathis_button_douban"></a>
+    <a class="jiathis_button_tqq"></a>
+    <a class="jiathis_button_renren"></a>
+    <a class="jiathis_button_douban9dian"></a>
+    <!--<a class="jiathis_button_readitlater"></a>-->
+    <!--<a class="jiathis_button_instapaper"></a>-->
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+    <!--<a class="jiathis_counter_style"></a>-->
+</div>
+
+<div style="clear:both"></div>
+
+{% include JB/comments %}
+     
+<script type="text/javascript" src="http://v2.jiathis.com/code/jia.js"></script>
+<script type="text/javascript" src="/js/prettify/prettify.js"></script>
+          
+<script type="text/javascript">
+    function addLoadEvent(func){
+        var oldonload = window.onload;
+        if(typeof window.onload != 'function'){
+            window.onload = func;
+        }else{
+            window.onload = function(){
+                oldonload();
+                func();
+            }
+        }
+    } 
+    $(document).ready(function(){
+            $('pre').addClass('prettyprint linenums')
+            });
+    addLoadEvent(function(){prettyPrint()});
+</script>
+
