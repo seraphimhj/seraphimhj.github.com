@@ -21,6 +21,10 @@ author :
   weibo: seraphimhunter
   #feedburner : feedname
 
+ads :
+    google : true
+    
+
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
 # Most places will/should use BASE_PATH to make the urls
@@ -80,9 +84,9 @@ JB :
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.
   # Set 'provider' to false to turn commenting off globally.
-  #
+  # added weibo
   comments :
-    provider : disqus
+    provider : disqus 
     disqus :
       short_name : hjian
     livefyre :
