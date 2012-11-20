@@ -1,0 +1,30 @@
+---
+layout: post
+type: post
+title: Road Towards Jekyll
+---
+
+对于一个技术狂人来说，没什么比COOL更吸引他们了：
+
+Jekyll就是这样一项技术。
+
+网页设计在最初的HTML静态编辑，走到数据库、PHP等脚本的动态生成，仿佛一场轮回，反璞归真又回到了静态页面的构建，这就是Jekyll。
+
+有了JS的帮助，Jekyll轻易就用静态页面玩转动态酷炫的效果；
+
+本博客从wordpress起步，一直看重ta丰富的插件，和简易的搭建，但是，有什么比得上在本地用VIM写博客，一条命令部署来的让人舒服呢。
+
+于是褪去繁华的外衣，Geek回归。
+
+下面是一些参考学习的站点(大家可以补充)：
+
+Jekyll的介绍参见[自带帮助](http://huangjian.info/jekyll-introduction/)
+
+搭乘了Bootstrap架构（前端Javascript框架[E文](http://twitter.github.com/bootstrap/)，[中文](http://wrongwaycn.github.com/bootstrap/docs/index.html))的Jekyll，所谓的JB([Jekyll-Bootstrap](http://jekyllbootstrap.com/))，作者是一个年轻小伙，但是功能不凡。值得一提的是，在这里可以快速在GitHub上创建页面，更吸引人的是，ta完全免费。
+
+当然你也可以直接[fork](https://github.com/seraphimhj/seraphimhj.github.com/fork)我的博客，
+
+GoodLuck!
+
+[Heroku create失败解决方法]: http://blog.project-sierra.de/archives/1534
+
