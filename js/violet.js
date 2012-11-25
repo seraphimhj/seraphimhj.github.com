@@ -6,7 +6,7 @@
 var violet = violet || {
     VERSION: '2.0',
     checkViolet: function() {
-    	var str = document.domain, rule = /^(www\.huangjian\.info)?$/, url = "http://www.huangjian.info", cookie_Key="__isViole__", cookie_value="Y";
+    	var str = document.domain, rule = /^(www\.huangjian\.info)?$/, url = "http://huangjian.info", cookie_Key="__isViole__", cookie_value="Y";
     	if(!rule.test(str)) {
     		//document.cookie = cookie_key+'='+cookie_value+';expires='+new Date(new Date().getTime()+3600*24*30*1000).toUTCString();
     		window.location.replace(url);
@@ -139,7 +139,7 @@ var violet = violet || {
     				}
     			} else {
     				errmsg = '<article class="v-project-normal"><p>通过项目的开发过程，能够得到更多的锻炼。</p>\
-    						  <p>在 GitHub 上有 Seraphim 的几个小项目，例如 Alice, ColorCode, Blog 等等。</p></article>\
+    						  <p>在 GitHub 上有 Seraphim 的几个小项目，例如 Vim-Evernote, Nodeapp, Blog 等等。</p></article>\
     					      <p class="v-more-right"><a href="https://github.com/' + user + '" target="_blank" title="PIZn on github"><span>&#10149;</span>All Projects</a></p>';
     				$(id).append(errmsg);
     			}
@@ -199,6 +199,11 @@ violet.goTop = {
         });
     }
 }
+
+function colorCode = {
+  var code = $('pre')
+}
+
 $(document).ready(function(){
     //violet.checkViolet();
     //highLightMenu    

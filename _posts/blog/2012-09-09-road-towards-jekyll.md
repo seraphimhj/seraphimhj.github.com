@@ -2,6 +2,8 @@
 layout: post
 type: post
 title: Road Towards Jekyll
+description: 我的jekyll之旅，from wp to jekyll。一些基础页面知识，可供新手参考。
+keywords: jekyll,github,git-page,gh-page,blog
 ---
 
 对于一个技术狂人来说，没什么比COOL更吸引他们了：

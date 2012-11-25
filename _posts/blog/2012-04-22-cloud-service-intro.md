@@ -1,8 +1,9 @@
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 --- 
 layout: post 
 title: 云服务概览
 tags: [cloud, Technics]
+description: 目前国内外云服务器概述，着重介绍了Amazon为代表的云服务器特点，及付费方式。
+keywords: cloud service,amazon,EC2,intro
 --- 
 
 只要在搜索引擎里输入cloud server,或者云服务,无论是搜索结果还是旁边的竞价广告,都会出来一批批的无论是大公司还是小公司的,无论是知名的还是非著名的云计算解决方案,

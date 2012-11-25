@@ -5,6 +5,7 @@ status: publish
 tags: vim
 layout: post 
 description: 介绍VimScript语言的基本语法，变量，字符串，函数，列表和字典等，并列出一些参考页面。
+keywords: Vim,vim-script,syntax,plugins,string,function,refer
 --- 
 
 ## Motivation
