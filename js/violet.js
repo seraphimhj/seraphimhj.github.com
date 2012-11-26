@@ -77,9 +77,11 @@ var violet = violet || {
     highLightMenu: function() {
     	var navs, url, cur, i;
     	navs = $("#J_nav li a");
-		for(i = 1 ; i < navs.length; i++ ){
+		for(i = 1; i < navs.length; i++){
 			url = navs[i].href;
 			cur = window.location.href;
+                        console.log(cur);
+                        console.log(url);
 			if(cur.indexOf(url) !=-1) {
 				navs[i].className = "current";
 				navs[0].className = "";
@@ -145,7 +147,16 @@ var violet = violet || {
     			}
     		}
     	});
-    }
+    },
+    colorCode: function() {
+      var codes;
+      codes = $("pre");
+      for (i=0; i < codes.length; i++) {
+        codes[i].setAttribute("name", "colorcode");
+        codes[i].setAttribute("class", "css");
+      }
+
+    }           
 }
 /**
  *  goTop for violet
@@ -200,14 +211,13 @@ violet.goTop = {
     }
 }
 
-function colorCode = {
-  var code = $('pre')
-}
 
 $(document).ready(function(){
-    //violet.checkViolet();
-    //highLightMenu    
+    // violet.checkViolet();
+    // highLightMenu    
     violet.highLightMenu();
+    // colorful code
+    // violet.colorCode();
     violet.goTop.run();
     //selfPhoto
     /*
