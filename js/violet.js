@@ -80,8 +80,8 @@ var violet = violet || {
 		for(i = 1; i < navs.length; i++){
 			url = navs[i].href;
 			cur = window.location.href;
-                        console.log(cur);
-                        console.log(url);
+                        // console.log(cur);
+                        // console.log(url);
 			if(cur.indexOf(url) !=-1) {
 				navs[i].className = "current";
 				navs[0].className = "";
