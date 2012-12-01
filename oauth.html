@@ -1,0 +1,67 @@
+---
+layout: default
+title: Action.oauth
+keywords: oauth, oauth2, verify, oauth_callback, callback url
+--- 
+<section class="content fn-clear">
+    <div class="content-cnt">
+        <div class="ui-grid-25 ui-grid-right content-top">
+            <div class="ui-grid-23 violet-post">
+                <div class="v-section-tit">
+                    <h4>Oauth Verify</h4>                
+                </div> 
+                <div class="violet-post-det fn-clear">
+                    <section class="ui-grid-20 violet-post v-post-detail">
+                        <article class="v-plugin fn-clear">
+                            <h3 class="v-plugin-title"></h3>
+                            <div class="ui-grid-13 v-plugin-desc">                      
+                                <h4>您的 Oauth 验证码如下:</h4>
+                                <div id="H_output">                     
+                                </div>
+                            </div>
+                            <div class="ui-grid-6 ui-grid-right v-plugin-meta">
+                                <h4>如果你喜欢这项服务，<a href="https://me.alipay.com/jianh" target="_blank" rel="nofollow">点击赞助</a></h4>
+                            </div>
+                        </article><!-- //v-plugin -->
+                    </section><!-- //violet-post -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- //content -->   
+
+<script type="text/javascript">
+function getQueryString(name)
+{
+    if(location.href.indexOf("?")==-1 || location.href.indexOf(name+'=')==-1)
+    {
+        return '';
+    }
+    var queryString = location.href.substring(location.href.indexOf("?")+1);
+    var parameters = queryString.split("&");
+    var pos, paraName, paraValue;
+    for(var i=0; i<parameters.length; i++)
+    {
+        pos = parameters[i].indexOf('=');
+        if(pos == -1) { continue; }
+
+        paraName = parameters[i].substring(0, pos);
+        paraValue = parameters[i].substring(pos + 1);
+
+        if(paraName == name)
+        {
+            return unescape(paraValue.replace(/\+/g, " "));
+        }
+    }
+    return '';
+}; 
+
+alert(getQueryString("oauth_token"));
+var Elem = document.getElementById("H_output");
+var NewP= document.createElement("p");
+var Text = document.createTextNode(getQueryString("oauth_verifier"));
+NewP.appendChild(Text);
+Elem.appendChild(NewP);
+
+</script>    
+         
