@@ -28,7 +28,7 @@ Jekyll的介绍参见[自带帮助](http://huangjian.info/jekyll-introduction/)
 
 Jekyll之所以称作框架，就是因为其能满足个人定制化的需求，兼容并包，主要是引入了[YAML](https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter)进行预处理来实现的。
 
-利用YAML可以自定义变量，通过在`_config.yaml`中赋值，在网页中`{{ varname }}`进行调用；
+利用YAML可以自定义变量，通过在`_config.yaml`中赋值，在网页中`{$ varname $}`(用$代替{和})进行调用；
 
 类似于其他语言，可以方便地在网页嵌入一段代码，`{@ include xxx @}` (以下用@代替%)；
 
