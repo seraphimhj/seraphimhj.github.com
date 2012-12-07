@@ -6,6 +6,6 @@ description: 对于一个程序员而言，有时候代码要比参考书更加�
 keywords: codes,reading,deep
 --- 
 
-可不可以微博一篇。。。
+可不可以,微博一篇......
 
 
