@@ -84,9 +84,9 @@ JB :
   # Settings for comments helper
   # Set 'provider' to the comment provider you want to use.
   # Set 'provider' to false to turn commenting off globally.
-  # added weibo
+  # added weibo, uyan
   comments :
-    provider : disqus 
+    provider : uyan
     disqus :
       short_name : hjian
     livefyre :

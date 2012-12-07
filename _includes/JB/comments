@@ -1,8 +1,10 @@
-{% if site.JB.comments.provider and page.comments != false %}
+{% if site.JB.comments.provider %}
 
 {% case site.JB.comments.provider %}
 {% when "weibo" %}
   {% include JB/comments-providers/weibo %}
+{% when "uyan" %}
+  {% include JB/comments-providers/uyan %}
 {% when "disqus" %}
   {% include JB/comments-providers/disqus %}
 {% when "livefyre" %}

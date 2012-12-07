@@ -5,5 +5,4 @@ type: post
 layout: post 
 --- 
 
-#### **First console**
 
