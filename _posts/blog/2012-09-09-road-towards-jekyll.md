@@ -28,32 +28,35 @@ Jekyll的介绍参见[自带帮助](http://huangjian.info/jekyll-introduction/)
 
 Jekyll之所以称作框架，就是因为其能满足个人定制化的需求，兼容并包，主要是引入了[YAML](https://github.com/mojombo/jekyll/wiki/YAML-Front-Matter)进行预处理来实现的。
 
-利用YAML可以自定义变量，通过在`_config.yaml`中赋值，在网页中`{$ varname $}`(用$代替{和})进行调用；
+利用YAML可以自定义变量，通过在`_config.yaml`中赋值，在网页中<pre class="html" name="colorcode">{$ varname $}</pre>(用$代替{和})进行调用；
 
-类似于其他语言，可以方便地在网页嵌入一段代码，`{@ include xxx @}` (以下用@代替%)；
+类似于其他语言，可以方便地在网页嵌入一段代码，<pre class="html" name="colorcode">{@ include xxx @}</pre> (以下用@代替%)；
+
 
 对配置进行判断，最后选择当前网站采用的服务，下面这个是我的comment文件的写法，从而实现个性化的需求，供参考：
 
-    {@ if site.JB.comments.provider @}
-     
-    {@ case site.JB.comments.provider @}
-    {@ when "weibo" @}
-      {@ include JB/comments-providers/weibo @}
-    {@ when "uyan" @}
-      {@ include JB/comments-providers/uyan @}
-    {@ when "disqus" @}
-      {@ include JB/comments-providers/disqus @}
-    {@ when "livefyre" @}
-      {@ include JB/comments-providers/livefyre @} 
-    {@ when "intensedebate" @}
-      {@ include JB/comments-providers/intensedebate @}
-    {@ when "facebook" @}
-      {@ include JB/comments-providers/facebook @}
-    {@ when "custom" @}
-      {@ include custom/comments @}
-    {@ endcase @}
-     
-    {@ endif @}
+<pre class="css" name="colorcode">
+{@ if site.JB.comments.provider @}
+    
+{@ case site.JB.comments.provider @}
+{@ when "weibo" @}
+    {@ include JB/comments-providers/weibo @}
+{@ when "uyan" @}
+    {@ include JB/comments-providers/uyan @}
+{@ when "disqus" @}
+    {@ include JB/comments-providers/disqus @}
+{@ when "livefyre" @}
+    {@ include JB/comments-providers/livefyre @} 
+{@ when "intensedebate" @}
+    {@ include JB/comments-providers/intensedebate @}
+{@ when "facebook" @}
+    {@ include JB/comments-providers/facebook @}
+{@ when "custom" @}
+    {@ include custom/comments @}
+{@ endcase @}
+    
+{@ endif @}
+</pre>
 
 当然你也可以直接[fork](https://github.com/seraphimhj/seraphimhj.github.com/fork)我的博客，
 
