@@ -1,32 +1,144 @@
----
-layout: none
----
 <?xml version="1.0" encoding="utf-8" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>{{ site.production_url }}/</loc>
+        <loc>http://huangjian.info//</loc>
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>{{ site.production_url }}/archives.html</loc>
+        <loc>http://huangjian.info//archives.html</loc>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>{{ site.production_url }}/plugins.html</loc>
+        <loc>http://huangjian.info//plugins.html</loc>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>{{ site.production_url }}/works.html</loc>
+        <loc>http://huangjian.info//works.html</loc>
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>{{ site.production_url }}/contact.html</loc>
+        <loc>http://huangjian.info//contact.html</loc>
         <priority>0.6</priority>
     </url>
-    {% for post in site.posts %}
+    
     <url>
-        <loc>{{ site.production_url }}{{ post.url }}</loc>
+        <loc>http://huangjian.info//new-mac-air</loc>
         <priority>0.8</priority>
     </url>
-    {% endfor %}
+    
+    <url>
+        <loc>http://huangjian.info//first-sight-of-javascript</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//learn-vim-script</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//dive-into-code</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//road-towards-jekyll</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//talk-about-oauth2-0</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//made-to-stick-about-simple</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//cloud-service-intro</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//jekyll-introduction</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//python-scientific-compute</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//ad-utility-model</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//cs-server-intro</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//webkit-intro</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//linux-package-manger-command</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//css-base</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//how-to-favicon</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//love-u-cloud-song</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//how-time-flies</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//post-to-specific-page</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//wordpress-code-highlight</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//jobs-lecture</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//swimming</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//but-you-didnt</loc>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://huangjian.info//cache_destiny</loc>
+        <priority>0.8</priority>
+    </url>
+    
 </urlset>
