@@ -1,3 +1,12 @@
+--- 
+published: true
+title: MacAir 购机手记及初体验
+type: post 
+layout: post 
+description: MacAir 购机手记及初体验
+keyword: macbook,购机手记
+--- 
+
 关注Macbook有一段时间了，作为程序猿，原本想购入ProMD101来着，但还是经不住Air的轻薄造型，最终选择AirMD231.
 
 这里要感谢下[苹果团](http://www.appletuan.com)，无论是价格还是服务，都很满意，你们很给力！
@@ -21,29 +30,29 @@
 
 刚收到货
 
-![image](http://pics.campl.us/f/1/12947.c5ec0176587ac4def92d4e5becb0da7a.jpg)
+![withSize](http://pics.campl.us/f/1/12947.c5ec0176587ac4def92d4e5becb0da7a.jpg)
 
 卖家包装的很好，一层层拆开
 
-![image](http://pics.campl.us/f/1/12947.164458b8eb30dddbfd899b013c7680e4.jpg)
+![withSize](http://pics.campl.us/f/1/12947.164458b8eb30dddbfd899b013c7680e4.jpg)
 
 终于见到庐山真面目，小激动。
 
-![image](http://pics.campl.us/f/1/12947.3d0096b81b54e54d2422f96faa45641b.jpg)
+![withSize](http://pics.campl.us/f/1/12947.3d0096b81b54e54d2422f96faa45641b.jpg)
 
-![image](http://pics.campl.us/f/1/12947.cae3859fb2f887a0034a7ff9f6489650.jpg)
+![withSize](http://pics.campl.us/f/1/12947.cae3859fb2f887a0034a7ff9f6489650.jpg)
 
 果然很薄啊。
 
-![image](http://pics.campl.us/f/1/12947.b1673d6812774ad24a7ee74d08f138f9.jpg)
+![withSize](http://pics.campl.us/f/1/12947.b1673d6812774ad24a7ee74d08f138f9.jpg)
 
-![image](http://ww3.sinaimg.cn/large/a7480316jw1e38aalmzsvj.jpg)
+![withSize](http://ww3.sinaimg.cn/large/a7480316jw1e38aalmzsvj.jpg)
 
-![image](https://photos-5.dropbox.com/t/0/AADpMGqwTth9sVnEteXMYCB9yQWFSPw9RdILSm0uOFtqtw/12/3704984/png/1024x768/3/1364731200/0/2/IMG_1316%E5%89%AF%E6%9C%AC.png/d52fQhT3uchCQKadHCb315z5I1tYEkTmlYOnTKtfZx4)
+![withSize](https://photos-5.dropbox.com/t/0/AADpMGqwTth9sVnEteXMYCB9yQWFSPw9RdILSm0uOFtqtw/12/3704984/png/1024x768/3/1364731200/0/2/IMG_1316%E5%89%AF%E6%9C%AC.png/d52fQhT3uchCQKadHCb315z5I1tYEkTmlYOnTKtfZx4)
 
 其他配件
 
-![image](http://pics.campl.us/f/1/12947.7a87e993412d92f38f6d82a682451b93.jpg)
+![withSize](http://pics.campl.us/f/1/12947.7a87e993412d92f38f6d82a682451b93.jpg)
 
 
 未开封，电池循环次数0。

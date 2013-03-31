@@ -24,6 +24,7 @@ sup { vertical-align:text-top; }
 sub { vertical-align:text-bottom; }
 a:hover { text-decoration:underline; }
 ins,a { text-decoration:none; }
+img[alt=withSize] {width: 500px; }
 
 /** fn **/
 .fn-clear:after { visibility:hidden; display:block; font-size:0; content:" "; clear:both; height:0; }
