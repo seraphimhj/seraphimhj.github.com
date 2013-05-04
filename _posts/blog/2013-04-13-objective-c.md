@@ -1,6 +1,6 @@
 --- 
 published: true
-title: iOS开发学习笔记series No.1 Objective-C基础
+title: iOS开发学习笔记 Series.1: Objective-C基础
 type: post 
 layout: post 
 description: Objective-C是iOS开发的首选编程语言，是程序开发的基石。但是它并不难学，任何有其他语言基础的同学都能很快上手。正因为它如此基础而又重要，所以开篇第一章就是介绍它的，下面我尝试把这个语言的细节理清楚...
@@ -148,7 +148,7 @@ Objective-C 为面向对象编程，是C语言的扩展，可以认为是另一�
 
 @“”，表示双引号内的字符串作为Cocoa的NSString元素。
 
-布尔类型（BOOL）
+#### 布尔类型（BOOL）
 
 1. in objc.h：typedef signed char BOOL; 
 1. YES（Value “1”）／NO（Value “0”）；
@@ -211,7 +211,7 @@ Cocoa非常智能，引用的retain（保留计数）和release（释放计数�
 ```
 
 
-**Reference:**
+### Reference:
 
 1. http://cocoadevcentral.com/d/learn_objectivec/
 2. http://www.cnblogs.com/VinceYuan/archive/2010/03/08/1680488.html
