@@ -34,18 +34,22 @@ Somelike shell, it is a procedure language.
 
 some kind of variable:
 
+```bash
         s:name          variable local to this script
         b:name          variable local to a buffer
         w:name          variable local to a window
         g:name          global variable (also in a function)
         v:name          variable predefined by Vim, like v:version.
+```
 
 some kind of define variable
 
+```bash
         let             define some variable
         unlet           free variable
         unlet!          safelly free variable
         exists          checks if variable has already been defined
+```
 
 What Vim calls true is anything that is not zero.
 
@@ -72,19 +76,27 @@ See Examples:
 
 ### Executing a expression
 
+```bash
         :execute "normal " . normal_commands
+```
 
 is equal to 
 
+```bash
         :normal normal_commands
+```
 
 if don't want to execute a string but evaluate it to get its expression value, you can use the eval() function:
 
+```bash
         :let optval = eval('&' . "path")
+```
 
 is equal to 
 
+```bash
         :exe 'let optval = &' . "path"
+```
 
 ### Function
 
@@ -92,6 +104,7 @@ Function is called with the ":call" command.
 
 define a function
 
+```bash
         function {name} ({arg1}, {arg2}, ...)
             {body}
         endfunction
@@ -103,29 +116,38 @@ define a function
                 return a:num2
         endfunction
         echo Min(5, 8)
+```
 
 if want to rewrite a function existed, use `function! {name}`
 
 **USING RANGE**
 
+```bash
         function {name} () range
+```
 
 This will pass a:firstline and a:lastline in the function, and called with:
 
+```bash
         :5,50call {name}()
+```
 
 It will call the function once, and output the result;
 
 Otherwise you define a function without "range", and if execute with
 
+```bash
         :5,50call {name}()
+```
 
 The function will be called 46 times.
 
 function reference:
 
+```bash
         let Afunc = function('{name}')
         echo call(Afunc, [])
+```
 
 Note: must Captalize first name of function reference, or will be confused with builtin functions.
 
@@ -133,7 +155,9 @@ Note: must Captalize first name of function reference, or will be confused with 
 
 The following defines a function that must have 1 argument (star) and can have up to 20 additional arguments:
 
+```bash
         function Show(star, ...)
+```
 
 a:000 is a list of all the "..." arguments.
 
@@ -145,11 +169,13 @@ a:1 is same with `a:000[0]`
 
 list is defined by 
 
+```bash
         let alist = []
         call add(alist, 'foo')
         call add(alist, 'bar')
         echo alist
         ['foo', 'bar']
+```
 
 concatenation is done by "+" or "call extend()"
 
@@ -159,17 +185,21 @@ Such method generate list range() getline()
 
 dictionary is defined by 
 
+```bash
         let adict = {'one': 'foo', 'two': 'bar'}
+```
 
 Retreive key list by keys(adict) to loop over them.
 
 Methods of dictionary
 
+```bash
         echo adict['one']
         echo adict.one
         let adict.four = 'music'
         echo adict
         {'one': 'foo', 'two': 'bar', 'four': 'music'}
+```
 
 ## End
 

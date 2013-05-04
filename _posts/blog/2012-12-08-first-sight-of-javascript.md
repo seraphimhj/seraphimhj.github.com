@@ -22,13 +22,14 @@ Javascript的语法规则和C语言比较类似，拥有if，for，while等语�
 - 函数设计：实参和定义不必完全匹配（参数个数或类型），参数用arguments数组表示。不存在重载函数，同名函数采用最后定义的函数版本；
 
 - With语句：将代码作用域设置到一个特定的对象中。如下例search, hostname, href都是location的成员，可以精炼：
-<pre class="js" name="colorcode">
+
+```js
 with (location) {
     var qs = search.substring(1);
     var hostName = hostname;
     var url = href;
 }
-</pre>
+```
 
 </br>
 
