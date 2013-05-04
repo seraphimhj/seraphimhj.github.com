@@ -1,6 +1,6 @@
 --- 
 published: true
-title: iOS开发学习笔记 Series.1: Objective-C基础
+title: iOS开发学习笔记(Series.1)－－Objective-C基础
 type: post 
 layout: post 
 description: Objective-C是iOS开发的首选编程语言，是程序开发的基石。但是它并不难学，任何有其他语言基础的同学都能很快上手。正因为它如此基础而又重要，所以开篇第一章就是介绍它的，下面我尝试把这个语言的细节理清楚...
