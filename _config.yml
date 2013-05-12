@@ -3,7 +3,7 @@
 permalink: /:title 
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md", "bootstrap_src"]
-auto: true
+watch: true
 pygments: true
 paginate: 6
 markdown: redcarpet

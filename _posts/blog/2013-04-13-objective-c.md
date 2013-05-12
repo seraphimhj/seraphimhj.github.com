@@ -216,3 +216,5 @@ Cocoa非常智能，引用的retain（保留计数）和release（释放计数�
 1. http://cocoadevcentral.com/d/learn_objectivec/
 2. http://www.cnblogs.com/VinceYuan/archive/2010/03/08/1680488.html
 3. http://deeploveapple.blogspot.jp/2012/09/objective-c-mactoday-20129.html
+4. http://developer.apple.com/library/ios/#documentation/Cocoa/Reference/Foundation/Classes/NSAutoreleasePool_Class/Reference/Reference.html#//apple_ref/occ/cl/NSAutoreleasePool
+5. http://developer.apple.com/library/ios/#documentation/CoreFoundation/Conceptual/CFMemoryMgmt/CFMemoryMgmt.html
