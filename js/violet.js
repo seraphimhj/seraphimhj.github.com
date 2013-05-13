@@ -27,53 +27,6 @@ var violet = violet || {
         }
         setTimeout(show, b);    
     },
-    selfPhoto: function() {
-        var ran = 1, faceImg;
-        function getRandom(n){
-            ran = Math.floor(Math.random()*n+1);
-        }
-        getRandom("11");    
-        faceImg = $("#J_myFace");
-        if (faceImg.children()[0]) {        
-            switch(ran) {
-                case 1:
-                    faceImg.children()[0].src = '/images/face/iampizn-2.png';
-                    break;
-                case 2:
-                    faceImg.children()[0].src = '/images/face/iampizn-3.png';
-                    break;
-                case 3:
-                    faceImg.children()[0].src = '/images/face/iampizn-4.png';
-                    break;
-                case 4:
-                    faceImg.children()[0].src = '/images/face/iampizn-5.png';
-                    break;
-                case 5:
-                    faceImg.children()[0].src = '/images/face/iampizn-6.png';
-                    break;
-                case 6:
-                    faceImg.children()[0].src = '/images/face/iampizn-7.png';
-                    break;
-                case 7:
-                    faceImg.children()[0].src = '/images/face/iampizn-8.png';
-                    break;
-                case 8:
-                    faceImg.children()[0].src = '/images/face/iampizn-9.png';
-                    break;
-                case 9:
-                    faceImg.children()[0].src = '/images/face/iampizn-10.png';
-                    break;
-                case 10: 
-                    faceImg.children()[0].src = '/images/face/iampizn-11.png';
-                    break;
-                case 11:
-                    faceImg.children()[0].src = '/images/face/iampizn-1.png';
-                    break;          
-                default:
-                    break;      
-            }   
-        }
-    },
     highLightMenu: function() {
     	var navs, url, cur, i;
     	navs = $("#J_nav li a");
@@ -94,7 +47,7 @@ var violet = violet || {
     getGitHub: function(name, num, id) {
     	var user, url, loading, repo_name, repo_url, repo_desc, repo_watch, repo_fork, repo_len, i, meta, status, errmsg;
     	user = name;
-    	url = "https://api.github.com/users/"+user+"/repos";
+    	url = "https://api.github.com/users/"+user+"/repos?sort=updated";
     	loading = '<p class="v-loading"><img src="/images/loading.gif" alt="loading" /></p>';
     	$(id).append(loading);
     	$.ajax({
@@ -136,27 +89,18 @@ var violet = violet || {
                     				   </article>';
                     		$(id).append(project);
     					}
-    					project = '<p class="v-more-right v-project-mor"><a href="https://github.com/' + user + '" target="_blank" title="PIZn on github"><span>&#10149;</span>All Projects</a></p>';
+    					project = '<p class="v-more-right v-project-mor"><a href="https://github.com/' + user + '" target="_blank" title="Seraphim on github"><span>&#10149;</span>All Projects</a></p>';
     					$(id).append(project);
     				}
     			} else {
     				errmsg = '<article class="v-project-normal"><p>通过项目的开发过程，能够得到更多的锻炼。</p>\
     						  <p>在 GitHub 上有 Seraphim 的几个小项目，例如 Vim-Evernote, Nodeapp, Blog 等等。</p></article>\
-    					      <p class="v-more-right"><a href="https://github.com/' + user + '" target="_blank" title="PIZn on github"><span>&#10149;</span>All Projects</a></p>';
+    					      <p class="v-more-right"><a href="https://github.com/' + user + '" target="_blank" title="Seraphim on github"><span>&#10149;</span>All Projects</a></p>';
     				$(id).append(errmsg);
     			}
     		}
     	});
-    },
-    colorCode: function() {
-      var codes;
-      codes = $("pre");
-      for (i=0; i < codes.length; i++) {
-        codes[i].setAttribute("name", "colorcode");
-        codes[i].setAttribute("class", "css");
-      }
-
-    }           
+    }         
 }
 /**
  *  goTop for violet
@@ -216,38 +160,5 @@ $(document).ready(function(){
     // violet.checkViolet();
     // highLightMenu    
     violet.highLightMenu();
-    // colorful code
-    // violet.colorCode();
     violet.goTop.run();
-    //selfPhoto
-    /*
-    var showSelfPhoto = $("#J_myFace");
-    showSelfPhoto.hover(
-        function() {
-            $(this).addClass('v-my-face-hover');
-        },
-        function(){
-            $(this).removeClass('v-my-face-hover');
-        });
-    showSelfPhoto.toggle(function() { 
-        if($("#J_myFace_img").hasClass('flipInYR')) {
-            $("#J_myFace_img").removeClass('flipInYR');
-        }       
-        $("#J_myFace_img").addClass('flipInYL');
-        if($(this).hasClass('v-my-face-hover')){
-                $(this).removeClass('v-my-face-hover');
-            }       
-            violet.selfPhoto();     
-        },
-        function() {
-            if($("#J_myFace_img").hasClass('flipInYL')) {
-                $("#J_myFace_img").removeClass('flipInYL');
-            }
-            $("#J_myFace_img").addClass('flipInYR');
-            if($(this).hasClass('v-my-face-hover')){
-                $(this).removeClass('v-my-face-hover');
-            }
-            violet.selfPhoto(); 
-        }
-    ); */
 })

@@ -983,66 +983,21 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
 .v-entry strong { font-weight: 700; font-family: "Times New Roman",Times,serif; }
 
 .v-entry pre { 
-  background-color: #303030;
-  border-left: 5px solid #1f1f1f;
+  border-left: 1px solid #1f1f1f;
   border-top: 1px solid #1f1f1f;
   border-right: 1px solid #1f1f1f;
   border-bottom: 1px solid #1f1f1f;
   font: 12px/1.5 Monaco,serif;
   margin: 10px 0 10px 0px;
   overflow:  auto;
-  color: #e8e8e8;
   border-radius: 3px 3px 3px 3px;
 }
 .v-entry .v-code {
  margin: 0 3px;
  padding: 0 3px;
- background: #a0a0a0;
  font: 12px Monaco,serif;
- color: #f8f8f8;
  border-radius: 2px 2px;
 }
-/** colorcode **/
-.DlHighlight .operand { color: #e8f8f2; }
-.DlHighlight .keyword { color: #65d7ed; }
-.DlHighlight .builtin { color: #a19; }
-.DlHighlight .string { color: #f8f0c3; }
-.DlHighlight .string .before, .DlHighlight .string .after { color: #d8d8d8; }
-.DlHighlight .regexp { color: #789eb6; }
-.DlHighlight .regexp .before, .DlHighlight .regexp .after { color: #789eb6; font-weight: bold; }
-.DlHighlight .comment { color: #789eb6; }
-.DlHighlight .comment .before, .DlHighlight .comment .after { color: #789eb6; }
-.DlHighlight .hasharrow { color: #f00; }
-.DlHighlight .paren {  color: #fd8b1f;}
-.DlHighlight .operator { color: #e8f8f2; }
-.DlHighlight .error { background-color: #c00; color: #fff; }
-.DlHighlight .defun { color: #e6db70;    }
-.DlHighlight .line-numbers { float: left; width: 3em; margin-left: -10px; text-align: center; color: #bcbcbc; background: #1f1f1f; margin-right: 5px; font: 0.9em Monaco,serif; padding-top: 0.06em; }
-
-/* XML */
-.DlHighlight .xml-tag-open, .DlHighlight .xml-tag-close { color: #A6E22E; }
-.DlHighlight .xml-tag-close .before { color: #F59320; }
-.DlHighlight .xml-tagangle { color: #d8d8d8; }
-.DlHighlight .xml-attribute { color: #F59320; }
-.DlHighlight .xml-entity { color: #A6E22E; }
-.DlHighlight .xml-entity .before, .DlHighlight .xml-entity .after { color: #607; }
-
-/* CSS */
-.DlHighlight .css-element { color: #e9ce6f; }
-.DlHighlight .css-class { color: #a6e22e;}
-.DlHighlight .css-pseudo-class { color: #777; }
-.DlHighlight .css-id { font-weight: bold; }
-.DlHighlight .css-color-spec { color: #f8f0c3; }
-.DlHighlight .css-length { color: #a19; }
-.DlHighlight .css-length .after { font-weight: bold; }
-.DlHighlight .css-keyword { color: #f59320; }
-.DlHighlight .css-keyword .after { color: #d8d8d8; }
-.DlHighlight .css-attribute { color: #60bbca; }
-.DlHighlight .css-comma { color: red; }
-.DlHighlight .css-url { color: #a6e22e; }
-.DlHighlight .css-brack-open { color: #ae81ff; }
-.DlHighlight .css-brack-close { color: #ae81ff; }
-.DlHighlight .css-end { color: #d8d8d8; }
 
 /** entry special **/
 .v-entry .title {

@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 一般我们在类里面声明成员变量，并实现其存取方法。
 
 ``` objective-c
-＃import <Cocoa/Cocoa/h>
+#import <Cocoa/Cocoa/h>
 
 #interface Person : NSObject {
     NSString * name;
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 person.h
 
 ``` objective-c
-＃import <Cocoa/Cocoa/h>
+#import <Cocoa/Cocoa/h>
 
 #interface Person : NSObject
 
