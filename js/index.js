@@ -49,7 +49,6 @@ $(document).ready(function() {
         )
     }
     setTimeout(hoverFlower, 13000);
-    violet.selfPhoto();
     
     //show github Porject    
     violet.getGitHub("seraphimhj", "3", "#J_porject");

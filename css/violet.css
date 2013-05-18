@@ -4,6 +4,11 @@
  * description: Violet 主题 css
  */
 /** reset **/
+ 
+@import url(http://fonts.googleapis.com/css?family=Galdeano);
+@import url(http://fonts.googleapis.com/css?family=Electrolize);
+@import url(http://fonts.googleapis.com/css?family=Cuprum);
+
 html{ color:#4d4d4d; background:#f8f8f8; }
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { margin:0;padding:0; }
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { display:block; }
@@ -153,10 +158,10 @@ body .fn-hide { display:none; }
 
 /** violet-site **/
 .violet-site { float: left; margin: 20px 0 12px 14px; position: relative; width: 188px; color: #f8f8f8; }
-.violet-site h1, .violet-site h1 a { font-family: "Times New Roman",Times,serif; font-size: 32px; line-height: 50px; font-weight: normal; color: #f6f6f6; }
+.violet-site h1, .violet-site h1 a { font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size: 32px; line-height: 50px; font-weight: normal; color: #f6f6f6; }
 .violet-site h1 a:hover { color: #fff; text-shadow: 0px 0px 5px #4e003a; text-decoration: none; }
-.violet-site h1 span { display: inline; padding: 0px 5px 0 3px; position: relative; line-height: 12px; font-size: 10px; font-family: Verdana,Arial,Helvetica,sans-serif; color: #800888; background: #fed640; border-radius: 7px 0px 7px 0; top: -23px; left: 5px; font-weight: 600; }
-.violet-site h2 { padding-top: 2px; font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 14px; line-height: 14px; border-top: 1px solid #f8f8f8; }
+.violet-site h1 span { display: inline; padding: 0px 5px 0 3px; position: relative; line-height: 12px; font-size: 10px; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; color: #800888; background: #fed640; border-radius: 7px 0px 7px 0; top: -23px; left: 5px; font-weight: 600; }
+.violet-site h2 { padding-top: 2px; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size: 14px; line-height: 14px; border-top: 1px solid #f8f8f8; }
 
 /** violet-nav **/
 .violet-nav { margin: 0 0 0 0; position: relative; }
@@ -167,7 +172,7 @@ body .fn-hide { display:none; }
     display: block;
     padding: 0 16px;
     font-size: 14px;
-    font-family: "Times New Roman",Times,serif;
+    font-family:"Electrolize",sans-serif;
     font-weight: 500;
     line-height: 26px;
     color: #f8f8f8;
@@ -433,7 +438,7 @@ body .fn-hide { display:none; }
 .content a { color: #4D8BB4; }
 .content a:hover { color: #800808; }
 .content .v-more, .content .v-more-right { margin-bottom: 0;text-align:right}
-.content .v-more a, .content .v-more-right a { font-family: Georgia,sans-serif; line-height: 18px; padding: 2px 6px 2px 0; border-radius: 3px 3px; background: #e18b3a; color: #fff; cursor: pointer; }
+.content .v-more a, .content .v-more-right a { font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;line-height: 18px; padding: 2px 6px 2px 0; border-radius: 3px 3px; background: #e18b3a; color: #fff; cursor: pointer; }
 .content .v-more a span, .content .v-more-right a span { padding-right: 2px; color: #fff; }
 .content .v-more a:hover, .content .v-more-right a:hover { text-decoration:  none; background: #f10072; }
 .content .v-more-right { padding: 10px 10px 0 0; text-align: right; line-height: 22px; }
@@ -444,8 +449,8 @@ body .fn-hide { display:none; }
 
 /** violet-journal **/
 .violet-journal { background: none repeat scroll 0 0 #FFFFFF; margin: 0; padding: 50px 20px 50px 40px; }
-.v-section-tit { padding: 0px 5px 0 0; color: #888; font-size: 18px; line-height: 30px; font-weight: 500; font-family: "Times New Roman",Times,serif; border-bottom: 1px solid #e8e8e8; }
-.v-section-tit span { display: inline; font-family: "Times New Roman",Times,serif; font-size: 12px; line-height: 12px; color: #e58b3a; }
+.v-section-tit { padding: 0px 5px 0 0; color: #888; font-size: 18px; line-height: 30px; font-weight: 500; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; border-bottom: 1px solid #e8e8e8; }
+.v-section-tit span { display: inline; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size: 12px; line-height: 12px; color: #e58b3a; }
 .v-section-tit h2 { display: inline; font-size: inherit; padding: inherit; margin: inherit; line-break: inherit;}
 .v-excerpt { padding: 20px 0; border-bottom: 1px dotted #e8e8e8; border-top: 1px solid #fff; }
 .v-excerpt:hover { background: #f5f5f5;
@@ -455,9 +460,9 @@ body .fn-hide { display:none; }
     background: linear-gradient(to -90deg, #ffffff 0, #fefefe 80%, #f5f5f5 100%)
  }
 .v-excerpt-title { margin-bottom: 12px; }
-.v-excerpt-title a { font-size: 18px; font-family: "Times New Roman",Times, serif; color: #489620; font-weight: 700; }
+.v-excerpt-title a { font-size: 18px; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; color: #489620; font-weight: 700; }
 .v-excerpt-title a:hover, .v-post-list .v-post-title a:hover { color: #246105; text-decoration: none; }
-.v-excerpt-det { font-size: 13px; line-height: 21px; color: #686868; font-family: Georgia, sans-serif; margin-bottom: 0; }
+.v-excerpt-det { font-size: 13px; line-height: 21px; color: #686868; font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;margin-bottom: 0; }
 .v-excerpt-det p { margin-bottom: 10px; }
 .v-post-list { padding: 8px 0; border-top: 1px solid #fff; border-bottom: 1px dashed #e8e8e8; }
 .v-post-list:hover { background: #f5f5f5; 
@@ -467,15 +472,15 @@ body .fn-hide { display:none; }
     background: linear-gradient(to -90deg, #ffffff 0, #fefefe 80%, #f5f5f5 100%)
 }
 .v-post-list .v-post-title { display: inline; line-height: 24px; }
-.v-post-list .v-post-title a { font-size: 16px; line-height: 24px; font-family: "Times New Roman",Times, serif; color: #489620; font-weight: 700; }
+.v-post-list .v-post-title a { font-size: 16px; line-height: 24px; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;color: #489620; font-weight: 700; }
 .v-post-list  p { float: right; display: inline; line-height: 24px; color: #888; }
 
 /** violet-quotes **/
 .violet-quotes { margin-top: 15px; height: auto; }
 .v-quote-list { padding: 20px 0; border-top: 1px solid #fff; }
 .v-quote-list .rquote { float: left; display: inline; width: 15px; height: 18px; }
-.v-quote-list .rquote span { font-family: sans-serif; font-size: 40px; position: relative; top: -8px; left: -26px; color: #d8d8d8; }
-.v-quote-list p { font-size: 13px; padding-left: 15px; font-family: Verdana,Arial,Helvetica,sans-serif; font-style: italic; color: #686868; }
+.v-quote-list .rquote span { font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;font-size: 40px; position: relative; top: -8px; left: -26px; color: #d8d8d8; }
+.v-quote-list p { font-size: 13px; padding-left: 15px; font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif; font-style: italic; color: #686868; }
 .v-quote-list p.quote-author { padding-top: 10px; padding-right: 10px; line-height: 18px; font-size: 13px; color: #888; font-style: italic; text-align: right; }
 .v-quote-list span { color: #a8a8a8; }
 
@@ -497,8 +502,8 @@ body .fn-hide { display:none; }
 .violet-about { margin-bottom: 20px; height: auto;  padding-left: 13px;}
 .violet-about-det { padding: 20px 0 10px 0; border-bottom: 1px solid #d8d8d8;  }
 .violet-about-det p img { background: #fff; padding: 2px 2px; }
-.violet-about-det p { padding-bottom: 10px; font-size: 13px; line-height: 18px; font-family: Verdana,Arial,Helvetica,sans-serif; color: #686868; }
-.violet-about-det strong { font-family: "Times New Roman",Times,serif; font-weight: 700; padding: 0 2px; font-size: 14px; line-height: 18px; }
+.violet-about-det p { padding-bottom: 10px; font-size: 13px; line-height: 18px; font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;color: #686868; }
+.violet-about-det strong { font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;font-weight: 700; padding: 0 2px; font-size: 14px; line-height: 18px; }
 .violet-about-det em { padding: 0 2px; font-weight: 700; border-bottom: 1px dotted #e8e8e8; }
 
 /** v-my-face **/
@@ -588,7 +593,7 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
     margin: 10px 0 0;
 }
 .violet-aside-post .v-aside-li { border-bottom: 1px dotted #d8d8d8; }
-.violet-aside-post .v-aside-li a { font-family: verdana, \9ED1\4F53, sans-serif; word-wrap:break-word; word-break:break-all; }
+.violet-aside-post .v-aside-li a { font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif;word-wrap:break-word; word-break:break-all; }
 .violet-aside-post .v-aside-li a:hover { text-decoration: none;  }
 .violet-aside-post .v-date { text-align: right; }
 
@@ -596,13 +601,13 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
 .foot { margin-top: 30px; width: 100%; padding-top: 10px; height: 110px; background: #488901; background: -moz-linear-gradient(-90deg, #244f0f 0%, #2d6213 4%, #488901 15%, #488901 100%); background: -webkit-linear-gradient(-90deg, #244f0f 0%, #2d6213 4%, #488901 15%, #488901 100%); background: -ms-linear-gradient(-90deg, #244f0f 0%, #2d6213 4%, #488901 15%, #488901 100%); background: linear-gradient(to -90deg, #244f0f 0%, #2d6213 4%, #488901 15%, #488901 100%); border-top: 2px solid #d8d8d8; }
 .violet-submenu { margin: 10px 10px 10px 60px; height: 80px; }
 .violet-submenu ul li { line-height: 20px; margin: 10px 10px 0 0; width: 160px; float: left; }
-.violet-submenu ul li a { display: block; padding: 0 5px; color: #efefef; line-height: 24px; font-size: 13px; font-family: "Times New Roman",Times,serif; border-top: 1px dotted #488901; border-bottom: 1px dotted #396d00; }
+.violet-submenu ul li a { display: block; padding: 0 5px; color: #efefef; line-height: 24px; font-size: 13px; font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif; border-top: 1px dotted #488901; border-bottom: 1px dotted #396d00; }
 .violet-submenu ul li a span { color: #fed640; padding-right: 2px; }
 .violet-submenu ul li a:hover { color: #fed640; text-decoration: none; border-radius: 3px 3px; background: rgba(0, 0, 0, 0.2); border-top: 1px solid #2d6213; border-bottom: 1px solid #56a201; }
 .violet-submenu ul li a:hover span { color: #efefef; }
 .violet-theme { margin-top: 20px; height: 70px; }
 .violet-copyright { margin-top: 20px; margin-right: 0; height: 70px; }
-.violet-theme p , .violet-copyright p { padding: 10px 5px; color: #efefef; font-family: "Times New Roman",Times,serif; font-size: 12px; line-height: 21px; background: rgba(0, 0, 0, 0.2); border-radius: 3px 3px; border-top: 1px solid #2d6213; border-bottom: 1px solid #56a201; }
+.violet-theme p , .violet-copyright p { padding: 10px 5px; color: #efefef; font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif; font-size: 12px; line-height: 21px; background: rgba(0, 0, 0, 0.2); border-radius: 3px 3px; border-top: 1px solid #2d6213; border-bottom: 1px solid #56a201; }
 .violet-theme p a { color: #fed640; }
 
 /** animated **/
@@ -861,7 +866,7 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
     animation-timing-function: ease;
     animation-fill-mode: both;
     box-shadow: 1px 1px 5px #555;
-    font-family: font-family: verdana, \9ED1\4F53, sans-serif;
+    font-family:"Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif; 
 }
 .violet-face2face ul li.last span {
     left: -146px;
@@ -941,21 +946,21 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
     background: #fff;
     position: relative;
 }
-.v-entry { padding-right: 10px; color: #555; font-family: verdana, "Microsoft Yahei","Microsoft Jhenghei",STHeiti,PMingLiU,Simsun; }
+.v-entry { padding-right: 10px; color: #555; font-family: "Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif; }
 .v-entry h1,
 .v-entry h2,
 .v-entry h3,
 .v-entry h4,
 .v-entry h5,
-.v-entry h6 { margin: 0; padding: 0; font-family: "Times New Roman", Times ,serif;}
+.v-entry h6 { margin: 0; padding: 0; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;}
 .v-entry h1 { padding: 3px 0; font-size: 20px; line-height: normal; margin-bottom: 20px; color: #489620; font-weight: 700; border-bottom: 1px solid #e8e8e8; }
-.v-entry h2 { margin-bottom: 20px; color: #489620; padding: 3px 0; font-size: 18px; line-height: normal; border-bottom: 1px solid #e8e8e8; font-family: 700; }
+.v-entry h2 { margin-bottom: 20px; color: #489620; padding: 3px 0; font-size: 18px; line-height: normal; border-bottom: 1px solid #e8e8e8; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
 .v-entry h3 { font-size: 16px; font-weight: 700; line-height: 26px; color: #489620; border-bottom: 1px solid #e8e8e8; margin-bottom: 18px; margin-top: 1.5em; }
 .v-entry h4 { margin-bottom: 18px; font-size: 14px; font-weight: 700; color: #489620; line-height: 26px; text-transform: uppercase; }
 .v-entry h5 { margin-bottom: 18px; color: #444; font-size: 14px; line-height: 26px; text-transform: uppercase; }
 .v-entry h6 { font-size: 13px; font-weight: 700; margin-bottom: 0.5em; color: #444; line-height: 26px; }
 .v-entry > h2:first-child, .v-entry > h1:first-child, .v-entry > h1:first-child + h2 { border: 0 none; }
-.v-entry p { font-size: 13px; line-height: 22px; margin-bottom: 15px; text-indent: 24px; }
+.v-entry p { font-size: 14px; line-height: 27px; margin-bottom: 15px; text-indent: 27px; }
 .v-entry > p:first-child { margin: 0.8em 0; text-indent: 0; }
 .v-entry ul,
 .v-entry ol { padding-bottom: 15px; margin-left: 24px; margin-top: 0.6em; }
@@ -980,29 +985,25 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
 .v-entry * tr td:last-child { border-right: none; }
 .v-entry * tr th { font-weight: 700; }
 .v-entry em { font-size: 14px; font-style: italic; color: #555; }
-.v-entry strong { font-weight: 700; font-family: "Times New Roman",Times,serif; }
+.v-entry strong { font-weight: 700; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
 
 .v-entry pre { 
-  border-left: 1px solid #1f1f1f;
-  border-top: 1px solid #1f1f1f;
-  border-right: 1px solid #1f1f1f;
-  border-bottom: 1px solid #1f1f1f;
-  font: 12px/1.5 Monaco,serif;
-  margin: 10px 0 10px 0px;
-  overflow:  auto;
   border-radius: 3px 3px 3px 3px;
-}
-.v-entry .v-code {
- margin: 0 3px;
- padding: 0 3px;
- font: 12px Monaco,serif;
- border-radius: 2px 2px;
+  overflow:  auto;
+  font: 13px/1.5;
+  font-family:Menlo,"Andale Mono",Consolas,"Courier New",Monaco,monospace;
+}                
+.v-entry code {
+    border-radius: 2px 2px;
+    font: 13px;
+    font-family:Menlo,"Andale Mono",Consolas,"Courier New",Monaco,monospace;
+    background-color:#D0D0D0;
 }
 
 /** entry special **/
 .v-entry .title {
     margin-bottom: 10px;
-    font-family: "Times New Roman",Times,serif;
+    font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;
     padding: 0 0;
     font-size: 20px;
     line-height: 32px;
@@ -1013,7 +1014,7 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
 .v-entry .meta {
     text-align: center;
     color: #a0a0a0;
-    font-family: "Times New Roman",Times,serif;
+    font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;
     font-size: 13px;
     text-indent: 0;
     font-weight: 600;
@@ -1090,7 +1091,7 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
     padding: 10px 0 0;
 }
 .v-pagination a {
-    font-family: verdana, \9ED1\4F53, sans-serif;
+    font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;
     color: #666666;
     padding: 0 8px;
     line-height: 28px;
@@ -1130,10 +1131,11 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
 /** plugins **/
 .v-plugin { padding: 20px 0 0; height: auto; }
 .v-plugin-title { margin-bottom: 10px; border-bottom: 1px solid #e58b3a; }
-.v-plugin-title a { font-family: "Times New Roman",Times,serif; font-size: 20px; line-height: 27px; font-weight: 700; color: #489620; }
+.v-plugin-title a { font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size: 20px; line-height: 27px; font-weight: 700; color: #489620; }
+    
 .v-plugin-title a:hover { color: #246105; text-decoration: none; }
 .v-plugin-desc, .v-plugin-meta { height: auto; margin-bottom: 0; }
-.v-plugin-desc h4, .v-plugin-meta h4 { margin-bottom: 10px; font-family: "Times New Roman",Times,serif; font-size: 14px; line-height: 24px; font-weight: 700; color: #8f006d; }
+.v-plugin-desc h4, .v-plugin-meta h4 { margin-bottom: 10px; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size: 14px; line-height: 24px; font-weight: 700; color: #8f006d; }
 .v-plugin-desc h4 { border-bottom: 1px dotted #d5d5d5; }
 .v-plugin-desc p, .v-plugin-meta p { font-size: 13px; font-family: Verdana,Arial,Helvetica,sans-serif; color: #686868; padding-bottom: 10px; }
 .v-plugin-desc p img, .v-plugin-meta p img { padding: 1px 1px;
@@ -1190,7 +1192,7 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
 /** violet-work **/
 .violet-work { padding: 20px 0 18px 0; border-top: 1px solid #fff; border-bottom: 1px solid #e8e8e8; }
 .violet-work-tit { margin-bottom: 0; }
-.violet-work-tit h3 { font-family: "Times New Roman",Times,serif; font-size: 18px; line-height: 27px; font-weight: 700; color: #489620; padding-bottom: 10px; }
+.violet-work-tit h3 { font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size: 18px; line-height: 27px; font-weight: 700; color: #489620; padding-bottom: 10px; }
 .violet-work-tit p { font-size: 13px; line-height: 18px; padding-bottom: 10px; }
 
 .violet-work-det { margin: 0 0; height: auto; text-align: right;}

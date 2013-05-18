@@ -59,43 +59,25 @@ var violet = violet || {
     			limit = data.meta["X-RateLimit-Remaining"];
     			status = data.meta["status"];
     			if(limit && limit > 0){
-       				if( repo_len < num ) {
-    					for( i = 0; i < repo_len; i++) {
-    						repo_name = data.data[i].name;
-    						repo_url = data.data[i].html_url;
-    						repo_desc = data.data[i].description;
-    						repo_watch = data.data[i].watchers;
-    						repo_fork = data.data[i].forks;
-    						project = '<article class="v-project-list">\
-                        			   <p class="name"><a href="' + repo_url + '" title="' + repo_name + '" target="_blank">' + repo_name + '</a>\
-                        			   <span class="v-project-watch">' + repo_watch + '</span>\
-                        			   <span class="v-project-forks">' + repo_fork + '</span></p>\
-                        			   <p class="descript">' + repo_desc + '</p>\
-                    				   </article>';
-                    		$(id).append(project);
-    					}	
-    				} else {
-    					for( i = 0; i < num; i++){
-    						repo_name = data.data[i].name;
-    						repo_url = data.data[i].html_url;
-    						repo_desc = data.data[i].description;
-    						repo_watch = data.data[i].watchers;
-    						repo_fork = data.data[i].forks;
-    						project = '<article class="v-project-list">\
-                        			   <p class="name"><a href="' + repo_url + '" title="' + repo_name + '" target="_blank">' + repo_name + '</a>\
-                        			   <span class="v-project-watch">' + repo_watch + '</span>\
-                        			   <span class="v-project-forks">' + repo_fork + '</span></p>\
-                        			   <p class="descript">' + repo_desc + '</p>\
-                    				   </article>';
-                    		$(id).append(project);
-    					}
-    					project = '<p class="v-more-right v-project-mor"><a href="https://github.com/' + user + '" target="_blank" title="Seraphim on github"><span>&#10149;</span>All Projects</a></p>';
-    					$(id).append(project);
-    				}
+       				if( repo_len < num ) num = repo_len;
+                                for( i = 0; i < num; i++) {
+                                  repo_name = data.data[i].name;
+                                  repo_url = data.data[i].html_url;
+                                  repo_desc = data.data[i].description;
+                                  repo_watch = data.data[i].watchers;
+                                  repo_fork = data.data[i].forks;
+                                  project = '<article class="v-project-list">\
+                                              <p class="name"><a href="' + repo_url + '" title="' + repo_name + '" target="_blank">' + repo_name + '</a>\
+                                              <span class="v-project-watch">' + repo_watch + '</span>\
+                                              <span class="v-project-forks">' + repo_fork + '</span></p>\
+                                              <p class="descript">' + repo_desc + '</p>\
+                                              </article>';
+                                  $(id).append(project);
+                                }
+                                project = '<p class="v-more-right v-project-mor"><a href="https://github.com/' + user + '" target="_blank" title="Seraphim on github"><span>&#10149;</span>All Projects</a></p>';
+                                $(id).append(project);
     			} else {
-    				errmsg = '<article class="v-project-normal"><p>通过项目的开发过程，能够得到更多的锻炼。</p>\
-    						  <p>在 GitHub 上有 Seraphim 的几个小项目，例如 Vim-Evernote, Nodeapp, Blog 等等。</p></article>\
-    					      <p class="v-more-right"><a href="https://github.com/' + user + '" target="_blank" title="Seraphim on github"><span>&#10149;</span>All Projects</a></p>';
+    				errmsg = '<article class="v-project-normal"><p>通过项目的开发过程，能够得到更多的锻炼。</p> <p>在 GitHub 上有 Seraphim 的几个小项目，例如 Vim-Evernote, Nodeapp, Blog 等等。</p></article> <p class="v-more-right"><a href="https://github.com/' + user + '" target="_blank" title="Seraphim on github"><span>&#10149;</span>All Projects</a></p>';
     				$(id).append(errmsg);
     			}
     		}

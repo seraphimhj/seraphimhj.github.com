@@ -22,7 +22,7 @@ Cocoa和Objective-C是Mac OS的核心。Cocoa也就是NeXT公司采用Objective-
 
 .m扩展名包含类的实现（implement）， Objective-C 头文件后缀名是.h，类的声明部分。在objective-C中，＃import会“聪明”地只导入一次头文件，而在C／C++，需要用＃ifndef来保证。示例：
 
-```objective-c
+```objc
 #import <Foundation/Foundation.h>
 ```
 	
@@ -35,7 +35,7 @@ By the way, iOS开发中，通常main.m文件，只是用来创建一个自动�
 
 如下：
 
-``` objective-c
+``` objc
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
 一般我们在类里面声明成员变量，并实现其存取方法。
 
-``` objective-c
+``` objc
 #import <Cocoa/Cocoa/h>
 
 #interface Person : NSObject {
