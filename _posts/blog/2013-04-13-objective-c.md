@@ -374,7 +374,7 @@ NSArray *someArray =
 		// 实现方法
 	}
 	
-	_ (void) unlock {
+	- (void) unlock {
 		// 实现方法
 	}
 	@end
