@@ -10,7 +10,7 @@
 @import url(http://fonts.googleapis.com/css?family=Cuprum);
 
 html{ color:#4d4d4d; background:#f8f8f8; }
-body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { margin:0;padding:0; }
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { margin:0;padding:0; }
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section { display:block; }
 body,button,input,select,textarea{ font: 13px/1.5 verdana, \5b8b\4f53, \9ED1\4F53, sans-serif;/* 英文字体 verdana，中文宋体和黑体。*/ }
 input,select,textarea{ font-size:100%; }
@@ -20,7 +20,7 @@ fieldset,img,a img{ border:0; }
 iframe{ display:block; }
 abbr,acronym{ border:0;font-variant:normal; }
 del { text-decoration:line-through; }
-address,caption,cite,code,dfn,em,th,var { font-style:normal; font-weight:500; }
+address,caption,cite,dfn,em,th,var { font-style:normal; font-weight:500; }
 ol,ul { list-style:none; }
 caption,th { text-align:left; }
 h1,h2,h3,h4,h5,h6 { font-size:100%; font-weight:500; }
@@ -222,7 +222,7 @@ body .fn-hide { display:none; }
     display: inline;
     padding: 0 16px;
     font-size: 14px;
-    font-family: "Times New Roman",Times,serif;
+    font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif;
     font-weight: 500;
     line-height: 25px;
     color: #800888;
@@ -946,7 +946,7 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
     background: #fff;
     position: relative;
 }
-.v-entry { padding-right: 10px; color: #555; font-family: "Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif; }
+.v-entry { padding-right: 10px; color: #555; /*font-family: "Galdeano","Hiragino Sans GB","Microsoft YaHei",Trebuchet,"Trebuchet MS",Tahoma,"Lucida Grande","Lucida Sans Unicode",Verdana,sans-serif; */}
 .v-entry h1,
 .v-entry h2,
 .v-entry h3,
@@ -963,7 +963,7 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
 .v-entry p { font-size: 14px; line-height: 27px; margin-bottom: 15px; text-indent: 27px; }
 .v-entry > p:first-child { margin: 0.8em 0; text-indent: 0; }
 .v-entry ul,
-.v-entry ol { padding-bottom: 15px; margin-left: 24px; margin-top: 0.6em; }
+.v-entry ol { padding-bottom: 5px; margin-left: 24px; margin-top: 0.6em; }
 .v-entry ul li,
 .v-entry ol li { font-size: 13px; color: #555; margin: 0.5em 0; }
 .v-entry ul li { list-style-type: square; }
@@ -986,19 +986,6 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
 .v-entry * tr th { font-weight: 700; }
 .v-entry em { font-size: 14px; font-style: italic; color: #555; }
 .v-entry strong { font-weight: 700; font-family:"Cuprum","Hiragino Sans GB","Microsoft YaHei",sans-serif; }
-
-.v-entry pre { 
-  border-radius: 3px 3px 3px 3px;
-  overflow:  auto;
-  font: 13px/1.5;
-  font-family:Menlo,"Andale Mono",Consolas,"Courier New",Monaco,monospace;
-}                
-.v-entry code {
-    border-radius: 2px 2px;
-    font: 13px;
-    font-family:Menlo,"Andale Mono",Consolas,"Courier New",Monaco,monospace;
-    background-color:#D0D0D0;
-}
 
 /** entry special **/
 .v-entry .title {
@@ -1056,6 +1043,9 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
     padding: 3px 3px;
     border: 1px solid #e8e8e8;
     box-shadow: 0 0 4px #d0d0d0;
+}
+.v-entry .highlight {
+    background-color: #ffffcc;
 }
 
 .v-announce {
@@ -1283,13 +1273,6 @@ p.v-my-face { padding-bottom: 0; margin: 0 auto 10px auto; text-align: right}
     animation-name: flipInYR;
 }
 
-/** v-fork-me **/
-.v-fork-me {
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: 999;
-}
 /** killie **/
 .KillIE { width: 100%; line-height: 18px; padding: 8px 0; background: #000; color: #fff; text-align: center;}
 .KillIE a { color: #cfdb74; }
